@@ -3,10 +3,10 @@ la = length(args)
 if(la==0){
   stop('No argument provide, please provide argument')
 }else if(la==4){
-  iter = args[1]
-  burnin = args[2]
-  core = args[3]
-  hn = args[4]
+  iter = as.numeric(args[1])
+  burnin = as.numeric(args[2])
+  core = as.numeric(args[3])
+  hn = as.numeric(args[4])
 }else{
   stop('Arguments length not correct, accept 4 arguments')
 }
