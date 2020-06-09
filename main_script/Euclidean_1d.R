@@ -3,7 +3,7 @@ args = commandArgs(trailingOnly = T)
 la = length(args)
 if(la==0){
   stop('No argument provided, please input 3 arguments')
-}else if(la==4){
+}else if(la==3){
   iter = as.numeric(args[1])
   burnin = as.numeric(args[2])
   hn = as.numeric(args[3])
