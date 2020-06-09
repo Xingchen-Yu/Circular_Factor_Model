@@ -17,7 +17,7 @@ source(file="./source/ymat_spit.R")
 required_package = c('mvnfast','truncnorm','wnominate','pscl')
 check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==4
 if(check_package ==F){
-  install.packages(required_package)
+  install.packages(required_package,repos = "http://cran.us.r-project.org")
 }
 
 if(hn == 116){
