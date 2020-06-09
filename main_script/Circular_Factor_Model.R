@@ -22,7 +22,7 @@ source(file="./source/ymat_spit.R")
 if(hn==116){
   cluster_seed = 888
   seed = 8888
-  b_range = c(0.01,0.04)
+  b_range = c(0.01,0.04) 
 }else if(hn==112){
   cluster_seed = 1990
   seed = 2080
@@ -55,9 +55,13 @@ kappa_a = 1
 omega_sd = 0.1
 #######data###########
 out = ymat_spit(hn=hn)
+if(hn==116){
+  print('session 1 of 116 House data contains the first 700 votes')
+}
 ymat = out[[1]]
 pol = out[[2]]
 rm(out)
+
 
 nr = nrow(ymat)
 nc = ncol(ymat)
@@ -150,22 +154,23 @@ kappa_accept_rs = rep(0,nc)
 kappa_accept_rs_all = no_accept_rs_all = yes_accept_rs_all = rep(0,nc)
 
 for(i in 1:iter){
+  
   if(i %in% seq(start_jitter,iter,skip)){
-    
+    ####step size and leap steps jittering####
     leap = sample(l_range[1]:l_range[2],nr,replace=T)
     leap_tau = sample(l_range[1]:l_range[2],nc,replace=T)
     
     delta = runif(nr,b_range[1],b_range[2])
     delta_yes = delta_no = runif(nc,yn_range[1],yn_range[2])
-    #######################################
     delta2 = delta/2
     delta2_yes = delta_yes/2
     delta2_no = delta_no/2
-    
-    if(i<2000 & continue==F){
+    #######################################
+    #######tunning the proposal variance of the scale parameter \kappa during the initial 2000 iterations#######
+    if(i<2000){
       ks = kappa_accept_rs/skip
       kappa_skip = min(ks)
-      
+      ####targetting acceptance ratio between 0.3 and 0.6#####
       out = update_tsig(0.6,0.3,t_sig,ks,nc)
       t_sig = out[[1]]
       kappa_mod = out[[2]]
@@ -179,17 +184,17 @@ for(i in 1:iter){
     sfExport("delta",'delta2','delta_yes','delta2_yes','delta_no','delta2_no','t_sig','leap','leap_tau')
   }
   
-  
+  #####impute the missing values#####
   if(i %in% seq(1,iter,20)){
     ymat = impute_NA(na, i_index, j_index, ymat, tau_yes, tau_no, beta, kappa, len_na)
     sfExport('ymat')
   }
   ################################################################################
-
+  ###Update scale parameter \kappa###
   out = sfLapply(node,wrapper_kappa)
   kappa = unlist(lapply(out,"[[",1))
   sfExport("kappa")
-  
+  ###update hyperprior parameter for \kappa###
   ccc = rgamma(1,c_alpha,ccc_b+sum(kappa))
   sfExport("ccc")
   
@@ -198,6 +203,7 @@ for(i in 1:iter){
   kappa_accept_rs = kappa_accept_rs  + haha
   kappa_accept_rs_all = kappa_accept_rs_all  + haha
   ################################################################################
+  ###update ideal points \beta_i's###
   out = sfLapply(node,wrapper_beta)
   beta = unlist(lapply(out,"[[",1))
   beta_ratio = sum(sapply(out,"[[",2))/nr
@@ -206,14 +212,16 @@ for(i in 1:iter){
   beta_accept_rs_all = beta_accept_rs_all  + haha
   sfExport("beta")
   ################################################################################
+  ###update \psi_j's####
   out = sfLapply(node,wrapper_yes)
   tau_yes = unlist(lapply(out,"[[",1))
   yes_ratio = sum(sapply(out,"[[",2))/nc
-  
+
   haha = unlist(lapply(out,"[[",3))
   yes_accept_rs_all = yes_accept_rs_all  + haha
   sfExport("tau_yes")
   ################################################################################
+  ###update \zeta_j's####
   out = sfLapply(node,wrapper_no)
   tau_no = unlist(lapply(out,"[[",1))
   no_ratio = sum(sapply(out,"[[",2))/nc
@@ -222,17 +230,20 @@ for(i in 1:iter){
   no_accept_rs_all = no_accept_rs_all  + haha
   sfExport("tau_no")
   ################################################################################
+  ###update hyperparameter \omega for \beta_i's####
   out = update_omega(omega,beta,nr,a,b,omega_sd)
   omega = out[[1]]
   omega_ratio = omega_ratio + out[[2]]
   cbeta_prior = lol * omega
   sfExport('omega',"cbeta_prior")
   
+  ####compute joint loglikelihood####
   waic_out = sfLapply(node,wrapper_waic)
   temp = do.call("cbind",lapply(waic_out,"[[",1))
   sum_temp = sum(temp)
   likeli_chain[i] = sum_temp
-
+  
+  ##output average acceptance ratio and joint loglikelihood every 50 iterations####
   if(i %in% seq(1,iter,50)){
     cat("\rProgress: ",i,"/",iter)
     print(paste('beta ar is',round(beta_ratio,digits = 2)))
@@ -248,6 +259,7 @@ for(i in 1:iter){
 
     print(paste('loglikelihood is ',round(sum_temp,digits = 0)))
   }
+  ###record paratmer after burnin and compute waic using running sums###
   if(i>burnin){
     beta_master[,j] = beta
     omega_master[j] = omega
@@ -259,13 +271,9 @@ for(i in 1:iter){
     j = j + 1
   }
 }
-waic_spherical = waic_compute(n_pos,pos_pred,pos_pred2,pos_pred3,no_na)
-
-nnn = n_pos
-pos_pred_master = pos_pred[no_na]/nnn
-lpd = sum(log(pos_pred_master))
-va = sum((pos_pred3[no_na]/nnn-(pos_pred2[no_na]/nnn)^2))*nnn/(nnn-1)
-waic_spherical = lpd-va
+###compute waic with -1 scaling, recall that -2 corresponds to deviance scaling###
+waic_spherical = -waic_compute(n_pos,pos_pred,pos_pred2,pos_pred3,no_na)
 print(waic_spherical)
 
+###save paramters for further analysis###
 # save.image(file=paste0('H',hn,"_workspace.Rdata"))
