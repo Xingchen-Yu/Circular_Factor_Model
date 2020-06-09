@@ -1,18 +1,18 @@
 args = commandArgs(trailingOnly = T)
 la = length(args)
 if(la==0){
-  stop('No argument is provided, please input 4 argument')
+  stop('No argument provided, please input 4 arguments')
 }else if(la==4){
   iter = as.numeric(args[1])
   burnin = as.numeric(args[2])
   core = as.numeric(args[3])
   hn = as.numeric(args[4])
 }else{
-  stop('Arguments length is not correct, please input 4 arguments')
+  stop('Argument length not correct, please input 4 arguments')
 }
 
-required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo')
-check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==5
+required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl')
+check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==6
 if(check_package ==F){
   install.packages(required_package)
 }
@@ -58,7 +58,7 @@ omega_sd = 0.1
 #######data###########
 out = ymat_spit(hn=hn)
 if(hn==116){
-  print('session 1 of 116 House data contains the first 700 votes')
+  print('Only session 1 (first 700 votes) of the 116 House data will be analyzed')
 }
 ymat = out[[1]]
 pol = out[[2]]
