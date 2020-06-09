@@ -1,19 +1,21 @@
 args = commandArgs(trailingOnly = T)
 la = length(args)
 if(la==0){
-  stop('No argument provide, please provide argument')
+  stop('No argument is provided, please input 4 argument')
 }else if(la==4){
   iter = as.numeric(args[1])
   burnin = as.numeric(args[2])
   core = as.numeric(args[3])
   hn = as.numeric(args[4])
 }else{
-  stop('Arguments length not correct, accept 4 arguments')
+  stop('Arguments length is not correct, please input 4 arguments')
 }
 
 required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo')
-lapply(required_package, require, character.only = TRUE)
-
+check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==5
+if(check_package ==F){
+  install.packages(required_package)
+}
 ######################
 source(file="./source/read_kh2.R")
 source(file="./source/geodesic_snowfall_rcpp_wrapper_v3_delta_jitter_bracket.R")
