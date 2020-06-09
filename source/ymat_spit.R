@@ -1,5 +1,5 @@
 ymat_spit<-function(hn){
-  vote2<-readKH2(file=paste0("../data/H",hn,"_votes.ord"))
+  vote2<-readKH2(file=paste0("./data/H",hn,"_votes.ord"))
   if(hn==116){
     vote<-as.matrix(vote2$votes)[,1:700]
     ####Amash switches party at 430, we combine the record for Amash together####
