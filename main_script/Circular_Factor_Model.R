@@ -2,7 +2,7 @@ args = commandArgs(trailingOnly = T)
 la = length(args)
 if(la==0){
   stop('No argument provide, please provide argument')
-}else if(la==3){
+}else if(la==4){
   iter = args[1]
   burnin = args[2]
   core = args[3]
