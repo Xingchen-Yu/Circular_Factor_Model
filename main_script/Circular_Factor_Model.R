@@ -15,9 +15,9 @@ required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo')
 lapply(required_package, require, character.only = TRUE)
 
 ######################
-source(file="../source/read_kh2.R")
-source(file="../source/geodesic_snowfall_rcpp_wrapper_v3_delta_jitter_bracket.R")
-source(file="../source/ymat_spit.R")
+source(file="./source/read_kh2.R")
+source(file="./source/geodesic_snowfall_rcpp_wrapper_v3_delta_jitter_bracket.R")
+source(file="./source/ymat_spit.R")
 
 if(hn==116){
   cluster_seed = 888
