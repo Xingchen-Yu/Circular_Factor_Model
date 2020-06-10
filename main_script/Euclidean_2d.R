@@ -119,6 +119,8 @@ for(i in 1:iter){
     y_hat[index_yes] = 1
     y_hat[-index_yes] = 0
     ymat[na] = y_hat[na]
+    kobe = dbinom(ymat,1,pnorm(mean_mat),log = T)
+    print(sum(kobe))
   }
   
   if(i>burnin){
@@ -153,5 +155,6 @@ rank_squad_dim1 = round(t(apply(beta_squad_dim_1,1,function(x) quantile(x,probs 
 rank_squad_dim2 = round(t(apply(beta_squad_dim_2,1,function(x) quantile(x,probs = c(0.025,0.5,0.975)))),digits=0)
 rownames(rank_squad_dim1) = rownames(rank_squad_dim2) = pol[squad]
 save(file='rank_squad_dim1',rank_squad_dim1)
-save(file='rank_squad_dim2',rank_squad_dim2)
+# save(file='rank_squad_dim2',rank_squad_dim2)
 print(rank_squad_dim1)
+

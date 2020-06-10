@@ -35,7 +35,6 @@ waic_compute = function(n_pos,pos_pred,pos_pred2,pos_pred3,no_na){
   lpd = sum(log(pos_pred_master))
   va = sum((pos_pred3[no_na]/n_pos-(pos_pred2[no_na]/n_pos)^2))*n_pos/(n_pos-1)
   waic_spherical = lpd-va
-  print(waic_spherical)
 }
 update_tsig = function(upper,lower,t_sig,check,nnn){
   l_s = which(check<=lower)
