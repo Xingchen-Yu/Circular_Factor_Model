@@ -280,3 +280,6 @@ print(waic_spherical)
 
 ###save paramters for further analysis###
 # save.image(file=paste0('H',hn,"_workspace.Rdata"))
+save(file=paste0('H',hn,"_beta_master_sph.Rdata"),beta_master)
+
+

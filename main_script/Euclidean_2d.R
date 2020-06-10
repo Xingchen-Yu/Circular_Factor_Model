@@ -32,6 +32,9 @@ p_mat = diag((1:p)^2)
 
 out = ymat_spit(hn=hn)
 if(hn==116){
+  squad = c(195,216,210,270)
+  print(pol[squad])
+  beta_squad_dim_2 = beta_squad_dim_1 = matrix(0,length(squad),n_pos)
   print('Only session 1 (first 700 votes) of the 116 House data will be analyzed')
 }
 ymat = out[[1]]
@@ -149,6 +152,6 @@ print(waic_spherical)
 rank_squad_dim1 = round(t(apply(beta_squad_dim_1,1,function(x) quantile(x,probs = c(0.025,0.5,0.975)))),digits=0)
 rank_squad_dim2 = round(t(apply(beta_squad_dim_2,1,function(x) quantile(x,probs = c(0.025,0.5,0.975)))),digits=0)
 rownames(rank_squad_dim1) = rownames(rank_squad_dim2) = pol[squad]
-# save(file='rank_squad_dim1',rank_squad_dim1)
-# save(file='rank_squad_dim2',rank_squad_dim2)
+save(file='rank_squad_dim1',rank_squad_dim1)
+save(file='rank_squad_dim2',rank_squad_dim2)
 print(rank_squad_dim1)

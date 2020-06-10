@@ -138,3 +138,7 @@ for(i in 1:iter){
 ###compute waic with -1 scaling, recall that -2 corresponds to deviance scaling###
 waic_spherical = -waic_compute(n_pos,pos_pred,pos_pred2,pos_pred3,no_na)
 print(waic_spherical)
+
+save(file=paste0('H',hn,"_beta_master_eu.Rdata"),beta_master)
+
+
