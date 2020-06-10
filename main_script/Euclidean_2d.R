@@ -23,6 +23,7 @@ if(check_package ==F){
 
 ####################################
 seed = 2020
+set.seed(seed)
 ####################################  
 p = 2
 n_pos = iter - burnin 
@@ -119,8 +120,6 @@ for(i in 1:iter){
     y_hat[index_yes] = 1
     y_hat[-index_yes] = 0
     ymat[na] = y_hat[na]
-    kobe = dbinom(ymat,1,pnorm(mean_mat),log = T)
-    print(sum(kobe))
   }
   
   if(i>burnin){
