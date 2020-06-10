@@ -20,17 +20,11 @@ if(check_package ==F){
   install.packages(required_package,repos = "http://cran.us.r-project.org")
   lapply(required_package, require, character.only = TRUE)
 }
-
-####################################
+### set seed number
 seed = 2020
 set.seed(seed)
-####################################  
-p = 2
+###load and preprocess data
 n_pos = iter - burnin 
-likeli_chain = rep(0,n_pos)
-####################################
-p_mat = diag((1:p)^2)
-
 out = ymat_spit(hn=hn)
 ymat = out[[1]]
 pol = out[[2]]
@@ -41,6 +35,10 @@ if(hn==116){
   beta_squad_dim_2 = beta_squad_dim_1 = matrix(0,length(squad),n_pos)
   print('Only session 1 (first 700 votes) of the 116 House data will be analyzed')
 }
+###Set hyperparameter and initialize variables
+p = 2
+likeli_chain = rep(0,n_pos)
+p_mat = diag((1:p)^2)
 
 nr = nrow(ymat)
 nc = ncol(ymat)
@@ -80,9 +78,11 @@ sample_rmvn = function(kobe){
 }
 y_hat = matrix(0,nr,nc)
 jj = 1
+
+### run starts
 for(i in 1:iter){
   
-  ###latent###
+  ### sample latent Z
   z_yes = rtruncnorm(1,a=0,b=Inf,mean=yes_mean,sd=1)
   z_no = rtruncnorm(1,a=-Inf,b=0,no_mean,sd=1)
   z_na = rnorm(na_l,na_mean,sd=1)
@@ -90,7 +90,7 @@ for(i in 1:iter){
   zmat[no] = z_no
   zmat[na] = z_na
   
-  ###alpha and mu###
+  ### sample \alpha and \mu
   alpha_beta = cbind(1,beta)
   po_sig_mual = chol2inv(chol((crossprod(alpha_beta)+sig_mu_alpha_inv)))
   
@@ -102,7 +102,7 @@ for(i in 1:iter){
   
   mu = mu_alpha_mat[,1]
   alpha = mu_alpha_mat[,-1]
-  ###beta###
+  ###sample \beta
   tt = t(zmat)-mu
   var_beta = chol2inv(chol((crossprod(alpha)+p_mat)))
   po_mean_beta = var_beta%*%crossprod(alpha,tt)
@@ -112,7 +112,7 @@ for(i in 1:iter){
   yes_mean = mean_mat[yes]
   no_mean = mean_mat[no]
   na_mean = mean_mat[na]
-  ###impute missing value####
+  ### impute missing value
   if(i %in% seq(1,iter,50)){
     cat("\rProgress: ",i,"/",iter)
     y_p = pnorm(mean_mat)
@@ -122,6 +122,7 @@ for(i in 1:iter){
     ymat[na] = y_hat[na]
   }
   
+  ### record paratmer after burnin and compute waic using running sums
   if(i>burnin){
     if(hn==116){
       if(mean(beta[squad[1:4],1])>0){
@@ -147,8 +148,8 @@ for(i in 1:iter){
   
 }
 ###compute waic with -1 scaling, recall that -2 corresponds to deviance scaling###
-waic_spherical = -waic_compute(n_pos,pos_pred,pos_pred2,pos_pred3,no_na)
-print(waic_spherical)
+waic = -waic_compute(n_pos,pos_pred,pos_pred2,pos_pred3,no_na)
+print(waic)
 
 rank_squad_dim1 = round(t(apply(beta_squad_dim_1,1,function(x) quantile(x,probs = c(0.025,0.5,0.975)))),digits=0)
 rank_squad_dim2 = round(t(apply(beta_squad_dim_2,1,function(x) quantile(x,probs = c(0.025,0.5,0.975)))),digits=0)

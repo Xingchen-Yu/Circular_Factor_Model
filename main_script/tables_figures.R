@@ -9,7 +9,7 @@ pol_lower = function(x){
   to_lower = sapply(1:length(x),function(i) substring(x[i],2,p_loc[i]-1))
   sapply(1:length(x), function(i) gsub(to_lower[i],tolower(to_lower[i]),x[i]))
 }
-######convert to paper format table#####
+######convert to paper format table
 to_table = function(x){
   temp = cbind(paste0(x[,2]," (",x[,1],",",x[,3],")"))
   rownames(temp) = rownames(x)
@@ -25,16 +25,17 @@ Rep_gang = c(grep('\\Amash',pol),
              grep('\\Massie',pol),
              grep('\\Gaetz',pol))
 
-col_stream = rep('red',nr)
-col_stream[dem] = 'blue'
-col_stream[ind] = 'green'
-####load the posterior samples of ideal points in the euclidean model for House 116####
+
+col_stream = rep('red',length(pol))
+col_stream[grep('\\(D',pol)] = 'blue'
+col_stream[grep('\\(I',pol)] = 'green'
+#### load the posterior samples of ideal points in the euclidean model for House 116
 load(file='H116_beta_master_eu.Rdata',verbose=T)
 rank_master_eu = apply(beta_master,2,rank)
 rank_all_eu = round(t(apply(rank_master_eu,1,function(x) quantile(x,probs = c(0.025,0.5,0.975)))),digits=0)
 rownames(rank_all_eu) = pol
 rm(beta_master)
-####load the posterior samples of ideal points in the spherical model for House 116####
+####load the posterior samples of ideal points in the spherical model for House 116
 load(file='H116_beta_master_sph.Rdata',verbose=T)
 rank_master = apply(beta_master,2,rank)
 rank_all = round(t(apply(rank_master,1,function(x) quantile(x,probs = c(0.025,0.5,0.975)))),digits=0)
@@ -44,8 +45,9 @@ rm(beta_master)
 
 
 #######Table 1###################################
-table1 = cbind(to_table(rank_all_eu[squad,]),to_table(rank_squad_dim1))
-table1
+table_1 = cbind(to_table(rank_all_eu[squad,]),to_table(rank_squad_dim1))
+colnames(table_1) = c("Euclidean (1D)","Euclidean (2D)")
+table_1
 #######Table 2###################################
 table_2 = to_table(rank_all[squad,])
 colnames(table_2) = 'Rank Order (Circular)'
@@ -67,9 +69,10 @@ rm(list=setdiff(ls(), c("pol_lower","to_table")))
 
 #################Figures related to House 112###############################################
 load(file=paste0('H112_pol.Rdata'),verbose=T)
-col_stream = rep('red',nr)
-col_stream[dem] = 'blue'
-col_stream[ind] = 'green'
+pol = pol_lower(pol)
+col_stream = rep('red',length(pol))
+col_stream[grep('\\(D',pol)] = 'blue'
+col_stream[grep('\\(I',pol)] = 'green'
 ####load the posterior samples of ideal points in the euclidean model for 112 House####
 load(file='H112_beta_master_eu.Rdata',verbose=T)
 rank_master_h112_eu = apply(beta_master,2,rank)
@@ -87,18 +90,18 @@ rm(beta_master)
 howmany = 16
 
 median_diff = abs(rank_all_h112[,2] - rank_all_h112_eu[,2])
-top20 = which(rank(median_diff, ties.method='first')%in% c((nr-howmany+1):nr))
+top20 = which(rank(median_diff, ties.method='first')%in% c((length(pol)-howmany+1):length(pol)))
 print(rev(tail(sort(median_diff),howmany)))
-median_diff[top20]
-pol[top20]
-
+# median_diff[top20]
+# pol[top20]
 sph_top20 = rank_all_h112[top20,]
 eu_top20 = rank_all_h112_eu[top20,]
 
 l_to_s = order(-median_diff[top20])
+
 sph_top20 = sph_top20[l_to_s,]
 eu_top20 = eu_top20[l_to_s,]
-###Remove Democrat legislator Kucinich since we are interested only in Republicans####
+###Remove Democrat legislator Kucinich since we are only interested in Republicans####
 sph_top20 = sph_top20[-12,]
 eu_top20 = eu_top20[-12,]
 
@@ -121,7 +124,7 @@ mtext(side=1, line=1, at=seq(1,15), text=rownames(sph_top20), font=fontxaxis,las
 #######Figure 5###################################
 x11(height=15,width=15)
 par(mar = c(10, 10, 4, 4))
-plot(rank_all_h112_eu[,2],rank_all_h112[,2],xlim=c(-5,nr+20),ylim=c(-5,nr+20),col=col_stream,
+plot(rank_all_h112_eu[,2],rank_all_h112[,2],xlim=c(-5,length(pol)+20),ylim=c(-5,length(pol)+20),col=col_stream,
      xlab='Euclidean Latent Space',ylab='Circular Latent Space',cex.axis=2,cex.lab=2,main='',cex.main=2,mgp=c(6,2,0),lwd=2)
 abline(1:500,1:500,col='gray',lwd=2)
 identify(rank_all_h112_eu[,2],rank_all_h112[,2],label = pol, cex = 1.5)
