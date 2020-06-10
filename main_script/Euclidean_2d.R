@@ -31,15 +31,15 @@ likeli_chain = rep(0,n_pos)
 p_mat = diag((1:p)^2)
 
 out = ymat_spit(hn=hn)
+ymat = out[[1]]
+pol = out[[2]]
+rm(out)
 if(hn==116){
   squad = c(195,216,210,270)
   print(pol[squad])
   beta_squad_dim_2 = beta_squad_dim_1 = matrix(0,length(squad),n_pos)
   print('Only session 1 (first 700 votes) of the 116 House data will be analyzed')
 }
-ymat = out[[1]]
-pol = out[[2]]
-rm(out)
 
 nr = nrow(ymat)
 nc = ncol(ymat)
