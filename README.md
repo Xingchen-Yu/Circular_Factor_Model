@@ -1,4 +1,5 @@
 # Circular Factor Model
+[![DOI](https://zenodo.org/badge/271097395.svg)](https://zenodo.org/badge/latestdoi/271097395)
 ## Data
 
 Roll call data for the U.S. House of Representatives (100th  to 116th) is obtained from voteview.com.  Each data is binary and contains some missing values. 
