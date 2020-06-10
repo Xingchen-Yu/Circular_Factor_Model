@@ -34,7 +34,7 @@ Platform: x86_64-redhat-linux-gnu (64-bit)
 Running under: CentOS Linux 7 (Core)
 
 ### Libraries and dependencies
-wnominate_1.2.5, pscl_1.5.5, truncnorm_1.0-8 mvnfast_0.2.5
+wnominate_1.2.5, pscl_1.5.5, truncnorm_1.0-8, mvnfast_0.2.5
 RcppArmadillo_0.9.300.2.0, rlecuyer_0.3-5, snowfall_1.84-6.1, 
 snow_0.4-3,   Rcpp_1.0.1 (or later)  
 
