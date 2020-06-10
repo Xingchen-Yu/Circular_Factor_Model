@@ -18,6 +18,7 @@ required_package = c('mvnfast','truncnorm','wnominate','pscl')
 check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==4
 if(check_package ==F){
   install.packages(required_package,repos = "http://cran.us.r-project.org")
+  lapply(required_package, require, character.only = TRUE)
 }
 
 if(hn == 116){
@@ -81,7 +82,7 @@ for(i in 1:iter){
   if(i %in% seq(1,iter,100)){
     cat("\rProgress: ",i,"/",iter)
   }
-  ###latent ###
+  ###sample latent ###
   z_yes = rtruncnorm(1,a=0,b=Inf,mean=yes_mean,sd=1)
   z_no = rtruncnorm(1,a=-Inf,b=0,no_mean,sd=1)
   z_na = rnorm(na_l,na_mean,sd=1)
@@ -90,7 +91,7 @@ for(i in 1:iter){
   zmat[na] = z_na
   # na_master[i,] = ifelse(z_na>0,1,0)
   
-  ###alpha and mu###
+  ###sample alpha and mu###
   alpha_beta = cbind(1,beta)
   po_sig_mual = chol2inv(chol((crossprod(alpha_beta)+sig_mu_alpha_inv)))
   for(j in 1:nc){
@@ -102,7 +103,7 @@ for(i in 1:iter){
   #mu_master[i,] = mu
   alpha = mu_alpha_mat[,2]
   #alpha_master[i,] = alpha
-  ###beta###
+  ###sample beta###
   tt = t(zmat)-mu
   var_beta = c(chol2inv(chol((crossprod(alpha)+1))))
   po_mean_beta = var_beta%*%crossprod(alpha,tt)
@@ -113,6 +114,7 @@ for(i in 1:iter){
   yes_mean = mean_mat[yes]
   no_mean = mean_mat[no]
   na_mean = mean_mat[na]
+  ###impute missing value####
   if(i %in% seq(1,iter,25)){
     y_p = pnorm(mean_mat)
     index_yes = which(y_p>0.5)
