@@ -32,23 +32,23 @@ read_kh2.R and ymat_spit.R contains data preprocessing and two miscellaneous fun
 ## Reproducibility workflow
 Under the root directory, first run each the following commands,
 
-### Implement the circular factor model on 112 House data, with 100000 iterations, 80000 burn-in and 12 cores (2-3 days)
+### Run circular factor model for the 112 House data, with 100000 iterations, 80000 burn-in and 12 cores (2-3 days)
 
 Rscript ./main_script/Circular_Factor_Model.R 100000 80000 12 112 &
 
-### Implement the circular factor model on 116 House data, with 100000 iterations, 80000 burn-in and 12 cores (1-2 days)
+### Run circular factor model for the 116 House data, with 100000 iterations, 80000 burn-in and 12 cores (1-2 days)
 
 Rscript ./main_script/Circular_Factor_Model.R 100000 80000 12 116 &
 
-### Implement the 1d Euclidean latent factor model on 112 House data with 30000 iterations and 10000 burnin
+### Run 1d Euclidean latent factor model for the 112 House data with 30000 iterations and 10000 burnin
 
 Rscript ./main_script/Euclidean_1d.R 30000 10000 112 &
 
-### Implement the 1d Euclidean latent factor model on 116 House with 30000 iterations and 10000 burnin
+### Run 1d Euclidean latent factor model for the 116 House data with 30000 iterations and 10000 burnin
 
 Rscript ./main_script/Euclidean_1d.R 30000 10000 116 &
 
-### Implement the 2d Euclidean latent factor model on 116 House with 40000 iterations and 20000 burnin
+### Run 2d Euclidean latent factor model for the 116 House data with 40000 iterations and 20000 burnin
 
 Rscript ./main_script/Euclidean_2d.R 40000 20000 116 &
 
