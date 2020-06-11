@@ -13,6 +13,18 @@ one could excute the following command.
 
 Rscript ./main_script/Circular_Factor_Model.R 100000 80000 12 112 &
 
+The “main_script” folder contains the following scripts,
+
+Circular_Factor_Model.R implements the proposed model in the paper. (Parallel computing required)
+Euclidean_1d. R implements the 1d Eulicdean latent factor model in the paper. (Single thread)
+Euclidean_2d. R implements the 2d Eulicdean latent factor model in the paper. (Single thread)
+tables_figures.R reproduces the major results in the paper once the corresponding runs are finished
+
+The “source” folder contains the following scripts,
+
+circular_factor_model_functions. R includes cpp functions for the proposed model.
+read_kh2.R and ymat_spit.R contains data preprocessing and two miscellaneous functions
+
 ## Reproducibility workflow
 Under the root directory, first run each the following commands,
 
