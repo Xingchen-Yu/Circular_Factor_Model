@@ -31,7 +31,9 @@ There will be a total of 7 Rdata files stored in the same directory. Tables 1, 2
 ## System and pacakge requirements
 ### Versions of softwares
 R version 3.6.0 (2019-04-26)
+
 Platform: x86_64-redhat-linux-gnu (64-bit)
+
 Running under: CentOS Linux 7 (Core)
 
 ### Libraries and dependencies
