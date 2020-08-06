@@ -10,6 +10,11 @@ if(la==0){
 }else{
   stop('Argument length not correct, please input 4 arguments')
 }
+
+# iter = 21000
+# burnin = 1000
+# core = 8
+# hn = 116
 #### checking and installing required packages###
 required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl')
 check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==6
@@ -24,6 +29,7 @@ source(file="./source/circular_factor_model_functions.R")
 #### setting both cluster seed and local seed for reproducibility 
 
 WAIC_group = T ###grouped waic calculation
+continue = T ###
 if(hn==116){
   cluster_seed = 888
   seed = 8888
@@ -36,6 +42,10 @@ if(hn==116){
   cluster_seed = 1234
   seed = 4321
   b_range = c(0.01,0.04)
+}
+if(continue==T){
+  cluster_seed = cluster_seed + as.numeric(continue)
+  seed = seed + as.numeric(continue)
 }
 ###Set up parallel environment 
 sourceCpp(code = RcppCode)
@@ -73,18 +83,28 @@ dem = grep("\\(D",pol)
 gop = grep("\\(R",pol)
 ind = grep("\\(I",pol)
 
-t_sig = rep(0.5,nc)
-omega = a/b
-ccc = ccc_a/ccc_b
-
-kappa = rep(0.1,nc)
-omega_ini = 0
-
-beta = rep(0,nr)
-beta[dem] = runif(length(dem),-pi/2,0)
-beta[gop] = runif(length(gop),0,pi/2)
-tau_no = runif(nc,-pi,pi)
-tau_yes = runif(nc,-pi,pi)
+if(continue==F){
+  t_sig = rep(0.5,nc)
+  omega = a/b
+  ccc = ccc_a/ccc_b
+  
+  kappa = rep(0.1,nc)
+  omega_ini = 0
+  
+  beta = rep(0,nr)
+  beta[dem] = runif(length(dem),-pi/2,0)
+  beta[gop] = runif(length(gop),0,pi/2)
+  tau_no = runif(nc,-pi,pi)
+  tau_yes = runif(nc,-pi,pi)
+}else{
+  load(file=paste0(h_s,hn,"_beta_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_tau_no_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_kappa_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_ccc_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_omega_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_tsig_start.Rdata"),verbose = T)
+}
 
 leap = sample(l_range[1]:l_range[2],nr,replace=T)
 leap_tau = sample(l_range[1]:l_range[2],nc,replace=T)
@@ -173,7 +193,7 @@ for(i in 1:iter){
     delta2_no = delta_no/2
     #######################################
     ### tuning the proposal variance of the scale parameter \kappa during the initial 2000 iterations
-    if(i<2000){
+    if(i<burnin){
       ks = kappa_accept_rs/skip
       kappa_skip = min(ks)
       ### targeting acceptance ratio between 0.3 and 0.6#####
@@ -263,7 +283,6 @@ for(i in 1:iter){
   if(i>burnin){
     beta_master[,j] = beta
     omega_master[j] = omega
-    # kappa_master[,j] = kappa
     
     if(WAIC_group==T){
       # temp[na+1] = 0 needs to include NA for WAIC computation
