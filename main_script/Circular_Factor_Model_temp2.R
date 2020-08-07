@@ -1,20 +1,22 @@
-args = commandArgs(trailingOnly = T)
-la = length(args)
-if(la==0){
-  stop('No argument provided, please input 4 arguments')
-}else if(la==4){
-  iter = as.numeric(args[1]) ### total iterations to run
-  burnin = as.numeric(args[2]) ### burnin period of mcmc
-  core = as.numeric(args[3]) ### number of cores
-  hn = as.numeric(args[4]) ### the number of house data to be analyzed 
-}else{
-  stop('Argument length not correct, please input 4 arguments')
-}
+# args = commandArgs(trailingOnly = T)
+# la = length(args)
+# if(la==0){
+#   stop('No argument provided, please input 4 arguments')
+# }else if(la==4){
+#   iter = as.numeric(args[1]) ### total iterations to run
+#   burnin = as.numeric(args[2]) ### burnin period of mcmc
+#   core = as.numeric(args[3]) ### number of cores
+#   hn = as.numeric(args[4]) ### the number of house data to be analyzed 
+# }else{
+#   stop('Argument length not correct, please input 4 arguments')
+# }
 
-# iter = 21000
-# burnin = 1000
-# core = 8
-# hn = 116
+iter = 21000
+burnin = 1000
+core = 10
+hn = 112
+house = T
+h_s = 'H'
 #### checking and installing required packages###
 required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl')
 check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==6
@@ -97,13 +99,13 @@ if(continue==F){
   tau_no = runif(nc,-pi,pi)
   tau_yes = runif(nc,-pi,pi)
 }else{
-  load(file=paste0(h_s,hn,"_beta_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_tau_no_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_kappa_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_ccc_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_omega_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_tsig_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_beta_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_tau_no_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_kappa_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_ccc_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_omega_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_tsig_start.Rdata"),verbose = T)
 }
 
 leap = sample(l_range[1]:l_range[2],nr,replace=T)
