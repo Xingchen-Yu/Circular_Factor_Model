@@ -18,8 +18,8 @@ hn = 112
 house = T
 h_s = 'H'
 #### checking and installing required packages###
-required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl')
-check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==6
+required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl','matrixStats')
+check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==7
 if(check_package ==F){
   install.packages(required_package,repos = "http://cran.us.r-project.org")
   lapply(required_package, require, character.only = TRUE)
