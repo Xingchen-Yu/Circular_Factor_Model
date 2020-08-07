@@ -299,6 +299,14 @@ for(i in 1:iter){
     j = j + 1
   }
 }
+waic_compute_new3 = function(nnn,pos_pred2){
+  lpd = sum(apply(pos_pred2,1,function(x) logSumExp(x) - log(nnn)))
+  penalty = 2 * (lpd - sum(apply(pos_pred2,1,mean)))
+  penalty_va = sum(apply(pos_pred2,1,var))
+  return(c(lpd,penalty, penalty_va))
+}
+waic_group = waic_compute_new3(n_pos,pos_pred_group)
+rm(pos_pred_group)
 ### compute waic with -1 scaling, recall that -2 corresponds to deviance scaling
 # waic_spherical = -waic_compute(n_pos,pos_pred,pos_pred2,pos_pred3,no_na)
 # print(waic_spherical)
