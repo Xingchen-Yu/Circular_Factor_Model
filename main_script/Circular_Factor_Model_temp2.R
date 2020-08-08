@@ -14,9 +14,9 @@
 iter = 21000
 burnin = 1000
 core = 10
-hn = 112
-house = T
-h_s = 'H'
+hn = 115
+house = F
+h_s = 'S'
 #### checking and installing required packages###
 required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl','matrixStats')
 check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==7
@@ -99,13 +99,21 @@ if(continue==F){
   tau_no = runif(nc,-pi,pi)
   tau_yes = runif(nc,-pi,pi)
 }else{
-  load(file=paste0('./continue/',h_s,hn,"_beta_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_tau_no_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_kappa_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_ccc_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_omega_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_tsig_start.Rdata"),verbose = T)
+  # load(file=paste0('./continue/',h_s,hn,"_beta_start.Rdata"),verbose = T)
+  # load(file=paste0('./continue/',h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
+  # load(file=paste0('./continue/',h_s,hn,"_tau_no_start.Rdata"),verbose = T)
+  # load(file=paste0('./continue/',h_s,hn,"_kappa_start.Rdata"),verbose = T)
+  # load(file=paste0('./continue/',h_s,hn,"_ccc_start.Rdata"),verbose = T)
+  # load(file=paste0('./continue/',h_s,hn,"_omega_start.Rdata"),verbose = T)
+  # load(file=paste0('./continue/',h_s,hn,"_tsig_start.Rdata"),verbose = T)
+  
+  load(file=paste0(h_s,hn,"_beta_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_tau_no_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_kappa_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_ccc_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_omega_start.Rdata"),verbose = T)
+  load(file=paste0(h_s,hn,"_tsig_start.Rdata"),verbose = T)
 }
 
 leap = sample(l_range[1]:l_range[2],nr,replace=T)
