@@ -14,7 +14,7 @@
 iter = 21000
 burnin = 1000
 core = 10
-hn = 101
+hn = 108
 house = T
 h_s = 'H'
 #### checking and installing required packages###
