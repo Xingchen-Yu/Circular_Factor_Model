@@ -11,9 +11,9 @@
 #   stop('Argument length not correct, please input 4 arguments')
 # }
 
-iter = 21000
+iter = 41000
 burnin = 1000
-core = 10
+core = 16
 hn = 108
 house = T
 h_s = 'H'
