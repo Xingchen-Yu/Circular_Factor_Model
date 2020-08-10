@@ -14,9 +14,9 @@
 iter = 21000
 burnin = 1000
 core = 10
-hn = 115
-house = F
-h_s = 'S'
+hn = 101
+house = T
+h_s = 'H'
 #### checking and installing required packages###
 required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl','matrixStats')
 check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==7
@@ -41,9 +41,9 @@ if(hn==116){
   seed = 2080
   b_range = c(0.005,0.04)
 }else{
-  cluster_seed = 1234
-  seed = 4321
-  b_range = c(0.01,0.04)
+  cluster_seed = 12345
+  seed = 43215
+  b_range = c(0.005,0.04)
 }
 if(continue==T){
   cluster_seed = cluster_seed + as.numeric(continue)
@@ -99,21 +99,21 @@ if(continue==F){
   tau_no = runif(nc,-pi,pi)
   tau_yes = runif(nc,-pi,pi)
 }else{
-  # load(file=paste0('./continue/',h_s,hn,"_beta_start.Rdata"),verbose = T)
-  # load(file=paste0('./continue/',h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
-  # load(file=paste0('./continue/',h_s,hn,"_tau_no_start.Rdata"),verbose = T)
-  # load(file=paste0('./continue/',h_s,hn,"_kappa_start.Rdata"),verbose = T)
-  # load(file=paste0('./continue/',h_s,hn,"_ccc_start.Rdata"),verbose = T)
-  # load(file=paste0('./continue/',h_s,hn,"_omega_start.Rdata"),verbose = T)
-  # load(file=paste0('./continue/',h_s,hn,"_tsig_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_beta_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_tau_no_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_kappa_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_ccc_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_omega_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_tsig_start.Rdata"),verbose = T)
   
-  load(file=paste0(h_s,hn,"_beta_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_tau_no_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_kappa_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_ccc_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_omega_start.Rdata"),verbose = T)
-  load(file=paste0(h_s,hn,"_tsig_start.Rdata"),verbose = T)
+  # load(file=paste0(h_s,hn,"_beta_start.Rdata"),verbose = T)
+  # load(file=paste0(h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
+  # load(file=paste0(h_s,hn,"_tau_no_start.Rdata"),verbose = T)
+  # load(file=paste0(h_s,hn,"_kappa_start.Rdata"),verbose = T)
+  # load(file=paste0(h_s,hn,"_ccc_start.Rdata"),verbose = T)
+  # load(file=paste0(h_s,hn,"_omega_start.Rdata"),verbose = T)
+  # load(file=paste0(h_s,hn,"_tsig_start.Rdata"),verbose = T)
 }
 
 leap = sample(l_range[1]:l_range[2],nr,replace=T)
