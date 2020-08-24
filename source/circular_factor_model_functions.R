@@ -582,6 +582,7 @@ List waic_cpp(int t, arma::vec nc_par,int nr,arma::vec beta, arma::vec tau_yes, 
   }
     return List::create(amat,amat_exp,amat_2);
 }
+
 // [[Rcpp::export]]
 arma::mat predict(int t, arma::vec nc_par,int nr,arma::vec beta, arma::vec tau_yes, arma::vec tau_no, arma::vec kappa,arma::mat ymat){
   int start = nc_par(t);
