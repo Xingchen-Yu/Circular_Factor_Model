@@ -11,10 +11,10 @@
 #   stop('Argument length not correct, please input 4 arguments')
 # }
 
-iter = 41000
-burnin = 1000
-core = 16
-hn = 108
+iter = 200
+burnin = 100
+core = 10
+hn = 112
 house = T
 h_s = 'H'
 #### checking and installing required packages###
@@ -37,8 +37,8 @@ if(hn==116){
   seed = 8888
   b_range = c(0.01,0.04) 
 }else if(hn==112){
-  cluster_seed = 1990
-  seed = 2080
+  cluster_seed = 1990 + 1
+  seed = 2080 + 1
   b_range = c(0.005,0.04)
 }else{
   cluster_seed = 12345
@@ -149,6 +149,7 @@ if(n_pos>0){
   no_na = which(is.na(ymat)==F)
   kappa_master = matrix(0,nc,n_pos)
   beta_master = matrix(0,nr,n_pos)
+  yes_master = no_master = matrix(0,nc,n_pos)
   omega_master = ccc_master = rep(0,n_pos)
 }
 posterior_chain = likeli_chain = rep(0,iter)
@@ -291,8 +292,14 @@ for(i in 1:iter){
   }
   ### record paratmer after burnin and compute waic using running sums
   if(i>burnin){
+    
     beta_master[,j] = beta
+    kappa_master[,j] = kappa
+    yes_master[,j] = tau_yes
+    no_master[,j] = tau_no
+    
     omega_master[j] = omega
+    ccc_master[j] = ccc
     
     if(WAIC_group==T){
       # temp[na+1] = 0 needs to include NA for WAIC computation
