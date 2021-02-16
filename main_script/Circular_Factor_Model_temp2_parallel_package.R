@@ -11,14 +11,14 @@
 #   stop('Argument length not correct, please input 4 arguments')
 # }
 
-iter = 1e5
-burnin = 8e4
+iter = 101
+burnin = 50
 core = 10
 hn = 116
-house = T
+house = F
 h_s = 'H'
 #### checking and installing required packages###
-required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl','matrixStats')
+required_package = c('Rcpp','parallel','wnominate','rlecuyer','RcppArmadillo','pscl','matrixStats')
 check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==7
 if(check_package ==F){
   install.packages(required_package,repos = "http://cran.us.r-project.org")
@@ -30,7 +30,7 @@ source(file="./source/ymat_spit.R")
 source(file="./source/circular_factor_model_functions.R")
 #### setting both cluster seed and local seed for reproducibility
 
-WAIC_group = T ###grouped waic calculation
+WAIC_group = F ###grouped waic calculation
 continue = F ###
 if(hn==116){
   cluster_seed = 888
@@ -51,17 +51,18 @@ if(continue==T){
 }
 ###Set up parallel environment
 sourceCpp(code = RcppCode)
-sfInit(parallel=TRUE,cpus=core)
-sfClusterSetupRNG( type="RNGstream",seed=cluster_seed)
-sfLibrary("Rcpp", character.only=TRUE)
-sfLibrary("RcppArmadillo", character.only=TRUE)
-###load and preprocess data
-out = ymat_spit(hn=hn,house)
-# if(hn==116){
-#   print('Only session 1 (first 700 votes) of the 116 House data will be analyzed')
-# }
+cl = makeCluster(core)
+clusterSetRNGStream(cl,cluster_seed)
+clusterEvalQ(cl, {
+  library(Rcpp)
+  library(RcppArmadillo)
+})
+###啥load and preprocess data
+out = ymat_spit(hn=hn)
+if(hn==116){
+  print('Only session 1 (first 700 votes) of the 116 House data will be analyzed')
+}
 ymat = out[[1]]
-print(dim(ymat))
 pol = out[[2]]
 rm(out)
 ###Set hyperparameter and initialize variables
@@ -133,8 +134,7 @@ c_alpha = kappa_a*nc+ccc_a
 ######parallel miscellaneous############################
 nr_par = round(seq(0,nr,length.out = core+1))
 nc_par = round(seq(0,nc,length.out = core+1))
-sfExportAll(except=c("dem","gop",'ind','omega_ini'))
-
+clusterExport(cl,ls())
 na = which(is.na(ymat==T)) - 1
 len_na = length(na)
 na.position = which(is.na(ymat)==T, arr.ind = T)
@@ -182,7 +182,8 @@ wrapper_predict_mean = function(t){
   predict(t,nc_par,nr,beta_mean,yes_mean,no_mean,kappa_mean,ymat)
 }
 
-sfClusterEval(sourceCpp(code = RcppCode))
+clusterEvalQ(cl,sourceCpp(code = RcppCode))
+
 core_1 = core - 1
 node = 0:core_1
 j = 1
@@ -191,133 +192,133 @@ beta_accept_rs_all = rep(0,nr)
 kappa_accept_rs = rep(0,nc)
 kappa_accept_rs_all = no_accept_rs_all = yes_accept_rs_all = rep(0,nc)
 ### Run starts
-# system.time({
-for(i in 1:iter){
+system.time({
+  for(i in 1:iter){
 
-  if(i %in% seq(start_jitter,iter,skip)){
-    #### step size and leap steps jittering
-    leap = sample(l_range[1]:l_range[2],nr,replace=T)
-    leap_tau = sample(l_range[1]:l_range[2],nc,replace=T)
+    if(i %in% seq(start_jitter,iter,skip)){
+      #### step size and leap steps jittering
+      leap = sample(l_range[1]:l_range[2],nr,replace=T)
+      leap_tau = sample(l_range[1]:l_range[2],nc,replace=T)
 
-    delta = runif(nr,b_range[1],b_range[2])
-    delta_yes = delta_no = runif(nc,yn_range[1],yn_range[2])
-    delta2 = delta/2
-    delta2_yes = delta_yes/2
-    delta2_no = delta_no/2
-    #######################################
-    ### tuning the proposal variance of the scale parameter \kappa during the initial 2000 iterations
-    if(i<burnin){
-      ks = kappa_accept_rs/skip
-      kappa_skip = min(ks)
-      ### targeting acceptance ratio between 0.3 and 0.6#####
-      out = update_tsig(0.6,0.3,t_sig,ks,nc)
-      t_sig = out[[1]]
-      kappa_mod = out[[2]]
+      delta = runif(nr,b_range[1],b_range[2])
+      delta_yes = delta_no = runif(nc,yn_range[1],yn_range[2])
+      delta2 = delta/2
+      delta2_yes = delta_yes/2
+      delta2_no = delta_no/2
+      #######################################
+      ### tuning the proposal variance of the scale parameter \kappa during the initial 2000 iterations
+      if(i<burnin){
+        ks = kappa_accept_rs/skip
+        kappa_skip = min(ks)
+        ### targeting acceptance ratio between 0.3 and 0.6#####
+        out = update_tsig(0.6,0.3,t_sig,ks,nc)
+        t_sig = out[[1]]
+        kappa_mod = out[[2]]
 
-      kappa_accept_rs = rep(0,nc)
-      print(paste0('percent kappa changed ',kappa_mod))
-      print(paste0('min kappa acceptance ',kappa_skip))
+        kappa_accept_rs = rep(0,nc)
+        print(paste0('percent kappa changed ',kappa_mod))
+        print(paste0('min kappa acceptance ',kappa_skip))
+      }
+
+
+      clusterExport(cl,c("delta",'delta2','delta_yes','delta2_yes','delta_no','delta2_no','t_sig','leap','leap_tau'))
     }
 
-
-    sfExport("delta",'delta2','delta_yes','delta2_yes','delta_no','delta2_no','t_sig','leap','leap_tau')
-  }
-
-  ### impute the missing values
-  if(i %in% seq(1,iter,20)){
-    ymat = impute_NA(na, i_index, j_index, ymat, tau_yes, tau_no, beta, kappa, len_na)
-    sfExport('ymat')
-  }
-  ################################################################################
-  ### Update scale parameter \kappa
-  out = sfLapply(node,wrapper_kappa)
-  kappa = unlist(lapply(out,"[[",1))
-  sfExport("kappa")
-  ###update hyperprior parameter for \kappa
-  ccc = rgamma(1,c_alpha,ccc_b+sum(kappa))
-  sfExport("ccc")
-
-  kappa_ratio = sum(sapply(out,"[[",2))/nc
-  haha = unlist(lapply(out,"[[",3))
-  kappa_accept_rs = kappa_accept_rs  + haha
-  kappa_accept_rs_all = kappa_accept_rs_all  + haha
-  ################################################################################
-  ### update ideal points \beta_i's
-  out = sfLapply(node,wrapper_beta)
-  beta = unlist(lapply(out,"[[",1))
-  beta_ratio = sum(sapply(out,"[[",2))/nr
-
-  haha = unlist(lapply(out,"[[",3))
-  beta_accept_rs_all = beta_accept_rs_all  + haha
-  sfExport("beta")
-  ################################################################################
-  ### update \psi_j's
-  out = sfLapply(node,wrapper_yes)
-  tau_yes = unlist(lapply(out,"[[",1))
-  yes_ratio = sum(sapply(out,"[[",2))/nc
-
-  haha = unlist(lapply(out,"[[",3))
-  yes_accept_rs_all = yes_accept_rs_all  + haha
-  sfExport("tau_yes")
-  ################################################################################
-  ### update \zeta_j's
-  out = sfLapply(node,wrapper_no)
-  tau_no = unlist(lapply(out,"[[",1))
-  no_ratio = sum(sapply(out,"[[",2))/nc
-
-  haha = unlist(lapply(out,"[[",3))
-  no_accept_rs_all = no_accept_rs_all  + haha
-  sfExport("tau_no")
-  ################################################################################
-  ### update hyperparameter \omega for \beta_i's
-  out = update_omega(omega,beta,nr,a,b,omega_sd)
-  omega = out[[1]]
-  omega_ratio = omega_ratio + out[[2]]
-  cbeta_prior = lol * omega
-  sfExport('omega',"cbeta_prior")
-
-  ### compute joint loglikelihood
-  waic_out = sfLapply(node,wrapper_waic)
-  temp = do.call("cbind",lapply(waic_out,"[[",1))
-  sum_temp = sum(temp[no_na]) ###exclude NA for DIC calculation
-  likeli_chain[i] = sum_temp
-
-  ## output average acceptance ratio and joint loglikelihood every 50 iterations
-  if(i %in% seq(1,iter,100)){
-    cat("\rProgress: ",i,"/",iter)
-    print(paste('beta ar is',round(beta_ratio,digits = 2)))
-    print(paste('yes ar is',round(yes_ratio,digits = 2)))
-    print(paste('no ar is',round(no_ratio,digits = 2)))
-    print(paste('kappa ar is',round(kappa_ratio,digits = 2)))
-    print(paste('omega ar is',round(omega_ratio/i,digits = 2)))
-    print(paste('loglikelihood is ',round(sum_temp,digits = 0)))
-  }
-  ### record paratmer after burnin and compute waic using running sums
-  if(i>burnin){
-
-    beta_master[,j] = beta
-    kappa_master[,j] = kappa
-    yes_master[,j] = tau_yes
-    no_master[,j] = tau_no
-
-    omega_master[j] = omega
-    ccc_master[j] = ccc
-
-    if(WAIC_group==T){
-      # temp[na+1] = 0 needs to include NA for WAIC computation
-      temp2 = apply(temp,1,sum)
-      pos_pred_group[,j] = temp2
+    ### impute the missing values
+    if(i %in% seq(1,iter,20)){
+      ymat = impute_NA(na, i_index, j_index, ymat, tau_yes, tau_no, beta, kappa, len_na)
+      clusterExport(cl,c('ymat'))
     }
+    ################################################################################
+    ### Update scale parameter \kappa
+    out = parLapply(cl,node,wrapper_kappa)
+    kappa = unlist(lapply(out,"[[",1))
+    clusterExport(cl,c("kappa"))
+    ###update hyperprior parameter for \kappa
+    ccc = rgamma(1,c_alpha,ccc_b+sum(kappa))
+    clusterExport(cl,c("ccc"))
 
-    pos_pred = pos_pred + do.call("cbind",lapply(waic_out,"[[",2))
-    pos_pred2 = pos_pred2 + temp
-    pos_pred3 = pos_pred3 + do.call("cbind",lapply(waic_out,"[[",3))
+    kappa_ratio = sum(sapply(out,"[[",2))/nc
+    haha = unlist(lapply(out,"[[",3))
+    kappa_accept_rs = kappa_accept_rs  + haha
+    kappa_accept_rs_all = kappa_accept_rs_all  + haha
+    ################################################################################
+    ### update ideal points \beta_i's
+    out = parLapply(cl,node,wrapper_beta)
+    beta = unlist(lapply(out,"[[",1))
+    beta_ratio = sum(sapply(out,"[[",2))/nr
 
-    j = j + 1
+    haha = unlist(lapply(out,"[[",3))
+    beta_accept_rs_all = beta_accept_rs_all  + haha
+    clusterExport(cl,c("beta"))
+    ################################################################################
+    ### update \psi_j's
+    out = parLapply(cl,node,wrapper_yes)
+    tau_yes = unlist(lapply(out,"[[",1))
+    yes_ratio = sum(sapply(out,"[[",2))/nc
+
+    haha = unlist(lapply(out,"[[",3))
+    yes_accept_rs_all = yes_accept_rs_all  + haha
+    clusterExport(cl,c("tau_yes"))
+    ################################################################################
+    ### update \zeta_j's
+    out = parLapply(cl,node,wrapper_no)
+    tau_no = unlist(lapply(out,"[[",1))
+    no_ratio = sum(sapply(out,"[[",2))/nc
+
+    haha = unlist(lapply(out,"[[",3))
+    no_accept_rs_all = no_accept_rs_all  + haha
+    clusterExport(cl,c("tau_no"))
+    ################################################################################
+    ### update hyperparameter \omega for \beta_i's
+    out = update_omega(omega,beta,nr,a,b,omega_sd)
+    omega = out[[1]]
+    omega_ratio = omega_ratio + out[[2]]
+    cbeta_prior = lol * omega
+    clusterExport(cl,c('omega',"cbeta_prior"))
+
+    ### compute joint loglikelihood
+    waic_out = parLapply(cl,node,wrapper_waic)
+    temp = do.call("cbind",lapply(waic_out,"[[",1))
+    sum_temp = sum(temp[no_na]) ###exclude NA for DIC calculation
+    likeli_chain[i] = sum_temp
+
+    ## output average acceptance ratio and joint loglikelihood every 50 iterations
+    if(i %in% seq(1,iter,50)){
+      cat("\rProgress: ",i,"/",iter)
+      print(paste('beta ar is',round(beta_ratio,digits = 2)))
+      print(paste('yes ar is',round(yes_ratio,digits = 2)))
+      print(paste('no ar is',round(no_ratio,digits = 2)))
+      print(paste('kappa ar is',round(kappa_ratio,digits = 2)))
+      print(paste('omega ar is',round(omega_ratio/i,digits = 2)))
+      print(paste('loglikelihood is ',round(sum_temp,digits = 0)))
+    }
+    ### record paratmer after burnin and compute waic using running sums
+    if(i>burnin){
+
+      beta_master[,j] = beta
+      kappa_master[,j] = kappa
+      yes_master[,j] = tau_yes
+      no_master[,j] = tau_no
+
+      omega_master[j] = omega
+      ccc_master[j] = ccc
+
+      if(WAIC_group==T){
+        # temp[na+1] = 0 needs to include NA for WAIC computation
+        temp2 = apply(temp,1,sum)
+        pos_pred_group[,j] = temp2
+      }
+
+      pos_pred = pos_pred + do.call("cbind",lapply(waic_out,"[[",2))
+      pos_pred2 = pos_pred2 + temp
+      pos_pred3 = pos_pred3 + do.call("cbind",lapply(waic_out,"[[",3))
+
+      j = j + 1
+    }
   }
-}
 
-# })
+})
 waic_compute_new3 = function(nnn,pos_pred2){
   lpd = sum(apply(pos_pred2,1,function(x) logSumExp(x) - log(nnn)))
   penalty = 2 * (lpd - sum(apply(pos_pred2,1,mean)))

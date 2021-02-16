@@ -1,16 +1,19 @@
+#
+# args = commandArgs(trailingOnly = T)
+# la = length(args)
+# if(la==0){
+#   stop('No argument provided, please input 3 arguments')
+# }else if(la==3){
+#   iter = as.numeric(args[1])
+#   burnin = as.numeric(args[2])
+#   hn = as.numeric(args[3])
+# }else{
+#   stop('Argument length not correct, please input 3 arguments')
+# }
 
-args = commandArgs(trailingOnly = T)
-la = length(args)
-if(la==0){
-  stop('No argument provided, please input 3 arguments')
-}else if(la==3){
-  iter = as.numeric(args[1])
-  burnin = as.numeric(args[2])
-  hn = as.numeric(args[3])
-}else{
-  stop('Argument length not correct, please input 3 arguments')
-}
-
+iter = 35000
+burnin = 15000
+hn = 112
 source(file="./source/read_kh2.R")
 source(file="./source/ymat_spit.R")
 
@@ -21,10 +24,10 @@ if(check_package ==F){
   lapply(required_package, require, character.only = TRUE)
 }
 ### set seed number
-seed = 2020
+seed = 2021
 set.seed(seed)
 ###load and preprocess data
-n_pos = iter - burnin 
+n_pos = iter - burnin
 out = ymat_spit(hn=hn)
 ymat = out[[1]]
 pol = out[[2]]
@@ -34,6 +37,11 @@ if(hn==116){
   print(pol[squad])
   beta_squad_dim_2 = beta_squad_dim_1 = matrix(0,length(squad),n_pos)
   print('Only session 1 (first 700 votes) of the 116 House data will be analyzed')
+}else if(hn==112){
+  load("F:/Study_Backedup/UCSC/depository/Circular_Factor_Model/data/top20_h112.Rdata")
+  squad = top20
+  print(pol[squad])
+  beta_squad_dim_2 = beta_squad_dim_1 = matrix(0,length(squad),n_pos)
 }
 ###Set hyperparameter and initialize variables
 p = 2
@@ -81,7 +89,7 @@ jj = 1
 
 ### run starts
 for(i in 1:iter){
-  
+
   ### sample latent Z
   z_yes = rtruncnorm(1,a=0,b=Inf,mean=yes_mean,sd=1)
   z_no = rtruncnorm(1,a=-Inf,b=0,no_mean,sd=1)
@@ -89,17 +97,17 @@ for(i in 1:iter){
   zmat[yes] = z_yes
   zmat[no] = z_no
   zmat[na] = z_na
-  
+
   ### sample \alpha and \mu
   alpha_beta = cbind(1,beta)
   po_sig_mual = chol2inv(chol((crossprod(alpha_beta)+sig_mu_alpha_inv)))
-  
+
   for(j in 1:nc){
     po_mean_mual = po_sig_mual%*%(crossprod(alpha_beta,zmat[,j])+part2)
     up_mu_alpha = rmvn(1,po_mean_mual,po_sig_mual)
     mu_alpha_mat[j,] = up_mu_alpha
   }
-  
+
   mu = mu_alpha_mat[,1]
   alpha = mu_alpha_mat[,-1]
   ###sample \beta
@@ -107,7 +115,7 @@ for(i in 1:iter){
   var_beta = chol2inv(chol((crossprod(alpha)+p_mat)))
   po_mean_beta = var_beta%*%crossprod(alpha,tt)
   beta = t(apply(po_mean_beta,2,sample_rmvn))
-  
+
   mean_mat = t(tcrossprod(alpha,beta) + mu)
   yes_mean = mean_mat[yes]
   no_mean = mean_mat[no]
@@ -121,11 +129,12 @@ for(i in 1:iter){
     y_hat[-index_yes] = 0
     ymat[na] = y_hat[na]
   }
-  
+
   ### record paratmer after burnin and compute waic using running sums
   if(i>burnin){
-    if(hn==116){
-      if(mean(beta[squad[1:4],1])>0){
+    if(hn==116 | hn==112){
+      check_flag = ifelse(hn==116,mean(beta[squad,1])>0,mean(beta[squad,1])<0)
+      if(check_flag){
         beta_squad_dim_1[,jj] = rank(-beta[,1])[squad]
         beta_squad_dim_2[,jj] = rank(-beta[,2])[squad]
       }else{
@@ -145,7 +154,7 @@ for(i in 1:iter){
     pos_pred3 = pos_pred3+kobe^2
     jj = jj + 1
   }
-  
+
 }
 ###compute waic with -1 scaling, recall that -2 corresponds to deviance scaling###
 waic = -waic_compute(n_pos,pos_pred,pos_pred2,pos_pred3,no_na)
