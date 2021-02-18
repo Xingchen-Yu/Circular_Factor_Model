@@ -100,21 +100,21 @@ if(continue==F){
   tau_no = runif(nc,-pi,pi)
   tau_yes = runif(nc,-pi,pi)
 }else{
-  load(file=paste0('./continue/',h_s,hn,"_beta_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_tau_no_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_kappa_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_ccc_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_omega_start.Rdata"),verbose = T)
-  load(file=paste0('./continue/',h_s,hn,"_tsig_start.Rdata"),verbose = T)
+  load(file=paste0('./continue/',h_s,hn,"_beta_start.Rdata"),)
+  load(file=paste0('./continue/',h_s,hn,"_tau_yes_start.Rdata"),)
+  load(file=paste0('./continue/',h_s,hn,"_tau_no_start.Rdata"),)
+  load(file=paste0('./continue/',h_s,hn,"_kappa_start.Rdata"),)
+  load(file=paste0('./continue/',h_s,hn,"_ccc_start.Rdata"),)
+  load(file=paste0('./continue/',h_s,hn,"_omega_start.Rdata"),)
+  load(file=paste0('./continue/',h_s,hn,"_tsig_start.Rdata"),)
 
-  # load(file=paste0(h_s,hn,"_beta_start.Rdata"),verbose = T)
-  # load(file=paste0(h_s,hn,"_tau_yes_start.Rdata"),verbose = T)
-  # load(file=paste0(h_s,hn,"_tau_no_start.Rdata"),verbose = T)
-  # load(file=paste0(h_s,hn,"_kappa_start.Rdata"),verbose = T)
-  # load(file=paste0(h_s,hn,"_ccc_start.Rdata"),verbose = T)
-  # load(file=paste0(h_s,hn,"_omega_start.Rdata"),verbose = T)
-  # load(file=paste0(h_s,hn,"_tsig_start.Rdata"),verbose = T)
+  # load(file=paste0(h_s,hn,"_beta_start.Rdata"),)
+  # load(file=paste0(h_s,hn,"_tau_yes_start.Rdata"),)
+  # load(file=paste0(h_s,hn,"_tau_no_start.Rdata"),)
+  # load(file=paste0(h_s,hn,"_kappa_start.Rdata"),)
+  # load(file=paste0(h_s,hn,"_ccc_start.Rdata"),)
+  # load(file=paste0(h_s,hn,"_omega_start.Rdata"),)
+  # load(file=paste0(h_s,hn,"_tsig_start.Rdata"),)
 }
 
 leap = sample(l_range[1]:l_range[2],nr,replace=T)
@@ -331,7 +331,17 @@ rm(pos_pred_group)
 # print(waic_spherical)
 
 ### save paramters for further analysis
-save.image(file=paste0('H',hn,"_workspace_grouped_waic_dic.Rdata"))
+save.image(file=paste0('H',hn,"complete_workspace_grouped_waic_dic.Rdata"))
 # save(file=paste0('H',hn,"_beta_master_sph.Rdata"),beta_master)
 # save(file=paste0('H',hn,"_pol.Rdata"),pol)
 
+
+
+
+# save(file=paste0('./continue/',h_s,hn,"_beta_start.Rdata"),beta)
+# save(file=paste0('./continue/',h_s,hn,"_tau_yes_start.Rdata"),tau_yes)
+# save(file=paste0('./continue/',h_s,hn,"_tau_no_start.Rdata"),tau_no)
+# save(file=paste0('./continue/',h_s,hn,"_kappa_start.Rdata"),kappa)
+# save(file=paste0('./continue/',h_s,hn,"_ccc_start.Rdata"),ccc)
+# save(file=paste0('./continue/',h_s,hn,"_omega_start.Rdata"),omega)
+# save(file=paste0('./continue/',h_s,hn,"_tsig_start.Rdata"),t_sig)
