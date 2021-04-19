@@ -11,12 +11,14 @@
 #   stop('Argument length not correct, please input 4 arguments')
 # }
 
-iter = 1e5
-burnin = 8e4
+iter = 5e4
+burnin = 3e4
 core = 10
 hn = 116
-house = T
-h_s = 'H'
+house = F
+h_s = ifelse(house==T,'H','S')
+WAIC_group = T ###grouped waic calculation
+continue = F ###
 #### checking and installing required packages###
 required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl','matrixStats')
 check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==7
@@ -30,12 +32,14 @@ source(file="./source/ymat_spit.R")
 source(file="./source/circular_factor_model_functions.R")
 #### setting both cluster seed and local seed for reproducibility
 
-WAIC_group = T ###grouped waic calculation
-continue = F ###
 if(hn==116){
   cluster_seed = 888
   seed = 8888
-  b_range = c(0.01,0.04)
+  if(house==T){
+    b_range = c(0.01,0.04)
+  }else{
+    b_range = c(0.005,0.03)
+  }
 }else if(hn==112){
   cluster_seed = 1990 + 1
   seed = 2080 + 1
@@ -331,7 +335,7 @@ rm(pos_pred_group)
 # print(waic_spherical)
 
 ### save paramters for further analysis
-save.image(file=paste0('H',hn,"complete_workspace_grouped_waic_dic.Rdata"))
+save.image(file=paste0(h_s,hn,"_complete_workspace_grouped_waic_dic.Rdata"))
 # save(file=paste0('H',hn,"_beta_master_sph.Rdata"),beta_master)
 # save(file=paste0('H',hn,"_pol.Rdata"),pol)
 

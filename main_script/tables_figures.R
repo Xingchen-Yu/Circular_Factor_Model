@@ -1,4 +1,4 @@
-
+setwd("F:/Study_Backedup/UCSC/depository/Circular_Factor_Model")
 library(stringr)
 library(plotrix)
 
@@ -66,7 +66,27 @@ abline(1:500,1:500,col='gray',lwd=2)
 identify(rank_all_eu[,2],rank_all[,2],label = pol, cex = 1.5)
 
 rm(list=setdiff(ls(), c("pol_lower","to_table")))
+#####colorless Figure 3#####################################
+x11(height=15,width=15)
+par(mar = c(10, 10, 4, 4))
+col_stream = rep('gray28',length(pol))
+col_stream[grep('\\(D',pol)] = 'gray68'
+col_stream[grep('\\(I',pol)] = 'gray68'
 
+pch_stream = rep(17,length(rank_all_eu))
+pch_stream[grep('\\(D',pol)] = 16
+pch_stream[grep('\\(I',pol)] = 16 ## no independent in h116
+
+plot(rank_all_eu[,2],rank_all[,2],xlim=c(-5,nrow(rank_all)),ylim=c(-5,nrow(rank_all)),col=col_stream,pch=pch_stream,
+     xlab='Euclidean Latent Space',ylab='Circular Latent Space',cex.axis=2,cex.lab=2,main='',mgp=c(6,2,0),cex=1.5)
+
+abline(1:500,1:500,col='gray',lwd=3)
+legend(1,400, legend=c("Republican Party", "Democratic Party"),
+       col=c("gray28", "gray68"), pch=c(17,16), cex=2,bty = "n")
+
+identify(rank_all_eu[,2],rank_all[,2],label = pol, cex = 1.5)
+
+rm(list=setdiff(ls(), c("pol_lower","to_table")))
 #################Figures related to House 112###############################################
 load(file=paste0('H112_pol.Rdata'),verbose=T)
 pol = pol_lower(pol)
@@ -121,14 +141,35 @@ fontxaxis <- rep(1,15)
 fontxaxis[whobold] <- 2
 mtext(side=1, line=1, at=seq(1,15), text=rownames(sph_top20), font=fontxaxis,las=2,cex=1.5)
 
-#######Figure 5###################################
+#######Figure 6###################################
 x11(height=15,width=15)
 par(mar = c(10, 10, 4, 4))
 plot(rank_all_h112_eu[,2],rank_all_h112[,2],xlim=c(-5,length(pol)+20),ylim=c(-5,length(pol)+20),col=col_stream,
      xlab='Euclidean Latent Space',ylab='Circular Latent Space',cex.axis=2,cex.lab=2,main='',cex.main=2,mgp=c(6,2,0),lwd=2)
 abline(1:500,1:500,col='gray',lwd=2)
 identify(rank_all_h112_eu[,2],rank_all_h112[,2],label = pol, cex = 1.5)
+#######colourless Figure 6#####################################
 
+x11(height=15,width=15)
+par(mar = c(10, 10, 4, 4))
+col_stream = rep('gray28',length(pol))
+col_stream[grep('\\(D',pol)] = 'gray68'
+col_stream[grep('\\(I',pol)] = 'gray68'
+
+pch_stream = rep(17,length(rank_all_h112_eu))
+pch_stream[grep('\\(D',pol)] = 16
+pch_stream[grep('\\(I',pol)] = 16 ## no independent in h116
+
+plot(rank_all_h112_eu[,2],rank_all_h112[,2],xlim=c(-5,nrow(rank_all_h112)),ylim=c(-5,nrow(rank_all_h112)),col=col_stream,pch=pch_stream,
+     xlab='Euclidean Latent Space',ylab='Circular Latent Space',cex.axis=2,cex.lab=2,main='',mgp=c(6,2,0),cex=1.5)
+
+abline(1:500,1:500,col='gray',lwd=3)
+legend(1,400, legend=c("Republican Party", "Democratic Party"),
+       col=c("gray28", "gray68"), pch=c(17,16), cex=2,bty = "n")
+
+identify(rank_all_h112_eu[,2],rank_all_h112[,2],label = pol, cex = 1.5)
+
+rm(list=setdiff(ls(), c("pol_lower","to_table")))
 ########Tau_yes and Tau_no#########################################
 library(circular)
 library(plotrix)
@@ -192,7 +233,7 @@ pol_lower = function(x){
   sapply(1:length(x), function(i) gsub(to_lower[i],tolower(to_lower[i]),x[i]))
 }
 
-hn = 116
+hn = 112
 if(hn==112){
   load("F:/Study_Backedup/UCSC/LatentFactorModel/House/h116_112_tau_yes_tau_no_additional_runs/H112_workspace_grouped_waic_dic.Rdata")
 }else{
@@ -203,25 +244,25 @@ if(hn==112){
 
 yes_mean = apply(yes_master,1,mean.circular)
 no_mean = apply(no_master,1, mean.circular)
-
+# pol[135] = "GARCIA (D IL-4)"
 pol = pol_lower(pol)
+
 out = ymat_spit(hn=hn)
 if(hn==116){
   print('Only session 1 (first 700 votes) of the 116 House data will be analyzed')
 }
 ymat = out[[1]]
 
-
-l_range = 0.5
-u_range = 2.5
-yes_0_no_pi = T
-if(yes_0_no_pi==T){
-  temp_mean1 = yes_mean
-  temp_mean2 = no_mean
-}else{
-  temp_mean1 = no_mean
-  temp_mean2 = yes_mean
-}
+# l_range = 0.5
+# u_range = 2.5
+# yes_0_no_pi = T
+# if(yes_0_no_pi==T){
+#   temp_mean1 = yes_mean
+#   temp_mean2 = no_mean
+# }else{
+#   temp_mean1 = no_mean
+#   temp_mean2 = yes_mean
+# }
 
 # yes_check = sapply(temp_mean1[2,],function(x) x<l_range & x>-l_range)
 # no_check = sapply(temp_mean2[2,],function(x) x>u_range | x<= -u_range)
@@ -244,18 +285,20 @@ if(yes_0_no_pi==T){
 # names(name_list) = paste0('Bill ', check_wo_unani)
 # 
 # name_list
-
-
-
+# bill_number = 531
+# c(0,1)[which.min(table_list[[bill_number]])]
+# names(which(ymat[,bill_number]==c(0,1)[which.min(table_list[[bill_number]])]))
 
 table_list = apply(ymat,2,function(x) table(x,exclude = NA))
 
 close = which(unlist(lapply(table_list,function(x) any(x/sum(x)<0.05) + length(x))==3)==T)
 length(close)
-plot_index = close[which(acos(cos(yes_mean[close]-no_mean[close]))>2.1)]
+plot_index = close[which(acos(cos(yes_mean[close]-no_mean[close]))>2.1)] ### 2.1
 # plot_index = close[which(acos(cos(yes_mean[2,close]-no_mean[2,close]))>2.4)]
 nnn = length(plot_index)
 name_list = vector('list',nnn)
+
+
 
 # bryant_yes = as.circular(yes_mean[2,],units="radians",modulo="2pi",rotation="clock")
 # bryant_no = as.circular(no_mean[2,],units="radians",modulo="2pi",rotation="clock")
@@ -272,11 +315,12 @@ name_list = vector('list',nnn)
 # 
 # }
 
-
+# names(which(Y_temp==c(0,1)[which.min(table_list[[bill_number]])]))
 for(i in 1:nnn){
   Y_temp = ymat[,plot_index[i]]
-  check_value = c(0,1)[as.numeric(which(table(Y_temp)==min(table(Y_temp))))]
-  name_list[[i]] = pol[which(Y_temp==check_value)]
+  # check_value = c(0,1)[as.numeric(which(table(Y_temp)==min(table(Y_temp))))]
+  
+  name_list[[i]] = pol_lower(names(which(Y_temp==c(0,1)[which.min(table_list[[plot_index[i]]])])))
   
 }
 names(name_list) = paste0('Bill ', plot_index)
@@ -284,23 +328,23 @@ name_list
 
 # dev.new(width=15, height=15,noRStudioGD = T)
 # # par(mar=c(7,7,2,2))
-beta_mean = apply(beta_master,1,median)
-names(beta_mean) = pol
+# beta_mean = apply(beta_master,1,median)
+# names(beta_mean) = pol
 
 
-ymat[squad,48]
-acos(cos(yes_mean[2,48]-no_mean[2,48]))
+# ymat[squad,48]
+# acos(cos(yes_mean[2,48]-no_mean[2,48]))
 
 
-bryant_yes = as.circular(yes_mean[2,],units="radians",modulo="2pi",rotation="clock")
-bryant_no = as.circular(no_mean[2,],units="radians",modulo="2pi",rotation="clock")
+# bryant_yes = as.circular(yes_mean[2,],units="radians",modulo="2pi",rotation="clock")
+# bryant_no = as.circular(no_mean[2,],units="radians",modulo="2pi",rotation="clock")
 for(i in 1:nnn){
   plot_k = plot_index[i]
   pdf(file=paste0("F:/Study_Backedup/UCSC/LatentFactorModel/House/h116_112_tau_yes_tau_no_additional_runs/h",hn,"/Bill_",plot_k,'.pdf'),width = 15,height=15)
   bryant = circular::as.circular(as.numeric(beta_mean),units="radians",modulo="2pi",rotation="clock")
-  circular::plot.circular(bryant[grep("\\(D",pol)],shrink=1,axes=F,units="radians",zero=pi/2,col='blue',cex=1.5)
+  circular::plot.circular(bryant[grep("\\(D",pol)],shrink=1,axes=F,units="radians",zero=pi/2,col='gray38',cex=1.5)
   par(new=T)
-  circular::plot.circular(bryant[-grep("\\(D",pol)],shrink=1,axes=F,units="radians",zero=pi/2,col='red',cex=1.5,pch=17)
+  circular::plot.circular(bryant[-grep("\\(D",pol)],shrink=1,axes=F,units="radians",zero=pi/2,col='gray68',cex=1.5,pch=17)
   
   b_name = beta_mean[name_list[[i]]]
   for(jj in 1:length(b_name)){
@@ -499,12 +543,12 @@ no_mean2 = apply(no_master,1,mean.circular)
 
 # bryant_yes = as.circular(yes_mean[2,],units="radians",modulo="2pi",rotation="clock")
 # bryant_no = as.circular(no_mean[2,],units="radians",modulo="2pi",rotation="clock")
-plot_k = 32
+plot_k = 1553 ## unanimous bills for h116 in paper are 5(split by party) and 32(unanimous)
   x11(width = 15,height=15)
   bryant = circular::as.circular(as.numeric(beta_mean),units="radians",modulo="2pi",rotation="clock")
-  circular::plot.circular(bryant[grep("\\(D",pol)],shrink=1,axes=F,units="radians",zero=pi/2,col='blue',cex=1.5)
+  circular::plot.circular(bryant[grep("\\(D",pol)],shrink=1,axes=F,units="radians",zero=pi/2,col='gray28',cex=1.5)
   par(new=T)
-  circular::plot.circular(bryant[-grep("\\(D",pol)],shrink=1,axes=F,units="radians",zero=pi/2,col='red',cex=1.5,pch=17)
+  circular::plot.circular(bryant[-grep("\\(D",pol)],shrink=1,axes=F,units="radians",zero=pi/2,col='gray68',cex=1.5,pch=17)
   if(plot_k==496){
     b_name = beta_mean[name_list$`Bill 496`]
   }else if(plot_k==531){
