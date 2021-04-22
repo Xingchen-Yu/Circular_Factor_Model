@@ -14,3 +14,9 @@ H116complete_workspace_grouped_waic_dic.Rdata
 simulation_results/paper1_eu2d_data_1d_eu.RData
 simulation_results/paper1_eu2d_data_2d_eu.RData
 simulation_results/paper1_eu2d_data_circ.RData
+data/H116_rollcalls.csv
+data/Hall_rollcalls.csv
+data/Hall_votes.csv
+data/HSall_members.csv
+data/Sall_members.csv
+data/Sall_votes.csv

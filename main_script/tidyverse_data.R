@@ -65,6 +65,23 @@ h116_all[temp3,] %>% select(bioname)
 house_list = c(100:116)
 dup_list = yes_no_list = vector('list',17)
 
+c(NA,0)[is.na(c(NA,0)) == F]
+aggregate_votes = function(x){
+  if(sum(is.na(x)) == 2){
+    x_mod = NA
+  }else{
+    x_mod = x[is.na(x) == F]
+    if(suppressWarnings(sum(is.na(as.numeric(x_mod)))!=2)){
+      x_mod = as.numeric(x_mod)
+    }
+  }
+  return(x_mod)
+}
+aggregate_votes(c(dup_name_freq$bioname[1],dup_name_freq$bioname[1]))
+is.na(c(dup_name_freq$bioname[1],dup_name_freq$bioname[1])) == F
+!is.na(as.numeric(c(dup_name_freq$bioname[1],dup_name_freq$bioname[1])))
+sum(is.na(as.numeric(c(dup_name_freq$bioname[1],dup_name_freq$bioname[1]))))
+# apply(as_tibble(list(x = c(1,NA),y=c(NA,NA),z =c(NA,0))),2,aggregate_votes)
 for(i in 1:17){
   cat("\rProgress: ",i,"/",17)
   house_number = house_list[i]
@@ -74,7 +91,7 @@ for(i in 1:17){
     mutate(name_district  = paste0(bioname," (",party,' ',state_abbrev,"-",district_code,")")) %>% 
     select(icpsr,name_district,bioname) 
   
-  c2= congress_all %>% select(icpsr,cast_code,congress,rollnumber) %>% filter(congress == house_number) %>% 
+  c2 = congress_all %>% select(icpsr,cast_code,congress,rollnumber) %>% filter(congress == house_number) %>% 
     mutate(cast_code = case_when(cast_code %in% c(1:3) ~ 1, cast_code %in% c(4:6) ~0,TRUE~NA_real_)) %>% 
     pivot_wider(names_from = rollnumber, values_from = cast_code) %>% select(-congress)
   
@@ -103,12 +120,27 @@ for(i in 1:17){
   c3 = c2 %>% left_join(c1,by = "icpsr")
   dup_list[[i]] = c3 %>% group_by(bioname) %>%  mutate(n = n()) %>% filter(n>1) %>% 
     select(bioname,name_district) %>% arrange(desc(name_district))
-  ### work here
-  c3 %>% group_by(bioname) %>%  mutate(n = n()) %>% filter(n>1) %>% select(bioname)
-
+  
+  ### combine rows
+  dup_name_freq = c3 %>% count(bioname) %>%  filter(n>1)  %>% select(-n)
+  
+  c3_new = c3 %>% filter(!bioname %in% dup_name_freq$bioname) %>% relocate(bioname,name_district)
+  
+  dup_name_freq$bioname
+  dup_name_freq %>% inner_join(c3, by = "bioname")
+  for(dup_name in dup_name_freq$bioname){
+   c3_new = bind_rows(c3_new,as_tibble(apply(dup_name_freq %>% inner_join(c3, by = "bioname") %>% filter(bioname == dup_name) %>% 
+                    # select(-bioname,-icpsr,-name_district) %>%
+  rowwise, 2, aggregate_votes))[1,])
+      
+  }
+  c3_new %>% filter(bioname %in% dup_name_freq$bioname)
   ###########
+  
   c3 %>% group_by(bioname) %>%  mutate(n = n()) %>% filter(n>1) %>% 
     select(bioname,name_district) %>% arrange(desc(name_district))
+  
+  
   ###########
   dup_list[[i]]$name_district = gsub("\\)","",gsub(".*\\(","",dup_list[[i]]$name_district))
   
@@ -122,7 +154,7 @@ for(i in 1:17){
   rm(temp)
 }
 names(dup_list) = names(yes_no_list) = paste0('H',100:116)
-
+### all duplicates either switch party or change district only once from H100 to H116
 
 dup_list_pivot = lapply(dup_list,function(x) x %>% group_by(bioname) %>% mutate(row = row_number()) %>% 
   pivot_wider(names_from = bioname,values_from=name_district) %>% select(-row))
@@ -164,7 +196,7 @@ test_df = matrix(rnorm(400*1500),400,1500)
 
 test_tibble = as_tibble(test_df)
 
-x = rnorm(1500)
+x = as_tibble(rnorm(1500))
 
 
 
