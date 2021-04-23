@@ -1,3 +1,12 @@
+
+
+ymat_spit_tidy = function(hn,house){
+  
+}
+
+
+
+
 ymat_spit<-function(hn,house){
   if(house==T){
     vote2<-readKH2(file=paste0("./data/H",hn,"_votes.ord"))
