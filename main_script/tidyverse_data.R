@@ -15,7 +15,7 @@ H116_bills$bill_number
 ###############################
 congress_all %>% select(icpsr,cast_code,congress,rollnumber) %>% filter(congress %in% c(100:116)) %>%
   count(cast_code)
-## only three parties in 100 to 116
+## only three parties(GOP, Dem, Ind) in 100 to 116
 congress_member %>% filter(congress %in% c(100:116)) %>%
   count(party_code)
 

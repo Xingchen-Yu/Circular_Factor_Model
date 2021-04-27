@@ -96,7 +96,7 @@ if(continue==F){
   ccc = ccc_a/ccc_b
 
   kappa = rep(0.1,nc)
-  omega_ini = 0
+  #omega_ini = 0
 
   beta = rep(0,nr)
   beta[dem] = runif(length(dem),-pi/2,0)
@@ -145,13 +145,13 @@ na.position = which(is.na(ymat)==T, arr.ind = T)
 i_index = as.numeric(na.position[,1]) - 1
 j_index = as.numeric(na.position[,2]) - 1
 ### initialize output vecotr/matrix
+no_na = which(is.na(ymat)==F)
 if(n_pos>0){
   if(WAIC_group==T){
     pos_pred_group = matrix(0,nr,n_pos)
   }
   pos_pred = pos_pred2 = pos_pred3 = matrix(0,nr,nc)
 
-  no_na = which(is.na(ymat)==F)
   kappa_master = matrix(0,nc,n_pos)
   beta_master = matrix(0,nr,n_pos)
   yes_master = no_master = matrix(0,nc,n_pos)

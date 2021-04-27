@@ -1,5 +1,3 @@
-library(tidyverse)
-
 ## function to aggregate legislators' (who switch parties or change district) votes into a single row 
 aggregate_votes = function(x){
   if(sum(is.na(x)) == 2){
@@ -12,17 +10,6 @@ aggregate_votes = function(x){
   }
   return(x_mod)
 }
-
-house = T
-h_s = ifelse(house==T,'H','S')
-hn = 116
-
-out = get_rollcall_data(house,h_s,hn,0.4)
-
-grep('Amash',out[[1]]$bioname)
-out[[2]]
-out[[3]]
-
 get_rollcall_data = function(house,h_s,hn,threshold = 0.4){
   
   ## data path
@@ -57,10 +44,10 @@ get_rollcall_data = function(house,h_s,hn,threshold = 0.4){
   rm(list = c('icpsr_name_district','vote_data','congress_all','congress_member','congress_bills'))
   
   ## find people who switch party or change voting district (have multiple entries/icpsr)
-  dup_name_freq = full_data %>% count(bioname) %>%  filter(n>1)  %>% select(-n)
+  dup_name_freq = full_data %>% dplyr::count(bioname) %>%  filter(n>1)  %>% select(-n)
   
   ## find legislator who actually change party of voting district within a single congress period
-  impossible = full_data %>% count(bioname) %>%  filter(n>2) 
+  impossible = full_data %>% dplyr::count(bioname) %>%  filter(n>2) 
   
   if(nrow(impossible)>0){
     print('this legislator is trolling')
