@@ -235,12 +235,12 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
       ## output average acceptance ratio and joint loglikelihood every 100 iterations
       if(i %in% seq(1,iter,skip)){
         cat("\rProgress: ",i,"/",iter,"\n")
-        cat(paste('beta_i acceptance ratio is',round(beta_ratio,digits = 2)),"\n")
-        print(paste('yes acceptance ratio is',round(yes_ratio,digits = 2)),"\n")
-        print(paste('no acceptance ratio is',round(no_ratio,digits = 2)),"\n")
-        print(paste('kappa_j acceptance ratio is',round(kappa_ratio,digits = 2)),"\n")
-        print(paste('omega acceptance ratio is',round(omega_ratio/i,digits = 2)),"\n")
-        print(paste('loglikelihood is ',round(sum_temp,digits = 0)),"\n")
+        cat(paste('"beta_i" acceptance ratio is',round(beta_ratio,digits = 2)),"\n")
+        cat(paste('"tau_yes" acceptance ratio is',round(yes_ratio,digits = 2)),"\n")
+        cat(paste('"tau_no" acceptance ratio is',round(no_ratio,digits = 2)),"\n")
+        cat(paste('"kappa_j" acceptance ratio is',round(kappa_ratio,digits = 2)),"\n")
+        cat(paste('"omega" acceptance ratio is',round(omega_ratio/i,digits = 2)),"\n")
+        cat(paste('loglikelihood is ',round(sum_temp,digits = 0)),"\n")
       }
       ### record paratmer after burnin and compute waic using running sums
       if(i>burnin & (i %in% seq(burnin+1,iter,thin))){
