@@ -21,7 +21,9 @@ out = get_rollcall_data(house,h_s,hn,threshold = 0.4)
 # dup_name = out[[2]]
 # filtered_legislator = out[[3]]
 
-master = SLFM(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b = 1/10, ccc_a = 1, ccc_b=25, kappa_a = 1, omega_sd=0.1, kappa_sd=0.5,
-                                                                      i_epi_lower = 0.005, i_epi_upper = 0.04, j_epi_lower = 0.01 ,j_epi = 0.105,
-                                                                      i_leap = 5, j_leap = 5,skip = 50, jitter = T, WAIC_group = T),
-                initial_values=NULL,core=10,cluster_seed=1234)
+master = SLFM(out, n_pos=20000,burnin=80000,thin = 1, hyperparams=list(a = 1, b = 1/10, ccc_a = 1, ccc_b=25, kappa_a = 1, omega_sd=0.1, kappa_sd=0.5,
+                                                                    i_epi_lower = 0.005, i_epi_upper = 0.04, j_epi_lower = 0.01 ,j_epi_upper = 0.105,
+                                                                    i_leap = 10, j_leap = 10,skip = 50, jitter = T, WAIC_group = T),
+                                                                    initial_values=NULL,core=10,cluster_seed=8888)
+
+str(master)

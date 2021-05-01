@@ -11,17 +11,17 @@
 #   stop('Argument length not correct, please input 4 arguments')
 # }
 
-iter = 5e4
-burnin = 3e4
+iter = 100
+burnin = 50
 core = 10
 hn = 116
-house = F
+house = T
 h_s = ifelse(house==T,'H','S')
 WAIC_group = T ###grouped waic calculation
 continue = F ###
 #### checking and installing required packages###
 required_package = c('Rcpp','snowfall','wnominate','rlecuyer','RcppArmadillo','pscl','matrixStats')
-check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==7
+check_package = sum(unlist(lapply(required_package, require, character.only = TRUE)))==length(required_package)
 if(check_package ==F){
   install.packages(required_package,repos = "http://cran.us.r-project.org")
   lapply(required_package, require, character.only = TRUE)

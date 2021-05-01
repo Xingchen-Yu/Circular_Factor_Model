@@ -1,24 +1,24 @@
-
+## don't forget to change bessel function
 SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b = 1/10, ccc_a = 1, ccc_b=25, kappa_a = 1, omega_sd=0.1, kappa_sd=0.5,
-                                                                      i_epi_lower = 0.005, i_epi_upper = 0.04, j_epi_lower = 0.01 ,j_epi = 0.105,
-                                                                      i_leap = 5, j_leap = 5,skip = 50, jitter = T, WAIC_group = T),
+                                                                      i_epi_lower = 0.005, i_epi_upper = 0.04, j_epi_lower = 0.01 ,j_epi_upper = 0.105,
+                                                                      i_leap = 10, j_leap = 10,skip = 50, jitter = T, WAIC_group = T),
                 initial_values=NULL,core=2,cluster_seed=1234){
   
   #######################################################
-  ###Set up parallel environment
-  sfInit(parallel=TRUE,cpus=core)
-  sfClusterSetupRNG( type="RNGstream",seed=cluster_seed)
-  sfLibrary("Rcpp", character.only=TRUE)
-  sfLibrary("RcppArmadillo", character.only=TRUE)
-  #######################################################
   ### loading functions
+  source(file='./source/wrapper_func.R')
   source(file='./source/utility_func.R')
   source(file="./source/circular_factor_model_functions.R")
   ### compiling cpp code
   print('compiling Rcpp Code locally')
   sourceCpp(code = RcppCode)
   print('compiling locally finished')
-  
+  ###Set up parallel environment
+  sfInit(parallel=TRUE,cpus=core)
+  sfClusterSetupRNG( type="RNGstream",seed=cluster_seed)
+  sfLibrary("Rcpp", character.only=TRUE)
+  sfLibrary("RcppArmadillo", character.only=TRUE)
+  #######################################################
   iter = n_pos * thin + burnin
   jitter = hyperparams[['jitter']]
   
@@ -37,6 +37,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
   dem = grep("\\(D",pol_info$name_district)
   gop = grep("\\(R",pol_info$name_district)
   ind = grep("\\(I",pol_info$name_district)
+  rm(out)
   #################
   nr = nrow(ymat)
   nc = ncol(ymat)
@@ -76,17 +77,20 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
     b_range = c(hyperparams[['i_epi_lower']],hyperparams[['i_epi_upper']])
     yn_range = c(hyperparams[['j_epi_lower']],hyperparams[['j_epi_upper']])
     
-    l_range_tau = c(1,2 * hyperparams[['j_leap']])
-    l_range = c(1,2*hyperparams[['i_leap']])
+    l_range_tau = c(1,hyperparams[['j_leap']])
+    l_range = c(1,hyperparams[['i_leap']])
     
   }else{
-    
-    delta = rep(hyperparams[['i_epi']],nr)
-    delta_yes = delta_no = rep(hyperparams[['j_epi']],nc)
+    i_epi = (hyperparams[['i_epi_lower']] + hyperparams[['i_epi_upper']])/2
+    j_epi = (hyperparams[['j_epi_lower']]+hyperparams[['j_epi_upper']])/2
+    delta = rep(i_epi,nr)
+    delta_yes = delta_no = rep(j_epi,nc)
     
     delta2 = delta/2
     delta2_yes = delta_yes/2
     delta2_no = delta_no/2
+    
+    sfExport('delta','delta_yes','delta2','delta2_yes','delta2')
   }
 
   lol = c(sin(mu),cos(mu))
@@ -97,7 +101,10 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
   nr_par = round(seq(0,nr,length.out = core+1))
   nc_par = round(seq(0,nc,length.out = core+1))
   ## work here
-  sfExport('RcppCode','a','b')
+  sfExport("ymat","nr","nc",'beta_i','tau_yes','tau_no','kappa_j','kappa_a','ccc',
+           't_sig','omega','cbeta_prior','a','b','omega_sd','nr_par','nc_par','RcppCode')
+  
+  # sfExportAll()
   na = which(is.na(ymat==T)) - 1
   len_na = length(na)
   na.position = which(is.na(ymat)==T, arr.ind = T)
@@ -134,7 +141,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
   # print(paste0('Running ',iter," iterations"))
   # print(system.time({
     for(i in 1:iter){
-      cat("\rProgress: ",i,"/",iter)
+      #cat("\rProgress: ",i,"/",iter)
       if(i %in% seq(1,iter,skip)){
         #### step size and leap steps jittering
         if(jitter == T){
@@ -151,8 +158,8 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
         }
         
         #######################################
-        ### tuning the proposal variance of the scale parameter \kappa_j during the initial 2000 iterations
-        if(i<burnin){
+        ### tuning the proposal variance of the scale parameter \kappa_j during burnin period
+        if(i<burnin & i!=1){
           ks = kappa_accept_rs/skip
           kappa_skip = min(ks)
           ### targeting acceptance ratio between 0.3 and 0.6#####
@@ -172,7 +179,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
       }
       ################################################################################
       ### Update scale parameter \kappa_j
-      out = sfLapply(node,update_kappa,nc_par,nr,beta_i,tau_yes,tau_no,kappa_j,ymat,kappa_a,ccc,t_sig)
+      out = sfLapply(node,wrapper_kappa)
       kappa_j = unlist(lapply(out,"[[",1))
       sfExport("kappa_j")
       ###update hyperprior parameter for \kappa_j
@@ -185,7 +192,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
       kappa_accept_rs_all = kappa_accept_rs_all  + haha
       ################################################################################
       ### update ideal points \beta_i's
-      out = sfLapply(node,update_beta,nr_par,delta,delta2,leap,nc,omega,cbeta_prior,beta_i,tau_yes,tau_no,kappa_j,ymat)
+      out = sfLapply(node,wrapper_beta)
       beta_i = unlist(lapply(out,"[[",1))
       beta_ratio = sum(sapply(out,"[[",2))/nr
       
@@ -194,7 +201,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
       sfExport("beta_i")
       ################################################################################
       ### update \psi_j's
-      out = sfLapply(node,update_tau_yes,nc_par,delta_yes,delta2_yes,leap_tau,nr,beta_i,tau_yes,tau_no,kappa_j,ymat)
+      out = sfLapply(node,wrapper_yes)
       tau_yes = unlist(lapply(out,"[[",1))
       yes_ratio = sum(sapply(out,"[[",2))/nc
       
@@ -203,7 +210,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
       sfExport("tau_yes")
       ################################################################################
       ### update \zeta_j's
-      out = sfLapply(node,update_tau_no,nc_par,delta_no,delta2_no,leap_tau,nr,beta_i,tau_yes,tau_no,kappa_j,ymat)
+      out = sfLapply(node,wrapper_no)
       tau_no = unlist(lapply(out,"[[",1))
       no_ratio = sum(sapply(out,"[[",2))/nc
       
@@ -219,7 +226,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
       sfExport('omega',"cbeta_prior")
       
       ### compute joint loglikelihood
-      waic_out = sfLapply(node,waic_cpp,nc_par,nr,beta_i,tau_yes,tau_no,kappa_j,ymat)
+      waic_out = sfLapply(node, wrapper_waic)
       temp = do.call("cbind",lapply(waic_out,"[[",1))
       sum_temp = sum(temp[no_na])
       likeli_chain[i] = sum_temp
@@ -227,13 +234,13 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
       ## maybe adding some warning features?
       ## output average acceptance ratio and joint loglikelihood every 100 iterations
       if(i %in% seq(1,iter,skip)){
-        cat("\rProgress: ",i,"/",iter)
+        cat("\rProgress: ",i,"/",iter,)
         cat(paste('beta_i acceptance ratio is',round(beta_ratio,digits = 2)))
-        cat(paste('yes acceptance ratio is',round(yes_ratio,digits = 2)))
-        cat(paste('no acceptance ratio is',round(no_ratio,digits = 2)))
-        cat(paste('kappa_j acceptance ratio is',round(kappa_ratio,digits = 2)))
-        cat(paste('omega acceptance ratio is',round(omega_ratio/i,digits = 2)))
-        cat(paste('loglikelihood is ',round(sum_temp,digits = 0)))
+        print(paste('yes acceptance ratio is',round(yes_ratio,digits = 2)))
+        print(paste('no acceptance ratio is',round(no_ratio,digits = 2)))
+        print(paste('kappa_j acceptance ratio is',round(kappa_ratio,digits = 2)))
+        print(paste('omega acceptance ratio is',round(omega_ratio/i,digits = 2)))
+        print(paste('loglikelihood is ',round(sum_temp,digits = 0)))
       }
       ### record paratmer after burnin and compute waic using running sums
       if(i>burnin & (i %in% seq(burnin+1,iter,thin))){
@@ -259,7 +266,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
     }
   # }))
   sfStop()
-  waic_group = waic_compute_new3(n_pos,pos_pred_group)
+  waic_group = waic_compute_group(n_pos,pos_pred_group)
   return(list(beta_i=beta_master,psi=yes_master,zeta=no_master,kappa_j=kappa_master,omega=omega_master,
               xi_inv=ccc_master,likeli=likeli_chain,waic_group = waic_group,cluster_seed=cluster_seed))
 }
