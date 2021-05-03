@@ -39,7 +39,12 @@ get_rollcall_data = function(house,h_s,hn,threshold = 0.4){
   ## joining icpsr with name_district
   full_data = vote_data %>% left_join(icpsr_name_district ,by = "icpsr") %>% 
     relocate(bioname,name_district)
-  
+  nrow_full_data = nrow(full_data)
+  ## check whether all bills column are valid
+  check_bill = full_data %>% select(-bioname,-name_district,-icpsr) %>% colnames() %>% as.numeric() %>% is.na() %>% sum()
+  if(check_bill != 0){
+    print('Check the column names of the data')
+  }
   ##clean memory
   rm(list = c('icpsr_name_district','vote_data','congress_all','congress_member','congress_bills'))
   
@@ -62,20 +67,17 @@ get_rollcall_data = function(house,h_s,hn,threshold = 0.4){
                                                                filter(bioname == dup_name) %>% rowwise, 2, aggregate_votes))[1,])
       
     }
+    ## check the rows match after combining flip floppers
+    check_unique = nrow(full_data_init) == nrow(full_data) - nrow(dup_name_freq)
+    if(!check_unique){
+      print('check flip floppers')
+    }
+  }else{
+    full_data_init = full_data
+    rm(full_data)
   }
   ## number of bills 
   n_bills = full_data_init %>% select(-bioname,-name_district,-icpsr) %>% ncol()
-  
-  ## check the rows match after combining flip floppers
-  check_unique = nrow(full_data_init) == nrow(full_data) - nrow(dup_name_freq)
-  if(!check_unique){
-    print('check flip floppers')
-  }
-  ## check whether all bills column are valid
-  check_bill = full_data_init %>% select(-bioname,-name_district,-icpsr) %>% colnames() %>% as.numeric() %>% is.na() %>% sum()
-  if(check_bill != 0){
-    print('Check the column names of the data')
-  }
   
   ## check proportion of bills missed in the congress
   missing_prop = apply(full_data_init %>% select(-bioname,-name_district,-icpsr),1,function(x) sum(is.na(x)==T)/n_bills)
@@ -88,9 +90,9 @@ get_rollcall_data = function(house,h_s,hn,threshold = 0.4){
   
   ## final data
   full_data_filtered = full_data_init %>% filter(missing_prop <= 0.4)
-
+  rm(full_data_init)
   ## final check preprocessing
-  check_row = nrow(full_data) == nrow(missing_40_percent) + nrow(full_data_filtered) + nrow(dup_name_freq) - nrow(troll)
+  check_row = nrow_full_data == nrow(missing_40_percent) + nrow(full_data_filtered) + nrow(dup_name_freq) - nrow(troll)
   if(!check_row){
     print('Check flip floppers')
   }

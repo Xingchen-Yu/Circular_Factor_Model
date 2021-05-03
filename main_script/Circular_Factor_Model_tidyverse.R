@@ -267,6 +267,6 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
   # }))
   sfStop()
   waic_group = waic_compute_group(n_pos,pos_pred_group)
-  return(list(beta_i=beta_master,psi=yes_master,zeta=no_master,kappa_j=kappa_master,omega=omega_master,
-              xi_inv=ccc_master,likeli=likeli_chain,waic_group = waic_group,cluster_seed=cluster_seed))
+  return(list(beta_i=beta_master, psi=yes_master, zeta=no_master, kappa_j=kappa_master, omega=omega_master,
+              xi_inv=ccc_master,likeli=likeli_chain,waic_group = waic_group, cluster_seed=cluster_seed, hyperparams= hyperparams))
 }
