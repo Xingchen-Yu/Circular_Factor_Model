@@ -1,5 +1,6 @@
 ## don't forget to change bessel function
-SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b = 1/10, ccc_a = 1, ccc_b=25, kappa_a = 1, omega_sd=0.1, kappa_sd=0.5,
+## change mu = 0;
+SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b = 1/10,mu = 0, ccc_a = 1, ccc_b=25, kappa_a = 1, omega_sd=0.1, kappa_sd=0.5,
                                                                       i_epi_lower = 0.005, i_epi_upper = 0.04, j_epi_lower = 0.01 ,j_epi_upper = 0.105,
                                                                       i_leap = 10, j_leap = 10,skip = 50, jitter = T, WAIC_group = T),
                 initial_values=NULL,core=2,cluster_seed=1234){
@@ -12,7 +13,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
   ### compiling cpp code
   print('compiling Rcpp Code locally')
   sourceCpp(code = RcppCode)
-  print('compiling locally finished')
+  print('Local compilation finished')
   ###Set up parallel environment
   sfInit(parallel=TRUE,cpus=core)
   sfClusterSetupRNG( type="RNGstream",seed=cluster_seed)
@@ -22,7 +23,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
   iter = n_pos * thin + burnin
   jitter = hyperparams[['jitter']]
   
-  mu = 0
+  mu = hyperparams[['mu']]
   a = hyperparams[['a']]
   b = hyperparams[['b']]
   ccc_a = hyperparams[['ccc_a']]
@@ -101,7 +102,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
   nr_par = round(seq(0,nr,length.out = core+1))
   nc_par = round(seq(0,nc,length.out = core+1))
   ## work here
-  sfExport("ymat","nr","nc",'beta_i','tau_yes','tau_no','kappa_j','kappa_a','ccc',
+  sfExport("ymat","nr","nc",'beta_i','tau_yes','tau_no','kappa_j','kappa_a','ccc','mu',
            't_sig','omega','cbeta_prior','a','b','omega_sd','nr_par','nc_par','RcppCode')
   
   # sfExportAll()
@@ -219,7 +220,7 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
       sfExport("tau_no")
       ################################################################################
       ### update hyperparameter \omega for \beta_i's
-      out = update_omega(omega,beta_i,nr,a,b,omega_sd)
+      out = update_omega(omega,beta_i,mu,nr,a,b,omega_sd)
       omega = out[[1]]
       omega_ratio = omega_ratio + out[[2]]
       cbeta_prior = lol * omega
@@ -269,5 +270,5 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
   waic_group = waic_compute_group(n_pos,pos_pred_group)
   return(list(beta_i=beta_master, psi=yes_master, zeta=no_master, kappa_j=kappa_master, omega=omega_master,
               xi_inv=ccc_master,likeli=likeli_chain,waic_group = waic_group, cluster_seed=cluster_seed, hyperparams= hyperparams,
-              n_pos = n_pos,thin=thin, burnin=burnin))
+              n_pos = n_pos,thin=thin, burnin=burnin, core = core, initial_values = initial_values))
 }

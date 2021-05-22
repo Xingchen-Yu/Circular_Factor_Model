@@ -2,15 +2,12 @@ RcppCode = '
 
 #include <RcppArmadillo.h>
 #include <Rmath.h>
-#include<functional>  
-#include <boost/math/special_functions/bessel.hpp>
 using namespace Rcpp;
 
 // Enable C++11 via this plugin (Rcpp 0.10.3 or later)
 // [[Rcpp::plugins("cpp11")]]
 
 //[[Rcpp::depends(RcppArmadillo)]]
-//[[Rcpp::depends(BH)]]
 
 const double pi2 = pow(M_PI,2);
 const double pi22 = 2 * pow(M_PI,2);
@@ -21,7 +18,6 @@ const double EPS = 3e-12;
 const double FPMIN = 1e-30;
 const double p = 2;
 const arma::mat dp = arma::eye(p,p);
-const double mu = 0;
 const double log2_p_pi = log(2) + log(M_PI);
 
 arma::vec s_to_e(double angle, arma::vec x){
@@ -101,13 +97,33 @@ double betaInc_log_lower(double a, double b, double x) {
   }
 }
 
+double bessi0_exp(double x)
+{
+  double ax,ans;
+  double y;
+  if ((ax=fabs(x)) < 3.75) {
+    y=x/3.75;
+    y*=y;
+    ans=(1.0+y*(3.5156229+y*(3.0899424+y*(1.2067492
+                                            +y*(0.2659732+y*(0.360768e-1+y*0.45813e-2))))))*exp(-ax);
+  } else {
+    y=3.75/ax;
+    ans=(1/sqrt(ax))*(0.39894228+y*(0.1328592e-1
+                                      +y*(0.225319e-2+y*(-0.157565e-2+y*(0.916281e-2
+                                                                           +y*(-0.2057706e-1+y*(0.2635537e-1+y*(-0.1647633e-1
+                                                                           +y*0.392377e-2))))))));
+  }
+  return ans;
+}
+
+
 double dgamma_log (double x, double a, double b){
   return a * log(b) - lgamma(a) + (a - 1) * log(x) - b * x;
 }
 
-double likeli_omega(double omega, arma::vec beta,int nr,double a, double b){
-  return  - nr * (log2_p_pi + log(boost::math::cyl_bessel_i(0,omega))) +
-    omega * sum(cos(beta-mu)) + dgamma_log (omega, a, b);
+double likeli_omega(double omega, arma::vec beta,double mu, int nr,double a, double b){
+  return  - nr * (log2_p_pi + log(bessi0_exp(omega))) +
+    omega * sum(cos(beta - mu)-1) + dgamma_log (omega, a, b);
 }
 
 double sb_c(double x){
@@ -149,7 +165,7 @@ arma::mat impute_NA(arma::uvec na, arma::uvec i_index, arma::uvec j_index, arma:
 }
 
 
-double likeli_beta (double omega, double beta, arma::vec tau_yes,
+double likeli_beta (double omega, double beta, double mu, arma::vec tau_yes,
                     arma::vec tau_no,arma::vec kappa ,int nc,arma::rowvec ymat_row){
 
   const arma::vec asset = sb_c_vec(square(acos(cos(tau_no-beta))) - square(acos(cos(tau_yes-beta))));
@@ -332,7 +348,7 @@ arma::vec gradient_tau_no(double tau_no,arma::vec beta,double shape,const int nr
 
 // [[Rcpp::export]]
 List update_beta(int t, arma::vec nr_par, arma::vec epsilon_vec, arma::vec epsilon2_vec, arma::vec leap_vec,int nc, double omega,
-                      arma::vec cbeta_prior, arma::vec beta,arma::vec tau_yes,arma::vec tau_no,arma::vec kappa,arma::mat ymat){
+                      arma::vec cbeta_prior, arma::vec beta,double mu, arma::vec tau_yes,arma::vec tau_no,arma::vec kappa,arma::mat ymat){
   arma::vec nu = arma::zeros(p);
   arma::vec x_temp = arma::zeros(p);
   arma::vec x = arma::zeros(p);
@@ -354,7 +370,7 @@ for(int i = start; i< end; i++,count++ ){
     nu = arma::randn(p);
     nu = (dp - x * x.t()) * nu;
   
-    h = likeli_beta(omega,beta_prev,tau_yes,tau_no,kappa,nc,ymat_row) - as_scalar(0.5 * nu.t() * nu);
+    h = likeli_beta(omega,beta_prev,mu,tau_yes,tau_no,kappa,nc,ymat_row) - as_scalar(0.5 * nu.t() * nu);
     for(int j = 0; j < leap; j++) {
       nu = nu + epsilon2 * gradient_beta(cbeta_prior, beta_new, tau_yes, tau_no,kappa, nc, ymat_row);
       nu = (dp - x * x.t()) * nu;
@@ -374,7 +390,7 @@ for(int i = start; i< end; i++,count++ ){
       nu = nu = (dp - x * x.t()) * nu;
 
     }
-    h_new = likeli_beta(omega,beta_new,tau_yes,tau_no,kappa,nc,ymat_row) - as_scalar(0.5 * nu.t() * nu);
+    h_new = likeli_beta(omega,beta_new,mu,tau_yes,tau_no,kappa,nc,ymat_row) - as_scalar(0.5 * nu.t() * nu);
     accept = exp(h_new - h);
     if(accept < as_scalar(arma::randu(1))){
       beta_new = beta_prev;
@@ -507,14 +523,14 @@ for(int j = start; j< end; j++,count++ ){
 }
 
 // [[Rcpp::export]]
-List update_omega(double omega, arma::vec beta, int nr, double a, double b,double omega_sd){
+List update_omega(double omega, arma::vec beta,double mu, int nr, double a, double b,double omega_sd){
   double eta = log(omega);
   double eta_new = omega_sd * as_scalar(arma::randn(1)) + eta;
   double omega_new = exp(eta_new);
   double accept;
   int accept_out = 1;
   
-  accept = exp(likeli_omega(omega_new,beta,nr,a,b) + eta_new - likeli_omega(omega,beta,nr,a,b) - eta);
+  accept = exp(likeli_omega(omega_new,beta,mu,nr,a,b) + eta_new - likeli_omega(omega,beta,mu,nr,a,b) - eta);
   if(accept < as_scalar(arma::randu(1))){
     omega_new = omega;
     accept_out = 0;

@@ -3,7 +3,7 @@ wrapper_kappa = function(t){
 }
 
 wrapper_beta = function(t){
-  update_beta(t,nr_par,delta,delta2,leap,nc,omega,cbeta_prior,beta_i,tau_yes,tau_no,kappa_j,ymat)
+  update_beta(t,nr_par,delta,delta2,leap,nc,omega,cbeta_prior,beta_i,mu,tau_yes,tau_no,kappa_j,ymat)
 }
 
 wrapper_yes = function(t){

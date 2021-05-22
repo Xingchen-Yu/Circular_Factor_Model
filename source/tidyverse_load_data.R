@@ -97,6 +97,6 @@ get_rollcall_data = function(house,h_s,hn,threshold = 0.4){
     print('Check flip floppers')
   }
   
-  return(list(full_data_filtered,dup_name_freq,missing_40_percent))
+  return(list(data = full_data_filtered,flip_floppers = dup_name_freq, delinquents = missing_40_percent))
 }
 
