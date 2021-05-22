@@ -22,7 +22,8 @@ out = get_rollcall_data(house,h_s,hn,threshold = 0.4)
 # dup_name = out[[2]]
 # filtered_legislator = out[[3]]
 set.seed(2021)
-master = SLFM(out, n_pos=100,burnin=100,thin = 1, hyperparams=list(a = 1, b = 1/10,mu =0, ccc_a = 1, ccc_b=25, kappa_a = 1, omega_sd=0.1, kappa_sd=0.5,
+out = matrix(sample(c(0,1),1000, T, prob=c(0.7,0.3)),100,10)
+master = SLFM(out, n_pos=100,burnin=100,thin = 1,congress = F, hyperparams=list(a = 1, b = 1/10,mu =0, ccc_a = 1, ccc_b=25, kappa_a = 1, omega_sd=0.1, kappa_sd=0.5,
                                                                     i_epi_lower = 0.01, i_epi_upper = 0.08, j_epi_lower = 0.01 ,j_epi_upper = 0.105,
                                                                     i_leap = 10, j_leap = 10,skip = 50, jitter = T, WAIC_group = T),
                                                                     initial_values=NULL,core=10,cluster_seed=8888)

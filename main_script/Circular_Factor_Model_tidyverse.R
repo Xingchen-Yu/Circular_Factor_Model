@@ -1,6 +1,6 @@
 ## don't forget to change bessel function
 ## change mu = 0;
-SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b = 1/10,mu = 0, ccc_a = 1, ccc_b=25, kappa_a = 1, omega_sd=0.1, kappa_sd=0.5,
+SLFM = function(out, n_pos=1000,burnin=500,thin = 1, congress = T, hyperparams=list(a = 1, b = 1/10,mu = 0, ccc_a = 1, ccc_b=25, kappa_a = 1, omega_sd=0.1, kappa_sd=0.5,
                                                                       i_epi_lower = 0.005, i_epi_upper = 0.04, j_epi_lower = 0.01 ,j_epi_upper = 0.105,
                                                                       i_leap = 10, j_leap = 10,skip = 50, jitter = T, WAIC_group = T),
                 initial_values=NULL,core=2,cluster_seed=1234){
@@ -33,11 +33,16 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
   WAIC_group = hyperparams[['WAIC_group']]
   
   #################
-  ymat = as.matrix(out[[1]] %>% select(-bioname,-name_district,-icpsr))
-  pol_info = out[[1]] %>% select(bioname,name_district,icpsr)
-  dem = grep("\\(D",pol_info$name_district)
-  gop = grep("\\(R",pol_info$name_district)
-  ind = grep("\\(I",pol_info$name_district)
+  ### https://voteview.com/data
+  if(congress == T){
+    ymat = as.matrix(out[[1]] %>% select(-bioname,-name_district,-icpsr))
+    pol_info = out[[1]] %>% select(bioname,name_district,icpsr)
+    dem = grep("\\(D",pol_info$name_district)
+    gop = grep("\\(R",pol_info$name_district)
+    ind = grep("\\(I",pol_info$name_district)
+  }else{
+    ymat = out
+  }
   rm(out)
   #################
   nr = nrow(ymat)
@@ -58,14 +63,18 @@ SLFM = function(out, n_pos=1000,burnin=500,thin = 1, hyperparams=list(a = 1, b =
     ccc = initial_values[['ccc']]
     
   }else{
-    
-    # print("For congressional voting data, it's recommended to initialize the democrats on the upper left half circle and 
-    #       republicans on the upper right half circle for faster convergence.")
-    
+
     kappa_j = rep(0.1,nc)
     beta_i = rep(0,nr)
-    beta_i[dem] = runif(length(dem),-pi/2,0)
-    beta_i[gop] = runif(length(gop),0,pi/2)
+    if(congress==T){
+      ### For congressional voting data, it's recommended to initialize the democrats on the upper left half circle and 
+      ### republicans on the upper right half circle for faster convergence.
+      beta_i[dem] = runif(length(dem),-pi/2,0)
+      beta_i[gop] = runif(length(gop),0,pi/2)
+      beta_i[ind] = rep(0,length(ind))
+    }else{
+      beta_i = runif(nr,-pi/2,pi/2)
+    }
     tau_no = runif(nc,-pi,pi)
     tau_yes = runif(nc,-pi,pi)
     omega = a/b
