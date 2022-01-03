@@ -1,6 +1,7 @@
+# This repository is superseded by https://github.com/Xingchen-Yu/SLFM1D. 
+
 # Circular Factor Model
 [![DOI](https://zenodo.org/badge/271097395.svg)](https://zenodo.org/badge/latestdoi/271097395)
-This repository is superseded by https://github.com/Xingchen-Yu/SLFM1D .
 ## Data
 
 Roll call data for the U.S. House of Representatives (100th  to 116th) is obtained from voteview.com.  Each data is binary and contains some missing values. 
