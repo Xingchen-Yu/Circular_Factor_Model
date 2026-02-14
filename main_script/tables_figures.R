@@ -1,4 +1,4 @@
-setwd("F:/Study_Backedup/UCSC/depository/Circular_Factor_Model")
+setwd("D:/Study_Backedup/UCSC/depository/Circular_Factor_Model")
 library(stringr)
 library(plotrix)
 
@@ -42,6 +42,11 @@ rank_all = round(t(apply(rank_master,1,function(x) quantile(x,probs = c(0.025,0.
 rownames(rank_all) = pol
 rm(beta_master)
 ########################
+rownames(beta_master) = pol
+library(tidyverse)
+beta_master = as_tibble(t(beta_master))
+write_csv(beta_master,file='./H116_posterior_beta_estimates.csv')
+beta_master = read_csv(file='./H116_posterior_beta_estimates.csv')
 
 
 #######Table 1###################################
