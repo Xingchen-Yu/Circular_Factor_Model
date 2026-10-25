@@ -27,6 +27,6 @@ print(f"omega split-Rhat {split_rhat(np.stack([p.omega for p in posts])):.3f}")
 print("worst legislators:")
 for i in np.argsort(-np.nan_to_num(rh))[:10]:
     print(f"  {leg.label[i]:<45} Rhat {rh[i]:.3f}  per-chain median rank {[int(np.median(r)) for r in ranks[:, :, i]]}")
-for name in ["Gaetz", "Pressley", "Omar", "Tlaib", "Ocasio", "Amash", "Massie"]:
+for name in ["Gaetz", "Rooney", "Lofgren", "Defazio", "Pressley", "Omar", "Tlaib", "Ocasio", "Amash", "Massie"]:
     i = int(leg.index[leg.label.str.startswith(name)][0])
     print(f"  {leg.label[i]:<45} Rhat {rh[i]:.3f}  per-chain median rank {[int(np.median(r)) for r in ranks[:, :, i]]}")
