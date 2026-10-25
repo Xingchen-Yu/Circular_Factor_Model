@@ -130,6 +130,28 @@ the paper's ranges (β: U(0.01, 0.04); ψ, ζ: U(0.01, 0.105); L ~ U{1..10}).
 * Non-voting delegates (DC, PR, GU, VI, AS, MP) are excluded, as in the
   original `.ord` files (`include_delegates=True` keeps them).
 
+## Run length and mixing
+
+The sampler mixes slowly on the House data, both here and in the original R
+code; this is a property of the model and the data, not of the port.
+
+* **Paper:** 20,000 draws kept after a burn-in of 20,000 to 80,000
+  iterations depending on the House (median ~30,000). Convergence was judged
+  from the log-likelihood trace and Gelman-Rubin across several chains.
+* **Original R code:** `R/README.md` recommends 100,000 iterations with
+  80,000 burn-in for the 112th and 116th Houses (1-3 days on 12 CPU cores).
+* **This port, 116th House, first session** (one seed): the log-likelihood
+  by 10k block is -29318, -28769, -28625, -28607, -28594, so it levels off
+  only after ~30-40k iterations. Chains with different seeds can still
+  disagree on individual legislators (e.g. Gaetz's median rank 400 vs 411
+  after 30k + 20k).
+
+The defaults (`--burnin 30000 --samples 20000`) match the paper's median.
+For final results, run several chains per House with
+`--burnin 80000` or more and check them with `scripts/chain_diagnostics.py`.
+A single 116th House chain runs at about 22 it/s on an RTX 5070 Ti, so
+100,000 iterations take about 75 minutes.
+
 ## Data source check (2026-10-24)
 
 `scripts/check_data_sources.py` compares the original data in `../R/data` with the
