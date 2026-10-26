@@ -33,6 +33,10 @@ uv run python scripts/run_congress.py 116 --sessions 1
 # 100th through 119th Houses (data is downloaded from voteview.com)
 uv run python scripts/run_congress.py 100-119
 
+# Continue those chains for 50k more draws, using the first run as burn-in
+uv run python scripts/run_congress.py 100-119 --resume results --samples 50000 \
+    --discard-old --out results_ext
+
 # Compare with the original R results
 uv run python scripts/compare_with_original.py results/H116_s1 \
     path/to/H116_posterior_beta_estimates.csv   # from the original R run (not in the repo)
@@ -64,6 +68,7 @@ chamber_summary(post, party)              # chi_0, chi_D, chi_R, grouped WAIC
 | `model.py` | `SLFM()`, `update_kappa`, `update_omega`, `waic_cpp` | priors, likelihood, Gibbs sweep, sampler, WAIC |
 | `data.py` | `get_rollcall_data`, `readKH2`, `ymat_spit` | voteview download and preprocessing |
 | `analysis.py` | parts of `tables_figures.R` | ranks, circular variance, summaries |
+| `placement.py` | (new) | places members excluded by the missing-vote rule |
 
 ## What the sampler does
 
@@ -103,6 +108,12 @@ the paper's ranges (β: U(0.01, 0.04); ψ, ζ: U(0.01, 0.105); L ~ U{1..10}).
   y | θ, must stay at the prior); and a consistency check of the carried
   log-likelihood matrix. Injected bugs (a dropped Jacobian, an off-by-one in
   the ξ conjugate, stale likelihood bookkeeping) make these tests fail.
+  Also: thinned roll-call draws are exactly the matching rows of the full
+  chain, and a chain resumed from its saved state reproduces one
+  uninterrupted run draw for draw.
+* **`test_placement.py`**: the grid sampler for excluded members against the
+  von Mises prior (no votes) and against the exact conditional computed with
+  scipy's incomplete beta function (5 to 200 votes).
 
 ## Differences from the original code
 
@@ -130,6 +141,23 @@ the paper's ranges (β: U(0.01, 0.04); ψ, ζ: U(0.01, 0.105); L ~ U{1..10}).
 * Non-voting delegates (DC, PR, GU, VI, AS, MP) are excluded, as in the
   original `.ord` files (`include_delegates=True` keeps them).
 
+## Members excluded by the missing-vote rule
+
+Following the paper, legislators missing more than 40% of the roll calls are
+left out of the fit (`max_missing=0.4`). These are mostly members who
+served part of the term (resignations, deaths, special elections) and the
+Speaker, who rarely votes. `run_congress.py` places everyone among them who
+cast at least `--place-min-votes` votes (default 25) *after* the fit: for
+each saved posterior draw of the roll-call parameters, the member's ideal
+point is drawn from its exact conditional on a fine grid over the circle
+(`circfactor/placement.py`). This is a cut posterior (Plummer 2015): the
+roll calls inform the member's position, but the member's votes do not
+change the roll-call parameters, so the fitted members' results (and χ, WAIC)
+are exactly those of the paper's procedure. Placed members appear in
+`legislators.csv` with `placed=True`; their rank is their position among the
+fitted members. See [`docs/cut_posterior_simulation.md`](docs/cut_posterior_simulation.md)
+for a simulation check.
+
 ## Run length and mixing
 
 The sampler mixes slowly on the House data, both here and in the original R
@@ -147,8 +175,10 @@ code; this is a property of the model and the data, not of the port.
   after 30k + 20k).
 
 The defaults (`--burnin 30000 --samples 20000`) match the paper's median.
-For final results, run several chains per House with
-`--burnin 80000` or more and check them with `scripts/chain_diagnostics.py`.
+For final results, run several chains per House and check them with
+`scripts/chain_diagnostics.py`; a House that has not converged can be
+continued with `--resume` (the continuation is identical to one longer run,
+see `tests/test_model.py`).
 A single 116th House chain runs at about 22 it/s on an RTX 5070 Ti, so
 100,000 iterations take about 75 minutes.
 

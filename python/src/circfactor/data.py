@@ -37,6 +37,7 @@ class RollCallData:
     chamber: str
     congress: int
     dropped: pd.DataFrame  # legislators removed for excessive absence
+    dropped_votes: np.ndarray | None = None  # their votes, one row per row of ``dropped``
 
     @property
     def shape(self):
@@ -146,6 +147,7 @@ def load_congress(
     frac_missing = np.isnan(y).mean(axis=1)
     keep = frac_missing <= max_missing
     dropped = legislators[~keep].assign(frac_missing=frac_missing[~keep]).reset_index(drop=True)
+    dropped_votes = y[~keep]
     legislators = legislators[keep].assign(frac_missing=frac_missing[keep]).reset_index(drop=True)
     y = y[keep]
 
@@ -162,4 +164,5 @@ def load_congress(
         chamber=chamber,
         congress=congress,
         dropped=dropped,
+        dropped_votes=dropped_votes,
     )

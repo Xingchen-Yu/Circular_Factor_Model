@@ -158,3 +158,42 @@ def test_carried_loglik_matrix_is_consistent():
         fresh = loglik_matrix(state.beta, state.yes, state.no, state.kappa, data)
         np.testing.assert_allclose(np.asarray(state.ll), np.asarray(fresh), rtol=1e-12, atol=1e-12)
     assert n_rej > 0  # rejections happened, so the accept masks were exercised
+
+
+def _small_votes(seed=0, I=12, J=20):
+    rng = np.random.default_rng(seed)
+    y = rng.integers(0, 2, (I, J)).astype(float)
+    y[rng.random((I, J)) < 0.1] = np.nan
+    return y
+
+
+def test_bill_draws_are_thinned_and_paired():
+    """n_bill_draws keeps evenly spaced roll-call draws without changing the chain."""
+    from circfactor.model import sample
+
+    y = _small_votes()
+    cfg = lambda nb: SamplerConfig(burnin=100, n_samples=40, n_bill_draws=nb, seed=3, print_every=0)
+    full, thin = sample(y, config=cfg(40)), sample(y, config=cfg(10))
+    np.testing.assert_array_equal(full.beta, thin.beta)
+    assert thin.yes.shape == (10, y.shape[1]) and len(np.unique(thin.bill_draw_index)) == 10
+    for name in ("yes", "no", "kappa"):
+        np.testing.assert_array_equal(getattr(thin, name), getattr(full, name)[thin.bill_draw_index])
+    assert sample(y, config=cfg(0)).yes.shape == (0, y.shape[1])
+
+
+def test_resume_continues_the_chain(tmp_path):
+    """A run resumed from its saved final state equals one uninterrupted run."""
+    from circfactor.model import Posterior, concatenate, sample
+
+    y = _small_votes(1)
+    cfg = lambda burnin, n: SamplerConfig(burnin=burnin, n_samples=n, n_bill_draws=n, seed=5, print_every=0)
+    whole = sample(y, config=cfg(100, 300))
+    first = sample(y, config=cfg(100, 200))
+    first.save(tmp_path / "p.npz")
+    first = Posterior.load(tmp_path / "p.npz")  # resume from disk, as run_congress does
+    both = concatenate(first, sample(y, config=cfg(0, 100), resume=first.final_state))
+    for name in ("beta", "yes", "no", "kappa", "omega", "xi", "ll_legislator", "loglik_trace"):
+        np.testing.assert_allclose(getattr(both, name), getattr(whole, name), rtol=1e-12, atol=1e-12, err_msg=name)
+    for k, v in whole.waic_pointwise.items():
+        assert both.waic_pointwise[k] == pytest.approx(v, rel=1e-10)
+    np.testing.assert_array_equal(both.bill_draw_index, whole.bill_draw_index)

@@ -33,7 +33,7 @@ accept/reject step uses float64, which keeps the chain exact (see ``ghmc.py``).
 from __future__ import annotations
 
 import time
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from functools import partial
 from typing import NamedTuple
 
@@ -65,6 +65,9 @@ class SamplerConfig:
     n_samples: int = 20_000
     burnin: int = 30_000
     thin: int = 1
+    # Roll-call draws (psi, zeta, kappa) are large (S x J each), so only
+    # n_bill_draws evenly spaced draws out of the n_samples are kept (0: none).
+    n_bill_draws: int = 1000
     jitter_every: int = 50  # redraw step sizes / leapfrog counts this often
     beta_step: tuple[float, float] = (0.01, 0.04)  # uniform range for beta step sizes
     tau_step: tuple[float, float] = (0.01, 0.105)  # ... for psi and zeta
@@ -294,9 +297,9 @@ class Posterior:
     """Posterior draws (angles in (-pi, pi]) plus diagnostics."""
 
     beta: np.ndarray  # (S, I)
-    yes: np.ndarray  # (S, J)  psi
-    no: np.ndarray  # (S, J)   zeta
-    kappa: np.ndarray  # (S, J)
+    yes: np.ndarray  # (B, J)  psi, B = n_bill_draws evenly spaced draws (see bill_draw_index)
+    no: np.ndarray  # (B, J)   zeta
+    kappa: np.ndarray  # (B, J)
     omega: np.ndarray  # (S,)
     xi: np.ndarray  # (S,)
     ll_legislator: np.ndarray  # (S, I) per-legislator log-likelihood (grouped WAIC)
@@ -307,6 +310,9 @@ class Posterior:
     config: dict
     seconds: float
     tuning: dict = field(default_factory=dict)
+    bill_draw_index: np.ndarray | None = None  # (B,) rows of beta/omega/xi paired with yes/no/kappa
+    # Final sampler state (values, tuning, RNG key, WAIC sums) for resume_state().
+    final_state: dict = field(default_factory=dict)
 
     def waic_grouped(self) -> dict:
         """Grouped (by legislator) WAIC as in the paper's Table 4."""
@@ -318,8 +324,11 @@ class Posterior:
         return {"lppd": lppd, "p_waic": p_waic, "elpd_waic": lppd - p_waic, "waic_deviance": -2 * (lppd - p_waic)}
 
     def save(self, path):
-        arrays = {k: v for k, v in asdict(self).items() if isinstance(v, np.ndarray)}
-        meta = {k: v for k, v in asdict(self).items() if not isinstance(v, np.ndarray)}
+        d = asdict(self)
+        state = d.pop("final_state")
+        arrays = {k: v for k, v in d.items() if isinstance(v, np.ndarray)}
+        meta = {k: v for k, v in d.items() if not isinstance(v, np.ndarray) and v is not None}
+        arrays |= {f"state__{k}": np.asarray(v) for k, v in state.items()}
         np.savez_compressed(path, **arrays, meta=np.array(repr(meta)))
 
     @classmethod
@@ -328,7 +337,14 @@ class Posterior:
 
         z = np.load(path, allow_pickle=False)
         meta = ast.literal_eval(str(z["meta"]))
-        return cls(**{k: z[k] for k in z.files if k != "meta"}, **meta)
+        state = {k.removeprefix("state__"): z[k] for k in z.files if k.startswith("state__")}
+        arrays = {k: z[k] for k in z.files if k != "meta" and not k.startswith("state__")}
+        return cls(**arrays, **meta, final_state=state)
+
+    def bill_draw_pairs(self):
+        """(beta, omega) rows paired with the saved roll-call draws."""
+        idx = self.bill_draw_index if self.bill_draw_index is not None else np.arange(self.yes.shape[0])
+        return self.beta[idx], self.omega[idx]
 
 
 def initial_state(I, J, key, priors: Priors, cfg: SamplerConfig, party=None) -> dict:
@@ -367,13 +383,17 @@ def sample(
     config: SamplerConfig = SamplerConfig(),
     party=None,
     init: dict | None = None,
+    resume: dict | None = None,
 ) -> Posterior:
     """Run the MCMC sampler on an (I, J) vote matrix (1 Yea / 0 Nay / NaN missing).
 
     Args:
       party: optional length-I array of "D"/"R"/... labels for initialisation.
       init: optional dict of initial values (beta, yes, no, kappa, xi, omega)
-        overriding the defaults, e.g. to continue a previous run.
+        overriding the defaults.
+      resume: ``Posterior.final_state`` of an earlier run on the same data, to
+        continue that chain: its values, tuned step sizes, RNG stream and WAIC
+        sums carry over (use ``config.burnin = 0``; see ``concatenate``).
     """
     votes = np.asarray(votes, dtype=float)
     I, J = votes.shape
@@ -385,14 +405,16 @@ def sample(
     values = initial_state(I, J, k_init, priors, cfg, party)
     if init:
         values.update({k: v for k, v in init.items() if k in values})
+    tuning = dict(kappa_sd=jnp.full(J, cfg.kappa_prop_sd), beta_scale=jnp.ones(I), yes_scale=jnp.ones(J), no_scale=jnp.ones(J))
+    if resume:
+        values.update({k: resume[k] for k in values})
+        tuning = {k: jnp.asarray(resume[k], jnp.float64) for k in tuning}
+        key = jax.random.wrap_key_data(jnp.asarray(resume["key"]))
     values = {k: jnp.asarray(v, jnp.float64) for k, v in values.items()}
     state = State(
         **values,
         ll=loglik_matrix(values["beta"], values["yes"], values["no"], values["kappa"], data),
-        kappa_sd=jnp.full(J, cfg.kappa_prop_sd),
-        beta_scale=jnp.ones(I),
-        yes_scale=jnp.ones(J),
-        no_scale=jnp.ones(J),
+        **tuning,
     )
 
     block = cfg.jitter_every
@@ -430,12 +452,18 @@ def sample(
         return state, waic, summary, draws
 
     waic = WaicAccum(jnp.full((I, J), -jnp.inf), jnp.zeros((I, J)), jnp.zeros((I, J)), jnp.zeros((), jnp.int32))
+    if resume and "waic_lse" in resume:  # omit the waic_* entries to start the sums afresh
+        waic = WaicAccum(*(jnp.asarray(resume[f"waic_{f}"]) for f in WaicAccum._fields))
     S = cfg.n_samples
+    B = min(cfg.n_bill_draws, S)
+    bill_index = (np.arange(B) * S) // B + (S // B - 1 if B else 0)  # evenly spaced, ending near S - 1
+    bill_row = np.full(S, -1)
+    bill_row[bill_index] = np.arange(B)
     out = {
         "beta": np.empty((S, I)),
-        "yes": np.empty((S, J), np.float32),
-        "no": np.empty((S, J), np.float32),
-        "kappa": np.empty((S, J), np.float32),
+        "yes": np.empty((B, J), np.float32),
+        "no": np.empty((B, J), np.float32),
+        "kappa": np.empty((B, J), np.float32),
         "omega": np.empty(S),
         "xi": np.empty(S),
         "ll_legislator": np.empty((S, I), np.float32),
@@ -460,8 +488,13 @@ def sample(
             idx = np.arange(it - cfg.burnin, it - cfg.burnin + n)
             keep = (idx % cfg.thin) == cfg.thin - 1
             m = int(keep.sum())
+            rows = bill_row[filled : filled + m]
             for name, arr in zip(out, draws):
-                out[name][filled : filled + m] = np.asarray(arr)[keep]
+                kept = np.asarray(arr)[keep]
+                if name in ("yes", "no", "kappa"):
+                    out[name][rows[rows >= 0]] = kept[rows >= 0]
+                else:
+                    out[name][filled : filled + m] = kept
             filled += m
             n_post_iter += n
             for name, v in zip(acc_sum, summary[:5]):
@@ -512,4 +545,40 @@ def sample(
             "yes_scale_mean": float(state.yes_scale.mean()),
             "no_scale_mean": float(state.no_scale.mean()),
         },
+        bill_draw_index=bill_index,
+        final_state={
+            **{k: np.asarray(getattr(state, k)) for k in ("beta", "yes", "no", "kappa", "xi", "omega", "kappa_sd", "beta_scale", "yes_scale", "no_scale")},
+            "key": np.asarray(jax.random.key_data(key)),
+            **{f"waic_{f}": np.asarray(v) for f, v in zip(WaicAccum._fields, waic)},
+        },
+    )
+
+
+def concatenate(first: Posterior, second: Posterior, drop_first: bool = False) -> Posterior:
+    """Join a run and its continuation (``sample(..., resume=first.final_state)``).
+
+    With ``drop_first`` the first run's draws are treated as burn-in: only the
+    continuation's draws are kept (the log-likelihood traces are still joined).
+    WAIC comes from the continuation's running sums, which include the first
+    run's unless its ``waic_*`` entries were dropped from ``resume``.
+    """
+    if drop_first:
+        return replace(second, loglik_trace=np.concatenate([first.loglik_trace, second.loglik_trace]))
+    S1 = first.beta.shape[0]
+    cat = lambda a, b: np.concatenate([a, b])
+    n1, n2 = S1, second.beta.shape[0]
+    accept = {k: (first.accept[k] * n1 + second.accept[k] * n2) / (n1 + n2) for k in first.accept}
+    return replace(
+        second,
+        beta=cat(first.beta, second.beta),
+        yes=cat(first.yes, second.yes),
+        no=cat(first.no, second.no),
+        kappa=cat(first.kappa, second.kappa),
+        omega=cat(first.omega, second.omega),
+        xi=cat(first.xi, second.xi),
+        ll_legislator=cat(first.ll_legislator, second.ll_legislator),
+        loglik_trace=cat(first.loglik_trace, second.loglik_trace),
+        accept=accept,
+        seconds=first.seconds + second.seconds,
+        bill_draw_index=cat(first.bill_draw_index, second.bill_draw_index + S1),
     )

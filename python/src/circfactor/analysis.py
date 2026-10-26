@@ -29,6 +29,11 @@ def orient(post: Posterior, party) -> Posterior:
         m = circular_mean(post.beta, axis=0)
         if circular_mean(m[dem]) > circular_mean(m[rep]):
             post.beta, post.yes, post.no = -post.beta, -post.yes, -post.no
+            # Reflect the saved final state too, so a resumed chain continues in
+            # the same orientation (the posterior is reflection invariant).
+            for k in ("beta", "yes", "no"):
+                if k in post.final_state:
+                    post.final_state[k] = -post.final_state[k]
     return post
 
 
@@ -46,6 +51,26 @@ def legislator_summary(post: Posterior, legislators: pd.DataFrame) -> pd.DataFra
     df["beta_median"] = q(beta, 0.5)
     df["beta_q025"], df["beta_q975"] = q(beta, 0.025), q(beta, 0.975)
     df["beta_circ_var"] = circular_variance(beta.T)
+    df["rank_median"] = q(ranks, 0.5)
+    df["rank_q025"], df["rank_q975"] = q(ranks, 0.025), q(ranks, 0.975)
+    return df
+
+
+def placed_summary(placed, beta_fit, legislators: pd.DataFrame) -> pd.DataFrame:
+    """Summaries for members placed after the fit (``placement.place_legislators``).
+
+    ``placed`` is (B, K) and ``beta_fit`` the (B, I) fitted members' draws
+    paired row by row (``Posterior.bill_draw_pairs``).  A placed member's rank
+    is their position among the I fitted members (1..I+1), so the fitted
+    members' ranks are the same with or without placed members.
+    """
+    ranks = (beta_fit[:, :, None] < placed[:, None, :]).sum(1) + 1
+    q = lambda a, p: np.quantile(a, p, axis=0)
+    df = legislators.reset_index(drop=True).copy()
+    df["beta_mean"] = circular_mean(placed, axis=0)
+    df["beta_median"] = q(placed, 0.5)
+    df["beta_q025"], df["beta_q975"] = q(placed, 0.025), q(placed, 0.975)
+    df["beta_circ_var"] = circular_variance(placed.T)
     df["rank_median"] = q(ranks, 0.5)
     df["rank_q025"], df["rank_q975"] = q(ranks, 0.025), q(ranks, 0.975)
     return df
