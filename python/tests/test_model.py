@@ -57,8 +57,17 @@ def _simulate_votes(key, beta, yes, no, kappa, mask):
     return Data(jnp.where(mask, jnp.where(y, 1.0, -1.0), 0.0), mask)
 
 
-@pytest.mark.parametrize("grad_dtype,rotation", [("float32", False), ("float64", False), ("float32", True)])
-def test_geweke_joint_distribution(grad_dtype, rotation):
+@pytest.mark.parametrize(
+    "grad_dtype,rotation,flip,flip_kappa",
+    [
+        ("float32", False, False, True),
+        ("float64", False, False, True),
+        ("float32", True, False, True),
+        ("float32", False, True, True),
+        ("float32", False, True, False),
+    ],
+)
+def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa):
     """Geweke (2004) successive-conditional test of the whole Gibbs sweep.
 
     Each of N independent chains starts at an exact prior draw with data
@@ -73,7 +82,7 @@ def test_geweke_joint_distribution(grad_dtype, rotation):
     # Priors chosen so kappa stays moderate (the paper's xi prior makes kappa
     # extremely heavy tailed a priori, which no small data set can tame).
     priors = Priors(mu=0.4, omega_shape=2.0, omega_rate=0.5, kappa_shape=2.0, xi_shape=6.0, xi_rate=20.0)
-    cfg = SamplerConfig(omega_prop_sd=0.5, grad_dtype=grad_dtype, rotation_move=rotation)
+    cfg = SamplerConfig(omega_prop_sd=0.5, grad_dtype=grad_dtype, rotation_move=rotation, bill_flip=flip, bill_flip_kappa=flip_kappa)
     rng = np.random.default_rng(1)
     mask = jnp.asarray(rng.random((I, J)) > 0.1)
 
@@ -104,7 +113,8 @@ def test_geweke_joint_distribution(grad_dtype, rotation):
             state, stats = _sweep(k, state, jitter, data, priors, cfg)
         data = _simulate_votes(k_data, state.beta, state.yes, state.no, state.kappa, mask)
         state = state._replace(ll=loglik_matrix(state.beta, state.yes, state.no, state.kappa, data))
-        return (state, data), (stats.acc_beta.mean(), stats.acc_yes.mean(), stats.acc_kappa.mean())
+        acc = (stats.acc_beta.mean(), stats.acc_yes.mean(), stats.acc_kappa.mean())
+        return (state, data), acc + ((stats.acc_flip.mean(),) if flip else ())
 
     @jax.jit
     def run(key):
@@ -142,7 +152,7 @@ def test_carried_loglik_matrix_is_consistent():
     """After every sweep the carried matrix must equal a fresh evaluation."""
     I, J = 9, 11
     priors = Priors()
-    cfg = SamplerConfig()
+    cfg = SamplerConfig(bill_flip=True)
     rng = np.random.default_rng(3)
     mask = jnp.asarray(rng.random((I, J)) > 0.15)
     beta, yes, no, kappa, xi, omega = _draw_prior(jax.random.key(0), I, J, Priors(xi_shape=6.0, xi_rate=20.0))

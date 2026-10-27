@@ -58,6 +58,8 @@ def main():
     ap.add_argument("--tau-step", type=float, nargs=2, default=(0.01, 0.105))
     ap.add_argument("--no-adapt", action="store_true", help="keep the step-size ranges fixed (as in the paper)")
     ap.add_argument("--rotation", action="store_true", help="enable the common-rotation group move")
+    ap.add_argument("--bill-flip", action="store_true", help="enable the per-roll-call Yea/Nay mirror move (kappa rescaled)")
+    ap.add_argument("--bill-flip-fixed-kappa", action="store_true", help="with --bill-flip: keep kappa fixed in the mirror move")
     ap.add_argument("--grad-dtype", default="float32", choices=["float32", "float64"])
     ap.add_argument("--omega-mean", type=float, default=10.0, help="mean of the exponential prior on omega")
     ap.add_argument("--xi-rate", type=float, default=25.0, help="rate of the exponential prior on xi = 1/lambda")
@@ -100,6 +102,8 @@ def main():
                 adapt_steps=not args.no_adapt,
                 grad_dtype=args.grad_dtype,
                 rotation_move=args.rotation,
+                bill_flip=args.bill_flip,
+                bill_flip_kappa=not args.bill_flip_fixed_kappa,
                 seed=args.seed,
                 print_every=args.print_every,
             )

@@ -21,6 +21,7 @@ Each sweep reproduces the original Gibbs scheme:
     beta_i   geodesic HMC, all legislators in parallel
     psi_j    geodesic HMC, all roll calls in parallel
     zeta_j   geodesic HMC, all roll calls in parallel
+    flip     MH mirror move of each roll call's Yea/Nay pair (new; see below)
     omega    random-walk MH on log scale
     delta    exact draw of a common rotation of all angles (new; see below)
 
@@ -86,6 +87,13 @@ class SamplerConfig:
     # Off by default: it is exact, but on the 116th House every chain with it
     # converged more slowly in log-likelihood than every chain without it.
     rotation_move: bool = False
+    # MH mirror move per roll call: (psi, zeta, kappa) -> (zeta + pi, psi + pi,
+    # g kappa).  It keeps every legislator's predicted vote (same cut points)
+    # but moves the Yea/Nay pair between the side of the circle where the
+    # legislators are and the empty side, two local modes GHMC cannot cross.
+    # bill_flip_kappa rescales kappa by g so the link keeps its steepness.
+    bill_flip: bool = False
+    bill_flip_kappa: bool = True
     seed: int = 0
     print_every: int = 1000  # iterations; 0 to silence
 
@@ -123,6 +131,7 @@ class SweepStats(NamedTuple):
     acc_beta: jax.Array
     acc_yes: jax.Array
     acc_no: jax.Array
+    acc_flip: jax.Array
     acc_omega: jax.Array
     loglik: jax.Array
 
@@ -157,7 +166,7 @@ def log_prior_omega(omega, beta, priors: Priors):
 def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: SamplerConfig) -> tuple[State, SweepStats]:
     gdt = jnp.dtype(cfg.grad_dtype)
     data_g = Data(data.sign.astype(gdt), data.mask)
-    k_kappa, k_kappa_u, k_xi, k_beta, k_yes, k_no, k_om, k_om_u, k_rot = jax.random.split(key, 9)
+    k_kappa, k_kappa_u, k_xi, k_beta, k_yes, k_no, k_flip, k_om, k_om_u, k_rot = jax.random.split(key, 10)
     beta, yes, no, kappa, xi, omega, ll = state.beta, state.yes, state.no, state.kappa, state.xi, state.omega, state.ll
 
     # --- kappa_j: log-normal random walk MH --------------------------------
@@ -258,6 +267,32 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
     no = circle_to_angle(x)
     ll = info_n.aux.T
 
+    # --- mirror move of each roll call (psi, zeta) -> (zeta + pi, psi + pi) ----
+    # With a = rho(psi, beta_i), c = rho(zeta, beta_i) the move maps (a, c) to
+    # (pi - c, pi - a), so e_ij = (c - a)(c + a) becomes (c - a)(2 pi - a - c):
+    # same sign, magnitude scaled by r_i = (2 pi - a - c) / (a + c).  kappa is
+    # scaled by g = geometric mean of 1 / r_i over the roll call's voters;
+    # applying the move again gives 1 / g, so it is an involution with
+    # Jacobian g (the angle map is an isometry).
+    if cfg.bill_flip:
+        yes_f, no_f = wrap(no + jnp.pi), wrap(yes + jnp.pi)
+        if cfg.bill_flip_kappa:
+            s = jnp.abs(wrap(yes[None, :] - beta[:, None])) + jnp.abs(wrap(no[None, :] - beta[:, None]))
+            log_r = jnp.clip(jnp.log(s) - jnp.log(2 * jnp.pi - s), -20.0, 20.0)
+            n_obs = data.mask.sum(0)
+            log_g = jnp.where(data.mask, log_r, 0.0).sum(0) / jnp.maximum(n_obs, 1)
+        else:
+            log_g = jnp.zeros_like(kappa)
+        kappa_f = kappa * jnp.exp(log_g)
+        ll_f = loglik_matrix(beta, yes_f, no_f, kappa_f, data)
+        log_a = ll_f.sum(0) - ll.sum(0) + priors.kappa_shape * log_g - xi * (kappa_f - kappa)
+        acc_flip = (jnp.log(jax.random.uniform(k_flip, kappa.shape)) < log_a) & (kappa_f <= KAPPA_MAX)
+        yes, no = jnp.where(acc_flip, yes_f, yes), jnp.where(acc_flip, no_f, no)
+        kappa = jnp.where(acc_flip, kappa_f, kappa)
+        ll = jnp.where(acc_flip[None, :], ll_f, ll)
+    else:
+        acc_flip = jnp.zeros(kappa.shape, bool)
+
     # --- omega: log-normal random walk MH ----------------------------------------
     log_om = jnp.log(omega)
     log_om_p = log_om + cfg.omega_prop_sd * jax.random.normal(k_om)
@@ -275,7 +310,7 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
         delta = sample_von_mises(k_rot, -jnp.arctan2(S, C), omega * jnp.hypot(C, S))
         beta, yes, no = wrap(beta + delta), wrap(yes + delta), wrap(no + delta)
     new_state = state._replace(beta=beta, yes=yes, no=no, kappa=kappa, xi=xi, omega=omega, ll=ll)
-    stats = SweepStats(acc_kappa, info_b.accepted, info_y.accepted, info_n.accepted, acc_omega, ll.sum())
+    stats = SweepStats(acc_kappa, info_b.accepted, info_y.accepted, info_n.accepted, acc_flip, acc_omega, ll.sum())
     return new_state, stats
 
 
@@ -469,7 +504,7 @@ def sample(
         "ll_legislator": np.empty((S, I), np.float32),
     }
     trace = np.empty(n_iter)
-    acc_sum = {k: 0.0 for k in ("kappa", "beta", "yes", "no", "omega")}
+    acc_sum = {k: 0.0 for k in ("kappa", "beta", "yes", "no", "flip", "omega")}
     n_post_iter = 0
     filled = 0
     it = 0
@@ -497,7 +532,7 @@ def sample(
                     out[name][filled : filled + m] = kept
             filled += m
             n_post_iter += n
-            for name, v in zip(acc_sum, summary[:5]):
+            for name, v in zip(acc_sum, summary[:6]):
                 acc_sum[name] += float(np.mean(np.asarray(v))) * n
         elif it > 0 or b > 0:
             # Burn-in tuning (as in the R code: kappa proposal sd towards 30-60%).
@@ -520,6 +555,7 @@ def sample(
                 f"iter {it:>7}/{n_iter}  loglik {trace[it - 1]:>12.1f}  "
                 f"acc beta {float(summary.acc_beta.mean()):.2f} psi {float(summary.acc_yes.mean()):.2f} "
                 f"zeta {float(summary.acc_no.mean()):.2f} kappa {float(summary.acc_kappa.mean()):.2f} "
+                f"flip {float(summary.acc_flip.mean()):.3f} "
                 f"omega {float(summary.acc_omega):.2f}  omega={float(state.omega):.2f}  "
                 f"{rate:.1f} it/s",
                 flush=True,
@@ -567,7 +603,7 @@ def concatenate(first: Posterior, second: Posterior, drop_first: bool = False) -
     S1 = first.beta.shape[0]
     cat = lambda a, b: np.concatenate([a, b])
     n1, n2 = S1, second.beta.shape[0]
-    accept = {k: (first.accept[k] * n1 + second.accept[k] * n2) / (n1 + n2) for k in first.accept}
+    accept = {k: (first.accept.get(k, 0.0) * n1 + second.accept[k] * n2) / (n1 + n2) for k in second.accept}
     return replace(
         second,
         beta=cat(first.beta, second.beta),
