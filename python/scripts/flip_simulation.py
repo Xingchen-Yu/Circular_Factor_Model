@@ -7,6 +7,7 @@ with several chains per sampler variant:
   control:  the paper's scheme (jittering GHMC only)
   flip:     plus the mirror move with kappa rescaled
   flipfix:  plus the mirror move with kappa kept fixed
+  flipscale: the mirror move plus the joint scale move (scale_move)
 
 Each chain starts like the real runs: "Democrats" (true beta < 0) in
 (-pi/2, 0), "Republicans" in (0, pi/2), Yea/Nay positions uniform.
@@ -32,7 +33,12 @@ from circfactor.model import Data, Posterior, Priors, SamplerConfig, loglik_matr
 from circfactor.special import log_link_cdf  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1] / "results" / "sim_flip"
-VARIANTS = {"control": {}, "flip": dict(bill_flip=True), "flipfix": dict(bill_flip=True, bill_flip_kappa=False)}
+VARIANTS = {
+    "control": {},
+    "flip": dict(bill_flip=True),
+    "flipfix": dict(bill_flip=True, bill_flip_kappa=False),
+    "flipscale": dict(bill_flip=True, scale_move=True),
+}
 
 
 def simulate(I=432, J=700, omega=2.0, log_kappa=(4.1, 0.85), seed=1):
@@ -103,6 +109,7 @@ def report(args):
             draws=S,
             minutes=round(float(np.mean([p.seconds for p in posts])) / 60, 1),
             accept_flip=round(float(np.mean([p.accept.get("flip", 0.0) for p in posts])), 4),
+            accept_scale=round(float(np.mean([p.accept.get("scale", 0.0) for p in posts])), 3),
             loglik_per_chain=[round(float(v)) for v in ll_end],
             chi0_per_chain=chi.mean(1).round(4).tolist(),
             chi0_mean=round(float(chi.mean()), 4),

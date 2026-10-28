@@ -58,16 +58,20 @@ def _simulate_votes(key, beta, yes, no, kappa, mask):
 
 
 @pytest.mark.parametrize(
-    "grad_dtype,rotation,flip,flip_kappa",
+    "grad_dtype,rotation,flip,flip_kappa,scale,shift",
     [
-        ("float32", False, False, True),
-        ("float64", False, False, True),
-        ("float32", True, False, True),
-        ("float32", False, True, True),
-        ("float32", False, True, False),
+        ("float32", False, False, True, False, False),
+        ("float64", False, False, True, False, False),
+        ("float32", True, False, True, False, False),
+        ("float32", False, True, True, False, False),
+        ("float32", False, True, False, False, False),
+        ("float32", False, False, True, True, False),
+        ("float32", False, True, True, True, False),
+        ("float32", False, False, True, False, True),
+        ("float32", False, True, True, False, True),
     ],
 )
-def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa):
+def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa, scale, shift):
     """Geweke (2004) successive-conditional test of the whole Gibbs sweep.
 
     Each of N independent chains starts at an exact prior draw with data
@@ -82,7 +86,8 @@ def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa):
     # Priors chosen so kappa stays moderate (the paper's xi prior makes kappa
     # extremely heavy tailed a priori, which no small data set can tame).
     priors = Priors(mu=0.4, omega_shape=2.0, omega_rate=0.5, kappa_shape=2.0, xi_shape=6.0, xi_rate=20.0)
-    cfg = SamplerConfig(omega_prop_sd=0.5, grad_dtype=grad_dtype, rotation_move=rotation, bill_flip=flip, bill_flip_kappa=flip_kappa)
+    cfg = SamplerConfig(omega_prop_sd=0.5, grad_dtype=grad_dtype, rotation_move=rotation, bill_flip=flip, bill_flip_kappa=flip_kappa,
+                        scale_move=scale, scale_prop_sd=0.3, bill_shift=shift)
     rng = np.random.default_rng(1)
     mask = jnp.asarray(rng.random((I, J)) > 0.1)
 
@@ -94,6 +99,7 @@ def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa):
             beta, yes, no, kappa, xi, omega,
             ll=loglik_matrix(beta, yes, no, kappa, data),
             kappa_sd=jnp.full(J, 0.7), beta_scale=jnp.ones(I), yes_scale=jnp.ones(J), no_scale=jnp.ones(J),
+            scale_sd=jnp.asarray(cfg.scale_prop_sd),
         )
         return state, data
 
@@ -114,7 +120,7 @@ def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa):
         data = _simulate_votes(k_data, state.beta, state.yes, state.no, state.kappa, mask)
         state = state._replace(ll=loglik_matrix(state.beta, state.yes, state.no, state.kappa, data))
         acc = (stats.acc_beta.mean(), stats.acc_yes.mean(), stats.acc_kappa.mean())
-        return (state, data), acc + ((stats.acc_flip.mean(),) if flip else ())
+        return (state, data), acc + ((stats.acc_flip.mean(),) if flip else ()) + ((stats.acc_scale.mean(),) if scale else ()) + ((stats.acc_shift.mean(),) if shift else ())
 
     @jax.jit
     def run(key):
@@ -152,13 +158,13 @@ def test_carried_loglik_matrix_is_consistent():
     """After every sweep the carried matrix must equal a fresh evaluation."""
     I, J = 9, 11
     priors = Priors()
-    cfg = SamplerConfig(bill_flip=True)
+    cfg = SamplerConfig(bill_flip=True, bill_shift=True, scale_move=True)
     rng = np.random.default_rng(3)
     mask = jnp.asarray(rng.random((I, J)) > 0.15)
     beta, yes, no, kappa, xi, omega = _draw_prior(jax.random.key(0), I, J, Priors(xi_shape=6.0, xi_rate=20.0))
     data = _simulate_votes(jax.random.key(1), beta, yes, no, kappa, mask)
     state = State(beta, yes, no, kappa, xi, omega, loglik_matrix(beta, yes, no, kappa, data),
-                  jnp.full(J, 0.7), jnp.ones(I), jnp.ones(J), jnp.ones(J))
+                  jnp.full(J, 0.7), jnp.ones(I), jnp.ones(J), jnp.ones(J), jnp.asarray(0.05))
     jitter = Jitter(jnp.full(I, 0.3), jnp.full(I, 5), jnp.full(J, 0.3), jnp.full(J, 5), jnp.full(J, 0.3), jnp.full(J, 5))
     sweep = jax.jit(lambda k, s: _sweep(k, s, jitter, data, priors, cfg))
     n_rej = 0

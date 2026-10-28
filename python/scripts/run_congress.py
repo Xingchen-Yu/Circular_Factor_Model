@@ -60,6 +60,8 @@ def main():
     ap.add_argument("--rotation", action="store_true", help="enable the common-rotation group move")
     ap.add_argument("--bill-flip", action="store_true", help="enable the per-roll-call Yea/Nay mirror move (kappa rescaled)")
     ap.add_argument("--bill-flip-fixed-kappa", action="store_true", help="with --bill-flip: keep kappa fixed in the mirror move")
+    ap.add_argument("--bill-shift", action="store_true", help="enable the per-roll-call random shift move of the Yea/Nay pair")
+    ap.add_argument("--scale-move", action="store_true", help="enable the joint scale move of all angles (kappa rescaled)")
     ap.add_argument("--grad-dtype", default="float32", choices=["float32", "float64"])
     ap.add_argument("--omega-mean", type=float, default=10.0, help="mean of the exponential prior on omega")
     ap.add_argument("--xi-rate", type=float, default=25.0, help="rate of the exponential prior on xi = 1/lambda")
@@ -104,6 +106,8 @@ def main():
                 rotation_move=args.rotation,
                 bill_flip=args.bill_flip,
                 bill_flip_kappa=not args.bill_flip_fixed_kappa,
+                bill_shift=args.bill_shift,
+                scale_move=args.scale_move,
                 seed=args.seed,
                 print_every=args.print_every,
             )

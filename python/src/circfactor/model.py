@@ -22,6 +22,8 @@ Each sweep reproduces the original Gibbs scheme:
     psi_j    geodesic HMC, all roll calls in parallel
     zeta_j   geodesic HMC, all roll calls in parallel
     flip     MH mirror move of each roll call's Yea/Nay pair (new; see below)
+    shift    MH move of each roll call's Yea/Nay pair by a random angle (new)
+    scale    MH move widening/narrowing all angles jointly, kappa rescaled (new)
     omega    random-walk MH on log scale
     delta    exact draw of a common rotation of all angles (new; see below)
 
@@ -94,6 +96,18 @@ class SamplerConfig:
     # bill_flip_kappa rescales kappa by g so the link keeps its steepness.
     bill_flip: bool = False
     bill_flip_kappa: bool = True
+    # MH move per roll call: (psi, zeta) -> (psi + d, zeta + d), d ~ U(-pi, pi).
+    # Moves the cut points by a large random angle, so a roll call whose cut
+    # is stuck in a poor place (e.g. at the party boundary for a vote that
+    # splits one party) can escape; GHMC alone cannot cross that barrier.
+    bill_shift: bool = False
+    # MH move of all angles at once by the circle map x -> mu + 2 atan(lam
+    # tan((x - mu) / 2)), which widens (lam > 1) or narrows the configuration
+    # around mu, with each kappa_j rescaled to keep its link equally steep.
+    # The overall spread of the legislators (chi_0) otherwise mixes slowly.
+    scale_move: bool = False
+    scale_kappa_power: float = 2.0  # kappa_j *= (mean|e_ij| / mean|e'_ij|) ** power
+    scale_prop_sd: float = 0.01  # initial sd of log lam, tuned during burn-in
     seed: int = 0
     print_every: int = 1000  # iterations; 0 to silence
 
@@ -115,6 +129,7 @@ class State(NamedTuple):
     beta_scale: jax.Array  # (I,) step-size multipliers (adapted in burn-in)
     yes_scale: jax.Array  # (J,)
     no_scale: jax.Array  # (J,)
+    scale_sd: jax.Array  # () sd of log lam in the scale move (tuned in burn-in)
 
 
 class Jitter(NamedTuple):
@@ -132,6 +147,8 @@ class SweepStats(NamedTuple):
     acc_yes: jax.Array
     acc_no: jax.Array
     acc_flip: jax.Array
+    acc_shift: jax.Array
+    acc_scale: jax.Array
     acc_omega: jax.Array
     loglik: jax.Array
 
@@ -293,6 +310,63 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
     else:
         acc_flip = jnp.zeros(kappa.shape, bool)
 
+    # --- random shift of each roll call (psi, zeta) -> (psi + d, zeta + d) ------
+    # The proposal is symmetric (d and -d equally likely), the map has unit
+    # Jacobian and psi, zeta have a uniform prior: the MH ratio is the
+    # likelihood ratio of the roll call.
+    if cfg.bill_shift:
+        k_sh, k_sh_u = jax.random.split(jax.random.fold_in(key, 2))
+        d = jax.random.uniform(k_sh, kappa.shape, minval=-jnp.pi, maxval=jnp.pi)
+        yes_d, no_d = wrap(yes + d), wrap(no + d)
+        ll_d = loglik_matrix(beta, yes_d, no_d, kappa, data)
+        acc_shift = jnp.log(jax.random.uniform(k_sh_u, kappa.shape)) < ll_d.sum(0) - ll.sum(0)
+        yes, no = jnp.where(acc_shift, yes_d, yes), jnp.where(acc_shift, no_d, no)
+        ll = jnp.where(acc_shift[None, :], ll_d, ll)
+    else:
+        acc_shift = jnp.zeros(kappa.shape, bool)
+
+    # --- scale move: all angles through one circle map --------------------------
+    # x -> mu + 2 atan(lam tan((x - mu) / 2)) is a one-parameter group in lam
+    # (the map for 1 / lam undoes it) that stretches the half circle around mu
+    # by lam and compresses the opposite one by 1 / lam; its derivative is
+    # lam / (cos^2 u + lam^2 sin^2 u), u = (x - mu) / 2.  kappa_j is scaled by
+    # h_j = (mean_i |e_ij| / mean_i |e'_ij|) ** power over the voters, which the
+    # move for 1 / lam inverts exactly.  With log lam ~ N(0, sd^2) the MH ratio
+    # is the posterior ratio times the Jacobian prod dx'/dx * prod h_j.
+    if cfg.scale_move:
+        k_sc, k_sc_u = jax.random.split(jax.random.fold_in(key, 1))
+        log_lam = state.scale_sd * jax.random.normal(k_sc)
+        lam = jnp.exp(log_lam)
+
+        def circle_map(x):
+            u = (x - priors.mu) / 2
+            sn, cs = jnp.sin(u), jnp.cos(u)
+            return wrap(priors.mu + 2 * jnp.arctan2(lam * sn, cs)), log_lam - jnp.log(cs * cs + lam * lam * sn * sn)
+
+        def mean_abs_e(beta, yes, no):
+            e = wrap(no[None, :] - beta[:, None]) ** 2 - wrap(yes[None, :] - beta[:, None]) ** 2
+            return jnp.where(data.mask, jnp.abs(e), 0.0).sum(0) / jnp.maximum(data.mask.sum(0), 1)
+
+        (beta_s, lj_b), (yes_s, lj_y), (no_s, lj_n) = circle_map(beta), circle_map(yes), circle_map(no)
+        log_h = cfg.scale_kappa_power * (jnp.log(mean_abs_e(beta, yes, no)) - jnp.log(mean_abs_e(beta_s, yes_s, no_s)))
+        kappa_s = kappa * jnp.exp(log_h)
+        ll_s = loglik_matrix(beta_s, yes_s, no_s, kappa_s, data)
+        log_a = (
+            ll_s.sum()
+            - ll.sum()
+            + omega * jnp.sum(jnp.cos(beta_s - priors.mu) - jnp.cos(beta - priors.mu))
+            + jnp.sum(priors.kappa_shape * log_h - xi * (kappa_s - kappa))  # (shape-1) log-prior term + Jacobian
+            + lj_b.sum()
+            + lj_y.sum()
+            + lj_n.sum()
+        )
+        acc_scale = (jnp.log(jax.random.uniform(k_sc_u)) < log_a) & jnp.all(kappa_s <= KAPPA_MAX)
+        beta, yes, no = (jnp.where(acc_scale, a, b) for a, b in ((beta_s, beta), (yes_s, yes), (no_s, no)))
+        kappa = jnp.where(acc_scale, kappa_s, kappa)
+        ll = jnp.where(acc_scale, ll_s, ll)
+    else:
+        acc_scale = jnp.zeros((), bool)
+
     # --- omega: log-normal random walk MH ----------------------------------------
     log_om = jnp.log(omega)
     log_om_p = log_om + cfg.omega_prop_sd * jax.random.normal(k_om)
@@ -310,7 +384,7 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
         delta = sample_von_mises(k_rot, -jnp.arctan2(S, C), omega * jnp.hypot(C, S))
         beta, yes, no = wrap(beta + delta), wrap(yes + delta), wrap(no + delta)
     new_state = state._replace(beta=beta, yes=yes, no=no, kappa=kappa, xi=xi, omega=omega, ll=ll)
-    stats = SweepStats(acc_kappa, info_b.accepted, info_y.accepted, info_n.accepted, acc_flip, acc_omega, ll.sum())
+    stats = SweepStats(acc_kappa, info_b.accepted, info_y.accepted, info_n.accepted, acc_flip, acc_shift, acc_scale, acc_omega, ll.sum())
     return new_state, stats
 
 
@@ -440,10 +514,13 @@ def sample(
     values = initial_state(I, J, k_init, priors, cfg, party)
     if init:
         values.update({k: v for k, v in init.items() if k in values})
-    tuning = dict(kappa_sd=jnp.full(J, cfg.kappa_prop_sd), beta_scale=jnp.ones(I), yes_scale=jnp.ones(J), no_scale=jnp.ones(J))
+    tuning = dict(
+        kappa_sd=jnp.full(J, cfg.kappa_prop_sd), beta_scale=jnp.ones(I), yes_scale=jnp.ones(J), no_scale=jnp.ones(J),
+        scale_sd=jnp.asarray(cfg.scale_prop_sd),
+    )
     if resume:
         values.update({k: resume[k] for k in values})
-        tuning = {k: jnp.asarray(resume[k], jnp.float64) for k in tuning}
+        tuning = {k: jnp.asarray(resume.get(k, v), jnp.float64) for k, v in tuning.items()}  # runs saved before scale_sd existed
         key = jax.random.wrap_key_data(jnp.asarray(resume["key"]))
     values = {k: jnp.asarray(v, jnp.float64) for k, v in values.items()}
     state = State(
@@ -504,7 +581,7 @@ def sample(
         "ll_legislator": np.empty((S, I), np.float32),
     }
     trace = np.empty(n_iter)
-    acc_sum = {k: 0.0 for k in ("kappa", "beta", "yes", "no", "flip", "omega")}
+    acc_sum = {k: 0.0 for k in ("kappa", "beta", "yes", "no", "flip", "shift", "scale", "omega")}
     n_post_iter = 0
     filled = 0
     it = 0
@@ -532,7 +609,7 @@ def sample(
                     out[name][filled : filled + m] = kept
             filled += m
             n_post_iter += n
-            for name, v in zip(acc_sum, summary[:6]):
+            for name, v in zip(acc_sum, summary[:8]):
                 acc_sum[name] += float(np.mean(np.asarray(v))) * n
         elif it > 0 or b > 0:
             # Burn-in tuning (as in the R code: kappa proposal sd towards 30-60%).
@@ -540,6 +617,9 @@ def sample(
             sd = jnp.where(ks <= 0.3, state.kappa_sd * 0.95, state.kappa_sd)
             sd = jnp.where(ks >= 0.6, sd * 1.05, sd)
             state = state._replace(kappa_sd=sd)
+            if cfg.scale_move:  # scale move acceptance towards 20-50%
+                a = summary.acc_scale
+                state = state._replace(scale_sd=jnp.where(a < 0.2, state.scale_sd * 0.9, jnp.where(a > 0.5, state.scale_sd * 1.1, state.scale_sd)))
             if cfg.adapt_steps:
                 state = state._replace(
                     beta_scale=_adapt_scale(state.beta_scale, summary.acc_beta),
@@ -555,7 +635,7 @@ def sample(
                 f"iter {it:>7}/{n_iter}  loglik {trace[it - 1]:>12.1f}  "
                 f"acc beta {float(summary.acc_beta.mean()):.2f} psi {float(summary.acc_yes.mean()):.2f} "
                 f"zeta {float(summary.acc_no.mean()):.2f} kappa {float(summary.acc_kappa.mean()):.2f} "
-                f"flip {float(summary.acc_flip.mean()):.3f} "
+                f"flip {float(summary.acc_flip.mean()):.3f} shift {float(summary.acc_shift.mean()):.3f} scale {float(summary.acc_scale):.2f} "
                 f"omega {float(summary.acc_omega):.2f}  omega={float(state.omega):.2f}  "
                 f"{rate:.1f} it/s",
                 flush=True,
@@ -580,10 +660,11 @@ def sample(
             "beta_scale_mean": float(state.beta_scale.mean()),
             "yes_scale_mean": float(state.yes_scale.mean()),
             "no_scale_mean": float(state.no_scale.mean()),
+            "scale_sd": float(state.scale_sd),
         },
         bill_draw_index=bill_index,
         final_state={
-            **{k: np.asarray(getattr(state, k)) for k in ("beta", "yes", "no", "kappa", "xi", "omega", "kappa_sd", "beta_scale", "yes_scale", "no_scale")},
+            **{k: np.asarray(getattr(state, k)) for k in ("beta", "yes", "no", "kappa", "xi", "omega", "kappa_sd", "beta_scale", "yes_scale", "no_scale", "scale_sd")},
             "key": np.asarray(jax.random.key_data(key)),
             **{f"waic_{f}": np.asarray(v) for f, v in zip(WaicAccum._fields, waic)},
         },
