@@ -6,7 +6,8 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "arviz>=1.3.0",
-    "jax[cuda12]>=0.12.0.1",
+    "jax>=0.12.0.1",
+    "jax[cuda12]>=0.12.0.1; sys_platform == 'linux'",  # CUDA on the Linux GPU box; CPU-only elsewhere (macOS)
     "matplotlib>=3.11.2",
     "numpy>=2.5.4",
     "pandas>=3.1.0",
