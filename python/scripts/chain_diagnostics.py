@@ -28,5 +28,8 @@ print("worst legislators:")
 for i in np.argsort(-np.nan_to_num(rh))[:10]:
     print(f"  {leg.label[i]:<45} Rhat {rh[i]:.3f}  per-chain median rank {[int(np.median(r)) for r in ranks[:, :, i]]}")
 for name in ["Gaetz", "Rooney", "Lofgren", "Defazio", "Pressley", "Omar", "Tlaib", "Ocasio", "Amash", "Massie"]:
-    i = int(leg.index[leg.label.str.startswith(name)][0])
+    hits = leg.index[leg.label.str.startswith(name) & ~leg.get("placed", False)]
+    if len(hits) == 0:  # not a fitted member of this House
+        continue
+    i = int(hits[0])
     print(f"  {leg.label[i]:<45} Rhat {rh[i]:.3f}  per-chain median rank {[int(np.median(r)) for r in ranks[:, :, i]]}")
