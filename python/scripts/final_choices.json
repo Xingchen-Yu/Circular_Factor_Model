@@ -1,0 +1,25 @@
+{
+  "_doc": "Which chains make up each House's reported posterior (read by combine_chains.py). Paths are relative to python/. 'drop_draws' discards that many leading draws of every listed chain as extra burn-in. Selection rules (decided 2026-10-28/29): chains that agree in fit and ranks are pooled; when one chain's mean log-likelihood beats the others by > 3 within-chain sd, only that chain is used (the voting-record check agreed with the log-likelihood in every such House); the chosen chain was then extended by 40k-80k draws with --resume.",
+  "houses": {
+    "100": {"chains": ["results/full_ext/c3/H100"], "rule": "best of 4 chains (seed 2023); next best -208 loglik; liberal-edge placement of Schroeder/Clay/Sikorski confirmed by voting record"},
+    "101": {"chains": ["results/full_ext/c1/H101"], "rule": "best of 2 chains; other chain -322 loglik, trapped Schroeder/Bates/Pease/Moody at the centre"},
+    "102": {"chains": ["results/full_ext2/c6/H102"], "drop_draws": 30000, "rule": "best of 6 chains (seed 2026); voting record favours its placement of Jacobs (rank 1, agreement with neighbours 69% vs 59%)", "drop_reason": "chi_0 still settling over the first ~30k of 130k draws (0.123, 0.120, then 0.113-0.115)"},
+    "103": {"chains": ["results/full_ext/c8/H103"], "rule": "best of 6 chains (seed 2028)", "notes": ["Schroeder: separate, non-overlapping modes across chains (rank 62-96 here vs 2-14 in another chain with loglik ~45 lower, about 1 sd); reported mode is the best-fitting chain's"]},
+    "104": {"chains": ["results/full_ext/c6/H104"], "rule": "best of 6 chains (seed 2026); voting record favours its placement of Neumann and Roth at the far right"},
+    "105": {"chains": ["results/full/c1/H105", "results/full/c2/H105"], "rule": "chains agree; pooled"},
+    "106": {"chains": ["results/full/c1/H106", "results/full/c2/H106"], "rule": "chains agree; pooled"},
+    "107": {"chains": ["results/full/c1/H107", "results/full/c2/H107"], "rule": "chains agree; pooled"},
+    "108": {"chains": ["results/full/c1/H108", "results/full/c2/H108"], "rule": "chains agree; pooled"},
+    "109": {"chains": ["results/full_ext/c1/H109"], "rule": "best of 6 chains; all 6 agree within 14 ranks"},
+    "110": {"chains": ["results/full/c1/H110", "results/full/c2/H110"], "rule": "chains agree; pooled"},
+    "111": {"chains": ["results/full/c1/H111", "results/full/c2/H111"], "rule": "chains agree; pooled"},
+    "112": {"chains": ["results/full/c1/H112", "results/full/c2/H112"], "rule": "chains agree; pooled"},
+    "113": {"chains": ["results/full_ext2/c2/H113"], "rule": "best of 2 chains; other chain -500 loglik, trapped Walter Jones at the centre"},
+    "114": {"chains": ["results/full/c1/H114", "results/full/c2/H114"], "rule": "chains agree; pooled"},
+    "115": {"chains": ["results/full_ext2/c1/H115"], "rule": "best of 2 chains; other chain -535 loglik, trapped Walter Jones and Rod Blum at the centre"},
+    "116": {"chains": ["results/full_ext/c1/H116", "results/full_ext/c2/H116"], "rule": "chains agree; pooled after +40k each"},
+    "117": {"chains": ["results/full/c1/H117", "results/full/c2/H117"], "rule": "chains agree; pooled"},
+    "118": {"chains": ["results/full_ext/c1/H118", "results/full_ext/c2/H118"], "rule": "chains agree; pooled after +40k each"},
+    "119": {"chains": ["results/full_ext/c1/H119", "results/full_ext/c2/H119"], "rule": "pooled after +40k each (user decision) although chi_0 still differs between chains (0.329 vs 0.311)", "notes": ["Congress ongoing: data up to the download date in provenance"]}
+  }
+}
