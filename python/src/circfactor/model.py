@@ -101,6 +101,19 @@ class SamplerConfig:
     # is stuck in a poor place (e.g. at the party boundary for a vote that
     # splits one party) can escape; GHMC alone cannot cross that barrier.
     bill_shift: bool = False
+    # MH move per legislator: beta_i -> beta_i + d, d ~ U(-pi, pi).  Given the
+    # roll calls the legislators are conditionally independent, so each one
+    # is accepted or rejected on its own.  Lets a member stuck in a poor place
+    # (e.g. a liberal held at the party boundary, where the roll calls have
+    # adapted around them) jump back; GHMC alone cannot cross that barrier.
+    beta_shift: bool = False
+    # Tempered burn-in: the likelihood is raised to a power that rises
+    # geometrically from temper_start to 1 over the first temper_frac of the
+    # burn-in (1.0: off).  A flatter target early on keeps a chain from
+    # locking into a poor joint arrangement of legislators and roll calls
+    # (e.g. a liberal held at the party boundary).  Sampling is untempered.
+    temper_start: float = 1.0
+    temper_frac: float = 0.5
     # MH move of all angles at once by the circle map x -> mu + 2 atan(lam
     # tan((x - mu) / 2)), which widens (lam > 1) or narrows the configuration
     # around mu, with each kappa_j rescaled to keep its link equally steep.
@@ -148,6 +161,7 @@ class SweepStats(NamedTuple):
     acc_no: jax.Array
     acc_flip: jax.Array
     acc_shift: jax.Array
+    acc_bshift: jax.Array
     acc_scale: jax.Array
     acc_omega: jax.Array
     loglik: jax.Array
@@ -180,7 +194,8 @@ def log_prior_omega(omega, beta, priors: Priors):
     )
 
 
-def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: SamplerConfig) -> tuple[State, SweepStats]:
+def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: SamplerConfig, temp=1.0) -> tuple[State, SweepStats]:
+    # temp < 1 (tempered burn-in only) raises the likelihood to the power temp.
     gdt = jnp.dtype(cfg.grad_dtype)
     data_g = Data(data.sign.astype(gdt), data.mask)
     k_kappa, k_kappa_u, k_xi, k_beta, k_yes, k_no, k_flip, k_om, k_om_u, k_rot = jax.random.split(key, 10)
@@ -192,8 +207,7 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
     kappa_p = jnp.exp(log_kp)
     ll_p = loglik_matrix(beta, yes, no, kappa_p, data)
     log_r = (
-        ll_p.sum(0)
-        - ll.sum(0)
+        temp * (ll_p.sum(0) - ll.sum(0))
         + priors.kappa_shape * (log_kp - log_k)  # (shape-1) log-prior term + Jacobian
         - xi * (kappa_p - kappa)
     )
@@ -212,14 +226,14 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
     # Each block's log_prob also returns its slice of the log-likelihood matrix
     # (rows for beta, columns for psi/zeta) so the matrix is carried through the
     # sweep; only the proposals need fresh float64 evaluations.
-    def lp_beta(x, yes, no, kappa, omega, data):
+    def lp_beta(x, yes, no, kappa, omega, temp, data):
         th = circle_to_angle(x)
-        return loglik_matrix(th, yes, no, kappa, data).sum(1) + omega * jnp.cos(th - priors.mu)
+        return temp * loglik_matrix(th, yes, no, kappa, data).sum(1) + omega * jnp.cos(th - priors.mu)
 
     def lp_beta_aux(x):
         th = circle_to_angle(x)
         m = loglik_matrix(th, yes, no, kappa, data)
-        return m.sum(1) + omega * jnp.cos(th - priors.mu), m
+        return temp * m.sum(1) + omega * jnp.cos(th - priors.mu), m
 
     def grad_of(lp, *args):
         """Leapfrog gradient of lp(x, *args, data) evaluated in grad_dtype."""
@@ -233,20 +247,32 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
         jitter.beta_eps * state.beta_scale,
         jitter.beta_leap,
         cfg.beta_max_leap,
-        grad_fn=grad_of(lp_beta, yes, no, kappa, omega),
-        log_prob_x=(ll.sum(1) + omega * jnp.cos(beta - priors.mu), ll),
+        grad_fn=grad_of(lp_beta, yes, no, kappa, omega, jnp.asarray(temp)),
+        log_prob_x=(temp * ll.sum(1) + omega * jnp.cos(beta - priors.mu), ll),
         has_aux=True,
     )
     beta = circle_to_angle(x)
     ll = info_b.aux
 
+    if cfg.beta_shift:
+        k_bs, k_bs_u = jax.random.split(jax.random.fold_in(key, 3))
+        d = jax.random.uniform(k_bs, beta.shape, minval=-jnp.pi, maxval=jnp.pi)
+        beta_d = wrap(beta + d)
+        ll_d = loglik_matrix(beta_d, yes, no, kappa, data)
+        log_a = temp * (ll_d.sum(1) - ll.sum(1)) + omega * (jnp.cos(beta_d - priors.mu) - jnp.cos(beta - priors.mu))
+        acc_bshift = jnp.log(jax.random.uniform(k_bs_u, beta.shape)) < log_a
+        beta = jnp.where(acc_bshift, beta_d, beta)
+        ll = jnp.where(acc_bshift[:, None], ll_d, ll)
+    else:
+        acc_bshift = jnp.zeros(beta.shape, bool)
+
     # --- psi_j (Yea positions): GHMC ----------------------------------------------
-    def lp_yes(x, beta, no, kappa, data):
-        return loglik_matrix(beta, circle_to_angle(x), no, kappa, data).sum(0)
+    def lp_yes(x, beta, no, kappa, temp, data):
+        return temp * loglik_matrix(beta, circle_to_angle(x), no, kappa, data).sum(0)
 
     def lp_yes_aux(x):
         m = loglik_matrix(beta, circle_to_angle(x), no, kappa, data)
-        return m.sum(0), m.T
+        return temp * m.sum(0), m.T
 
     x, info_y = ghmc_step(
         k_yes,
@@ -255,20 +281,20 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
         jitter.yes_eps * state.yes_scale,
         jitter.yes_leap,
         cfg.tau_max_leap,
-        grad_fn=grad_of(lp_yes, beta, no, kappa),
-        log_prob_x=(ll.sum(0), ll.T),
+        grad_fn=grad_of(lp_yes, beta, no, kappa, jnp.asarray(temp)),
+        log_prob_x=(temp * ll.sum(0), ll.T),
         has_aux=True,
     )
     yes = circle_to_angle(x)
     ll = info_y.aux.T
 
     # --- zeta_j (Nay positions): GHMC ---------------------------------------------
-    def lp_no(x, beta, yes, kappa, data):
-        return loglik_matrix(beta, yes, circle_to_angle(x), kappa, data).sum(0)
+    def lp_no(x, beta, yes, kappa, temp, data):
+        return temp * loglik_matrix(beta, yes, circle_to_angle(x), kappa, data).sum(0)
 
     def lp_no_aux(x):
         m = loglik_matrix(beta, yes, circle_to_angle(x), kappa, data)
-        return m.sum(0), m.T
+        return temp * m.sum(0), m.T
 
     x, info_n = ghmc_step(
         k_no,
@@ -277,7 +303,7 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
         jitter.no_eps * state.no_scale,
         jitter.no_leap,
         cfg.tau_max_leap,
-        grad_fn=grad_of(lp_no, beta, yes, kappa),
+        grad_fn=grad_of(lp_no, beta, yes, kappa, jnp.asarray(temp)),
         log_prob_x=(info_y.log_prob, ll.T),
         has_aux=True,
     )
@@ -302,7 +328,7 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
             log_g = jnp.zeros_like(kappa)
         kappa_f = kappa * jnp.exp(log_g)
         ll_f = loglik_matrix(beta, yes_f, no_f, kappa_f, data)
-        log_a = ll_f.sum(0) - ll.sum(0) + priors.kappa_shape * log_g - xi * (kappa_f - kappa)
+        log_a = temp * (ll_f.sum(0) - ll.sum(0)) + priors.kappa_shape * log_g - xi * (kappa_f - kappa)
         acc_flip = (jnp.log(jax.random.uniform(k_flip, kappa.shape)) < log_a) & (kappa_f <= KAPPA_MAX)
         yes, no = jnp.where(acc_flip, yes_f, yes), jnp.where(acc_flip, no_f, no)
         kappa = jnp.where(acc_flip, kappa_f, kappa)
@@ -319,7 +345,7 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
         d = jax.random.uniform(k_sh, kappa.shape, minval=-jnp.pi, maxval=jnp.pi)
         yes_d, no_d = wrap(yes + d), wrap(no + d)
         ll_d = loglik_matrix(beta, yes_d, no_d, kappa, data)
-        acc_shift = jnp.log(jax.random.uniform(k_sh_u, kappa.shape)) < ll_d.sum(0) - ll.sum(0)
+        acc_shift = jnp.log(jax.random.uniform(k_sh_u, kappa.shape)) < temp * (ll_d.sum(0) - ll.sum(0))
         yes, no = jnp.where(acc_shift, yes_d, yes), jnp.where(acc_shift, no_d, no)
         ll = jnp.where(acc_shift[None, :], ll_d, ll)
     else:
@@ -352,8 +378,7 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
         kappa_s = kappa * jnp.exp(log_h)
         ll_s = loglik_matrix(beta_s, yes_s, no_s, kappa_s, data)
         log_a = (
-            ll_s.sum()
-            - ll.sum()
+            temp * (ll_s.sum() - ll.sum())
             + omega * jnp.sum(jnp.cos(beta_s - priors.mu) - jnp.cos(beta - priors.mu))
             + jnp.sum(priors.kappa_shape * log_h - xi * (kappa_s - kappa))  # (shape-1) log-prior term + Jacobian
             + lj_b.sum()
@@ -384,7 +409,7 @@ def _sweep(key, state: State, jitter: Jitter, data: Data, priors: Priors, cfg: S
         delta = sample_von_mises(k_rot, -jnp.arctan2(S, C), omega * jnp.hypot(C, S))
         beta, yes, no = wrap(beta + delta), wrap(yes + delta), wrap(no + delta)
     new_state = state._replace(beta=beta, yes=yes, no=no, kappa=kappa, xi=xi, omega=omega, ll=ll)
-    stats = SweepStats(acc_kappa, info_b.accepted, info_y.accepted, info_n.accepted, acc_flip, acc_shift, acc_scale, acc_omega, ll.sum())
+    stats = SweepStats(acc_kappa, info_b.accepted, info_y.accepted, info_n.accepted, acc_flip, acc_shift, acc_bshift, acc_scale, acc_omega, ll.sum())
     return new_state, stats
 
 
@@ -547,10 +572,10 @@ def sample(
         )
 
     @partial(jax.jit, static_argnames=("n", "record"), donate_argnums=(1, 4))
-    def run_block(key, state, jitter, data, waic, n, record):
+    def run_block(key, state, jitter, data, waic, temp, n, record):
         def body(carry, key):
             state, waic = carry
-            state, stats = _sweep(key, state, jitter, data, priors, cfg)
+            state, stats = _sweep(key, state, jitter, data, priors, cfg, temp)
             if record:
                 waic = _accumulate(waic, state.ll)
                 draws = (state.beta, state.yes, state.no, state.kappa, state.omega, state.xi, state.ll.sum(1))
@@ -581,7 +606,7 @@ def sample(
         "ll_legislator": np.empty((S, I), np.float32),
     }
     trace = np.empty(n_iter)
-    acc_sum = {k: 0.0 for k in ("kappa", "beta", "yes", "no", "flip", "shift", "scale", "omega")}
+    acc_sum = {k: 0.0 for k in ("kappa", "beta", "yes", "no", "flip", "shift", "bshift", "scale", "omega")}
     n_post_iter = 0
     filled = 0
     it = 0
@@ -594,7 +619,9 @@ def sample(
         record = it >= cfg.burnin
         if not record and it + n > cfg.burnin:  # keep blocks aligned with the burn-in boundary
             n = cfg.burnin - it
-        state, waic, summary, draws = run_block(k_run, state, jitter, data, waic, n, record)
+        ramp = cfg.temper_frac * cfg.burnin
+        temp = cfg.temper_start ** max(0.0, 1.0 - it / ramp) if ramp > 0 and not record else 1.0
+        state, waic, summary, draws = run_block(k_run, state, jitter, data, waic, jnp.asarray(temp), n, record)
         trace[it : it + n] = np.asarray(summary.loglik)
         if record:
             idx = np.arange(it - cfg.burnin, it - cfg.burnin + n)
@@ -609,7 +636,7 @@ def sample(
                     out[name][filled : filled + m] = kept
             filled += m
             n_post_iter += n
-            for name, v in zip(acc_sum, summary[:8]):
+            for name, v in zip(acc_sum, summary[:9]):
                 acc_sum[name] += float(np.mean(np.asarray(v))) * n
         elif it > 0 or b > 0:
             # Burn-in tuning (as in the R code: kappa proposal sd towards 30-60%).
@@ -635,9 +662,9 @@ def sample(
                 f"iter {it:>7}/{n_iter}  loglik {trace[it - 1]:>12.1f}  "
                 f"acc beta {float(summary.acc_beta.mean()):.2f} psi {float(summary.acc_yes.mean()):.2f} "
                 f"zeta {float(summary.acc_no.mean()):.2f} kappa {float(summary.acc_kappa.mean()):.2f} "
-                f"flip {float(summary.acc_flip.mean()):.3f} shift {float(summary.acc_shift.mean()):.3f} scale {float(summary.acc_scale):.2f} "
+                f"flip {float(summary.acc_flip.mean()):.3f} shift {float(summary.acc_shift.mean()):.3f} bshift {float(summary.acc_bshift.mean()):.4f} scale {float(summary.acc_scale):.2f} "
                 f"omega {float(summary.acc_omega):.2f}  omega={float(state.omega):.2f}  "
-                f"{rate:.1f} it/s",
+                f"{rate:.1f} it/s" + (f"  temp {temp:.3f}" if temp < 1 else ""),
                 flush=True,
             )
 

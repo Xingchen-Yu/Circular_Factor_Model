@@ -61,6 +61,10 @@ def main():
     ap.add_argument("--bill-flip", action="store_true", help="enable the per-roll-call Yea/Nay mirror move (kappa rescaled)")
     ap.add_argument("--bill-flip-fixed-kappa", action="store_true", help="with --bill-flip: keep kappa fixed in the mirror move")
     ap.add_argument("--bill-shift", action="store_true", help="enable the per-roll-call random shift move of the Yea/Nay pair")
+    ap.add_argument("--beta-shift", action="store_true", help="enable the per-legislator random shift move of the ideal point")
+    ap.add_argument("--temper-start", type=float, default=1.0,
+                    help="tempered burn-in: initial likelihood power, rising to 1 over the first --temper-frac of the burn-in (1: off)")
+    ap.add_argument("--temper-frac", type=float, default=0.5)
     ap.add_argument("--scale-move", action="store_true", help="enable the joint scale move of all angles (kappa rescaled)")
     ap.add_argument("--grad-dtype", default="float32", choices=["float32", "float64"])
     ap.add_argument("--omega-mean", type=float, default=10.0, help="mean of the exponential prior on omega")
@@ -107,6 +111,9 @@ def main():
                 bill_flip=args.bill_flip,
                 bill_flip_kappa=not args.bill_flip_fixed_kappa,
                 bill_shift=args.bill_shift,
+                beta_shift=args.beta_shift,
+                temper_start=args.temper_start,
+                temper_frac=args.temper_frac,
                 scale_move=args.scale_move,
                 seed=args.seed,
                 print_every=args.print_every,

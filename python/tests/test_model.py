@@ -58,20 +58,22 @@ def _simulate_votes(key, beta, yes, no, kappa, mask):
 
 
 @pytest.mark.parametrize(
-    "grad_dtype,rotation,flip,flip_kappa,scale,shift",
+    "grad_dtype,rotation,flip,flip_kappa,scale,shift,bshift",
     [
-        ("float32", False, False, True, False, False),
-        ("float64", False, False, True, False, False),
-        ("float32", True, False, True, False, False),
-        ("float32", False, True, True, False, False),
-        ("float32", False, True, False, False, False),
-        ("float32", False, False, True, True, False),
-        ("float32", False, True, True, True, False),
-        ("float32", False, False, True, False, True),
-        ("float32", False, True, True, False, True),
+        ("float32", False, False, True, False, False, False),
+        ("float64", False, False, True, False, False, False),
+        ("float32", True, False, True, False, False, False),
+        ("float32", False, True, True, False, False, False),
+        ("float32", False, True, False, False, False, False),
+        ("float32", False, False, True, True, False, False),
+        ("float32", False, True, True, True, False, False),
+        ("float32", False, False, True, False, True, False),
+        ("float32", False, True, True, False, True, False),
+        ("float32", False, False, True, False, False, True),
+        ("float32", False, True, True, False, True, True),
     ],
 )
-def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa, scale, shift):
+def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa, scale, shift, bshift):
     """Geweke (2004) successive-conditional test of the whole Gibbs sweep.
 
     Each of N independent chains starts at an exact prior draw with data
@@ -87,7 +89,7 @@ def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa, scale
     # extremely heavy tailed a priori, which no small data set can tame).
     priors = Priors(mu=0.4, omega_shape=2.0, omega_rate=0.5, kappa_shape=2.0, xi_shape=6.0, xi_rate=20.0)
     cfg = SamplerConfig(omega_prop_sd=0.5, grad_dtype=grad_dtype, rotation_move=rotation, bill_flip=flip, bill_flip_kappa=flip_kappa,
-                        scale_move=scale, scale_prop_sd=0.3, bill_shift=shift)
+                        scale_move=scale, scale_prop_sd=0.3, bill_shift=shift, beta_shift=bshift)
     rng = np.random.default_rng(1)
     mask = jnp.asarray(rng.random((I, J)) > 0.1)
 
@@ -120,7 +122,7 @@ def test_geweke_joint_distribution(grad_dtype, rotation, flip, flip_kappa, scale
         data = _simulate_votes(k_data, state.beta, state.yes, state.no, state.kappa, mask)
         state = state._replace(ll=loglik_matrix(state.beta, state.yes, state.no, state.kappa, data))
         acc = (stats.acc_beta.mean(), stats.acc_yes.mean(), stats.acc_kappa.mean())
-        return (state, data), acc + ((stats.acc_flip.mean(),) if flip else ()) + ((stats.acc_scale.mean(),) if scale else ()) + ((stats.acc_shift.mean(),) if shift else ())
+        return (state, data), acc + ((stats.acc_flip.mean(),) if flip else ()) + ((stats.acc_scale.mean(),) if scale else ()) + ((stats.acc_shift.mean(),) if shift else ()) + ((stats.acc_bshift.mean(),) if bshift else ())
 
     @jax.jit
     def run(key):
@@ -158,7 +160,7 @@ def test_carried_loglik_matrix_is_consistent():
     """After every sweep the carried matrix must equal a fresh evaluation."""
     I, J = 9, 11
     priors = Priors()
-    cfg = SamplerConfig(bill_flip=True, bill_shift=True, scale_move=True)
+    cfg = SamplerConfig(bill_flip=True, bill_shift=True, beta_shift=True, scale_move=True)
     rng = np.random.default_rng(3)
     mask = jnp.asarray(rng.random((I, J)) > 0.15)
     beta, yes, no, kappa, xi, omega = _draw_prior(jax.random.key(0), I, J, Priors(xi_shape=6.0, xi_rate=20.0))
