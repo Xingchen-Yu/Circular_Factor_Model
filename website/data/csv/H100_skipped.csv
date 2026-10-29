@@ -1,0 +1,2 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+W000763,10391,"WRIGHT, James Claude, Jr.",D,TX,12,-0.383,0.672,"Wright, James Claude, Jr. (D TX-12)",False,0.9818956336528222,17

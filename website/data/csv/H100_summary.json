@@ -1,0 +1,127 @@
+{
+  "congress": 100,
+  "chamber": "House",
+  "I": 425,
+  "J": 939,
+  "n_fitted": 425,
+  "n_placed": 14,
+  "n_skipped": 1,
+  "chi_0": {
+    "mean": 0.13734356296149067,
+    "q025": 0.13074212571783475,
+    "q975": 0.1439579130304393,
+    "ess": 48.47843453700662,
+    "per_chain_mean": [
+      0.13734356296149067
+    ],
+    "split_rhat": 1.078280067642803
+  },
+  "chi_D": {
+    "mean": 0.07811272853717642,
+    "q025": 0.07283184913752411,
+    "q975": 0.08345845840962342,
+    "ess": 38.89879474791832,
+    "per_chain_mean": [
+      0.07811272853717642
+    ]
+  },
+  "chi_R": {
+    "mean": 0.012149593700446297,
+    "q025": 0.011080788087760123,
+    "q975": 0.013299754034701164,
+    "ess": 32.951189997795,
+    "per_chain_mean": [
+      0.012149593700446297
+    ]
+  },
+  "waic_grouped": {
+    "lppd": -85983.85371024857,
+    "p_waic": 2997.1606716230754,
+    "elpd_waic": -88981.01438187165,
+    "waic_deviance": 177962.0287637433
+  },
+  "omega_mean": 3.98543836737198,
+  "choice": {
+    "chains": [
+      "results/full_ext/c3/H100"
+    ],
+    "rule": "best of 4 chains (seed 2023); next best -208 loglik; liberal-edge placement of Schroeder/Clay/Sikorski confirmed by voting record"
+  },
+  "chains": [
+    {
+      "path": "results/full_ext/c3/H100",
+      "draws_used": 80000,
+      "loglik_mean": -87279.51978993976,
+      "loglik_sd": 49.26125533817916,
+      "md5_posterior": "f6d31e38c20c836376e466c8d0d8abb1",
+      "md5_placed": "3675dd97c268107e3526420e7bb75870",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 0,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2023,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    }
+  ],
+  "provenance": {
+    "code": {
+      "commit": "a78aadfcbca298693310f2cd540cace4ef69871d",
+      "dirty": false
+    },
+    "script": "scripts/combine_chains.py",
+    "created": "2026-10-29T22:10:02+00:00",
+    "place_min_votes": 25,
+    "data": [
+      {
+        "file": "H100_members.csv",
+        "md5": "56255afadefb0bde11edcee51c67fa8f",
+        "modified": "2026-10-25T00:24:02+00:00"
+      },
+      {
+        "file": "H100_rollcalls.csv",
+        "md5": "e452dbe6dd0dd7397db9f6a7a85b4d9d",
+        "modified": "2026-10-25T00:24:02+00:00"
+      },
+      {
+        "file": "H100_votes.csv",
+        "md5": "e85d5850a59204a7c3a17dcc3647b76b",
+        "modified": "2026-10-25T00:24:01+00:00"
+      }
+    ]
+  }
+}

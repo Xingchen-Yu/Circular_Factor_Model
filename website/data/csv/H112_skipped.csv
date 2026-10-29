@@ -1,0 +1,3 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+B000589,29137,"BOEHNER, John Andrew",R,OH,8,0.513,0.04,"Boehner, John Andrew (R OH-8)",False,0.9943820224719101,9
+G000554,20701,"GIFFORDS, Gabrielle",D,AZ,8,-0.11,0.076,"Giffords, Gabrielle (D AZ-8)",False,0.9931335830212235,11

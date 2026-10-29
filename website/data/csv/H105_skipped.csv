@@ -1,0 +1,2 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+R000229,15055,"RICHARDSON, Bill",D,NM,3,-0.321,0.227,"Richardson, Bill (D NM-3)",False,0.9939965694682675,7

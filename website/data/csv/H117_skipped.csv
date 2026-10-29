@@ -1,0 +1,3 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+R000588,21137,"RICHMOND, Cedric",D,LA,2,-0.486,0.332,"Richmond, Cedric (D LA-2)",False,0.9859437751004017,14
+W000827,21984,"WRIGHT, Ron",R,TX,6,0.711,-0.09,"Wright, Ron (R TX-6)",False,0.9849397590361446,15

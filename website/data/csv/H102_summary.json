@@ -1,0 +1,129 @@
+{
+  "congress": 102,
+  "chamber": "House",
+  "I": 431,
+  "J": 901,
+  "n_fitted": 431,
+  "n_placed": 8,
+  "n_skipped": 2,
+  "chi_0": {
+    "mean": 0.11387953846872,
+    "q025": 0.10739537038923198,
+    "q975": 0.12170095972816014,
+    "ess": 84.50129075985271,
+    "per_chain_mean": [
+      0.11387953846872
+    ],
+    "split_rhat": 1.003700645271447
+  },
+  "chi_D": {
+    "mean": 0.04399822721087756,
+    "q025": 0.04062424131068679,
+    "q975": 0.047837949367657596,
+    "ess": 94.59498820440113,
+    "per_chain_mean": [
+      0.04399822721087756
+    ]
+  },
+  "chi_R": {
+    "mean": 0.017284949679724403,
+    "q025": 0.01589817806470782,
+    "q975": 0.018904538048185936,
+    "ess": 107.06315900676772,
+    "per_chain_mean": [
+      0.017284949679724403
+    ]
+  },
+  "waic_grouped": {
+    "lppd": -95910.7705195215,
+    "p_waic": 2845.2237285045608,
+    "elpd_waic": -98755.99424802605,
+    "waic_deviance": 197511.9884960521
+  },
+  "omega_mean": 4.710906430672635,
+  "choice": {
+    "chains": [
+      "results/full_ext2/c6/H102"
+    ],
+    "drop_draws": 30000,
+    "rule": "best of 6 chains (seed 2026); voting record favours its placement of Jacobs (rank 1, agreement with neighbours 69% vs 59%)",
+    "drop_reason": "chi_0 still settling over the first ~30k of 130k draws (0.123, 0.120, then 0.113-0.115)"
+  },
+  "chains": [
+    {
+      "path": "results/full_ext2/c6/H102",
+      "draws_used": 100000,
+      "loglik_mean": -97168.20688630555,
+      "loglik_sd": 43.30931952435707,
+      "md5_posterior": "eec5d1832d946b483e698094307fa477",
+      "md5_placed": "331037e66979471af49e3b2839fd3a1e",
+      "config": {
+        "n_samples": 80000,
+        "burnin": 0,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2026,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    }
+  ],
+  "provenance": {
+    "code": {
+      "commit": "a78aadfcbca298693310f2cd540cace4ef69871d",
+      "dirty": false
+    },
+    "script": "scripts/combine_chains.py",
+    "created": "2026-10-29T22:10:22+00:00",
+    "place_min_votes": 25,
+    "data": [
+      {
+        "file": "H102_members.csv",
+        "md5": "cd3c81c71769f405440369459c8200ef",
+        "modified": "2026-10-25T00:24:05+00:00"
+      },
+      {
+        "file": "H102_rollcalls.csv",
+        "md5": "5b0948133f1a85c16fc47390ab7cb41c",
+        "modified": "2026-10-25T00:24:05+00:00"
+      },
+      {
+        "file": "H102_votes.csv",
+        "md5": "c089b5362dad447fcf05365916405a8c",
+        "modified": "2026-10-25T00:24:05+00:00"
+      }
+    ]
+  }
+}

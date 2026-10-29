@@ -1,0 +1,180 @@
+{
+  "congress": 108,
+  "chamber": "House",
+  "I": 431,
+  "J": 1218,
+  "n_fitted": 431,
+  "n_placed": 8,
+  "n_skipped": 0,
+  "chi_0": {
+    "mean": 0.13020752146507197,
+    "q025": 0.1232695709605764,
+    "q975": 0.13871465489488025,
+    "ess": 47.800492132079334,
+    "per_chain_mean": [
+      0.1302768477163621,
+      0.13013819521378184
+    ],
+    "split_rhat": 1.0573947073778047
+  },
+  "chi_D": {
+    "mean": 0.014708865275423927,
+    "q025": 0.013173540003530429,
+    "q975": 0.01631224037603356,
+    "ess": 23.837754468263302,
+    "per_chain_mean": [
+      0.014694298113310526,
+      0.014723432437537326
+    ]
+  },
+  "chi_R": {
+    "mean": 0.02425875742030506,
+    "q025": 0.02155355414234849,
+    "q975": 0.02683545436046558,
+    "ess": 28.663428424993086,
+    "per_chain_mean": [
+      0.024502865034403014,
+      0.02401464980620711
+    ]
+  },
+  "waic_grouped": {
+    "lppd": -65039.4906519392,
+    "p_waic": 2974.447250227072,
+    "elpd_waic": -68013.93790216628,
+    "waic_deviance": 136027.87580433255
+  },
+  "omega_mean": 4.181927410277419,
+  "choice": {
+    "chains": [
+      "results/full/c1/H108",
+      "results/full/c2/H108"
+    ],
+    "rule": "chains agree; pooled"
+  },
+  "chains": [
+    {
+      "path": "results/full/c1/H108",
+      "draws_used": 40000,
+      "loglik_mean": -66276.4076035154,
+      "loglik_sd": 49.079389240189,
+      "md5_posterior": "c6e0a54884031babb9bf764eae6bcee3",
+      "md5_placed": "b666a61f226834445c0840c4f5260070",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 20000,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2021,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    },
+    {
+      "path": "results/full/c2/H108",
+      "draws_used": 40000,
+      "loglik_mean": -66309.189551331,
+      "loglik_sd": 54.07848782284744,
+      "md5_posterior": "5ed08bfff9dd43c5e5e927059823ce34",
+      "md5_placed": "5b536e53238db05fb21eeba5b3ae9faf",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 20000,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2022,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    }
+  ],
+  "provenance": {
+    "code": {
+      "commit": "a78aadfcbca298693310f2cd540cace4ef69871d",
+      "dirty": false
+    },
+    "script": "scripts/combine_chains.py",
+    "created": "2026-10-29T22:11:06+00:00",
+    "place_min_votes": 25,
+    "data": [
+      {
+        "file": "H108_members.csv",
+        "md5": "998b1e65a2859053187dfbc6a38f3109",
+        "modified": "2026-10-25T00:24:15+00:00"
+      },
+      {
+        "file": "H108_rollcalls.csv",
+        "md5": "41a93bf492c6475b937dc798e7c87bbd",
+        "modified": "2026-10-25T00:24:16+00:00"
+      },
+      {
+        "file": "H108_votes.csv",
+        "md5": "0642f86674ebc53d34022f9f922cdb7a",
+        "modified": "2026-10-25T00:24:15+00:00"
+      }
+    ]
+  }
+}

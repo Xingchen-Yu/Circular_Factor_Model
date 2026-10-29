@@ -1,0 +1,2 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+E000172,29736,"EMERSON, Jo Ann",R,MO,8,0.269,0.274,"Emerson, Jo Ann (R MO-8)",False,0.9908485856905158,11

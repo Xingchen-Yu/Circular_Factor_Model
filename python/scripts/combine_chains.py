@@ -63,10 +63,19 @@ def load_chain(path, drop, I):
     return trimmed, placed, post.loglik_trace[-post.beta.shape[0]:][drop:]
 
 
+# Party used for the within-party measures chi_D / chi_R. Members carry the party they cast most
+# of their votes with in that Congress (Voteview's label, also used in the fit). Members who left
+# for Independent count with the party they left, or with the party they joined if they joined the
+# other party within the same Congress. Sanders (I, never a party member) stays out of both.
+PARTY_MEASURE_OVERRIDES = {107: {"G000280": "R"},   # Goode: D -> I (2000) -> R (Aug 2002)
+                           116: {"A000367": "R"}}   # Amash: R -> I (July 2019)
+
+
 def combine(congress, choice, out_dir, place_min_votes=25):
     data = load_congress(congress, "House", download=False)
     I = data.shape[0]
-    party = data.legislators["party"].to_numpy()
+    over = PARTY_MEASURE_OVERRIDES.get(congress, {})
+    party = np.array([over.get(p, x) for p, x in zip(data.legislators["person"].astype(str), data.legislators["party"])])
     drop = choice.get("drop_draws", 0)
     chains = [load_chain(ROOT / c, drop, I) for c in choice["chains"]]
     posts = [p for p, _, _ in chains]
@@ -99,6 +108,7 @@ def combine(congress, choice, out_dir, place_min_votes=25):
         summary[name] = {"mean": float(a.mean()), "q025": float(np.quantile(a, 0.025)), "q975": float(np.quantile(a, 0.975)),
                          "ess": float(sum(ess_bulk(x) for x in xs)), "per_chain_mean": [float(x.mean()) for x in xs]}
     summary["chi_0"]["split_rhat"] = float(rhat)
+    summary["party_measure_overrides"] = over
     summary["waic_grouped"] = {k: float(v) for k, v in pooled.waic_grouped().items()}
     summary["omega_mean"] = float(pooled.omega.mean())
     summary["choice"] = choice

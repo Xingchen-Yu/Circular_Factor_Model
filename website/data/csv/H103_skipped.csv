@@ -1,0 +1,5 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+E000218,15411,"ESPY, Alphonso Michael (Mike)",D,MS,2,-0.386,0.432,"Espy, Alphonso Michael (Mike) (D MS-2)",False,0.9954296160877514,5
+G000349,14225,"GRADISON, Willis David, Jr.",R,OH,2,0.233,-0.338,"Gradison, Willis David, Jr. (R OH-2)",False,0.9917733089579525,9
+H000514,15103,"HENRY, Paul B.",R,MI,3,0.264,-0.773,"Henry, Paul B. (R MI-3)",False,0.9990859232175503,1
+P000047,14444,"PANETTA, Leon Edward",D,CA,17,-0.258,-0.186,"Panetta, Leon Edward (D CA-17)",False,0.9954296160877514,5

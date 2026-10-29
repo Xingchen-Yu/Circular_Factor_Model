@@ -1,0 +1,127 @@
+{
+  "congress": 101,
+  "chamber": "House",
+  "I": 429,
+  "J": 879,
+  "n_fitted": 429,
+  "n_placed": 11,
+  "n_skipped": 3,
+  "chi_0": {
+    "mean": 0.12390345198409496,
+    "q025": 0.11739537472414126,
+    "q975": 0.1298163144728569,
+    "ess": 81.06449598287604,
+    "per_chain_mean": [
+      0.12390345198409496
+    ],
+    "split_rhat": 1.0112200641384081
+  },
+  "chi_D": {
+    "mean": 0.06744417059027415,
+    "q025": 0.06268254071867552,
+    "q975": 0.07213579518600838,
+    "ess": 53.310980774459374,
+    "per_chain_mean": [
+      0.06744417059027415
+    ]
+  },
+  "chi_R": {
+    "mean": 0.015285465034733827,
+    "q025": 0.0140601987863937,
+    "q975": 0.016521648121806645,
+    "ess": 158.60704441810634,
+    "per_chain_mean": [
+      0.015285465034733827
+    ]
+  },
+  "waic_grouped": {
+    "lppd": -95782.77623520413,
+    "p_waic": 2799.893841350179,
+    "elpd_waic": -98582.6700765543,
+    "waic_deviance": 197165.3401531086
+  },
+  "omega_mean": 4.371054112921018,
+  "choice": {
+    "chains": [
+      "results/full_ext/c1/H101"
+    ],
+    "rule": "best of 2 chains; other chain -322 loglik, trapped Schroeder/Bates/Pease/Moody at the centre"
+  },
+  "chains": [
+    {
+      "path": "results/full_ext/c1/H101",
+      "draws_used": 80000,
+      "loglik_mean": -97022.5672549305,
+      "loglik_sd": 41.45089539850201,
+      "md5_posterior": "cb008fe5e5309a7b1bfe343df40be1a3",
+      "md5_placed": "fe46149f88e813d201d251a5bd7546e0",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 0,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2021,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    }
+  ],
+  "provenance": {
+    "code": {
+      "commit": "a78aadfcbca298693310f2cd540cace4ef69871d",
+      "dirty": false
+    },
+    "script": "scripts/combine_chains.py",
+    "created": "2026-10-29T22:10:10+00:00",
+    "place_min_votes": 25,
+    "data": [
+      {
+        "file": "H101_members.csv",
+        "md5": "22db3b9f964a3a802227bd2051e4dbb8",
+        "modified": "2026-10-25T00:24:03+00:00"
+      },
+      {
+        "file": "H101_rollcalls.csv",
+        "md5": "81af5a8feaf26530ca0d4e3029b7b4bd",
+        "modified": "2026-10-25T00:24:04+00:00"
+      },
+      {
+        "file": "H101_votes.csv",
+        "md5": "203c4c90920e3207556c66a7340a7bc1",
+        "modified": "2026-10-25T00:24:03+00:00"
+      }
+    ]
+  }
+}

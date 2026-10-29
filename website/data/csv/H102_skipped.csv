@@ -1,0 +1,3 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+C000709,2009,"CONTE, Silvio Ottavio",R,MA,1,-0.023,-0.683,"Conte, Silvio Ottavio (R MA-1)",False,0.9811320754716981,17
+U000001,10566,"UDALL, Morris King",D,AZ,2,-0.387,0.008,"Udall, Morris King (D AZ-2)",False,0.9955604883462819,4

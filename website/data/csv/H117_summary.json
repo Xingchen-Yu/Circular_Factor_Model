@@ -1,0 +1,174 @@
+{
+  "congress": 117,
+  "chamber": "House",
+  "I": 427,
+  "J": 996,
+  "n_fitted": 427,
+  "n_placed": 20,
+  "n_skipped": 2,
+  "chi_0": {
+    "mean": 0.3899267923627464,
+    "q025": 0.37487172080841413,
+    "q975": 0.4052775753596168,
+    "ess": 58.330387440360276,
+    "per_chain_mean": [
+      0.3921620886125017,
+      0.3876914961129912
+    ],
+    "split_rhat": 1.0780634911175666
+  },
+  "chi_D": {
+    "mean": 0.018008613022671538,
+    "q025": 0.015650946631527208,
+    "q975": 0.020631021851147312,
+    "ess": 70.8271285027977,
+    "per_chain_mean": [
+      0.018020533577850432,
+      0.017996692467492643
+    ]
+  },
+  "chi_R": {
+    "mean": 0.026427419316377734,
+    "q025": 0.024154011484577898,
+    "q975": 0.0288548292910065,
+    "ess": 76.236352254677,
+    "per_chain_mean": [
+      0.02627255151516453,
+      0.026582287117590944
+    ]
+  },
+  "waic_grouped": {
+    "lppd": -31202.350206947347,
+    "p_waic": 2018.6249849935348,
+    "elpd_waic": -33220.97519194088,
+    "waic_deviance": 66441.95038388176
+  },
+  "omega_mean": 1.5567027077829998,
+  "choice": {
+    "chains": [
+      "results/full/c1/H117",
+      "results/full/c2/H117"
+    ],
+    "rule": "chains agree; pooled"
+  },
+  "chains": [
+    {
+      "path": "results/full/c1/H117",
+      "draws_used": 40000,
+      "loglik_mean": -32039.996852467586,
+      "loglik_sd": 35.289023321297854,
+      "md5_posterior": "1eec5355095a67d435df307adae95fd3",
+      "md5_placed": "775ffd6dc17230f8e30cb486b9b41183",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 20000,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2021,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    },
+    {
+      "path": "results/full/c2/H117",
+      "draws_used": 40000,
+      "loglik_mean": -32037.128086312317,
+      "loglik_sd": 35.141009192071884,
+      "md5_posterior": "8f7fae174d2348a6eed2ac1ce357a5fc",
+      "md5_placed": "1a0efd363b1d0e46c24b0715ea04659c",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 20000,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2022,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    }
+  ],
+  "provenance": {
+    "code": {
+      "commit": "a78aadfcbca298693310f2cd540cace4ef69871d",
+      "dirty": false
+    },
+    "script": "scripts/combine_chains.py",
+    "created": "2026-10-29T22:12:52+00:00",
+    "place_min_votes": 25,
+    "data": [
+      {
+        "file": "H117_members.csv",
+        "md5": "37a24d35be96b0752d33d46d93eafccd",
+        "modified": "2026-10-25T00:24:31+00:00"
+      },
+      {
+        "file": "H117_rollcalls.csv",
+        "md5": "e9fe84ab04ca47c21c111ec6483c4623",
+        "modified": "2026-10-25T00:24:31+00:00"
+      },
+      {
+        "file": "H117_votes.csv",
+        "md5": "e6e3f770e5d884fdab07dab5c078eb07",
+        "modified": "2026-10-25T00:24:31+00:00"
+      }
+    ]
+  }
+}

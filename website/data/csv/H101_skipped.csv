@@ -1,0 +1,4 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+C000344,14611,"CHENEY, Richard Bruce",R,WY,1,0.523,-0.068,"Cheney, Richard Bruce (R WY-1)",False,0.9931740614334471,6
+P000218,7333,"PEPPER, Claude Denson",D,FL,18,-0.422,0.357,"Pepper, Claude Denson (D FL-18)",False,0.9863481228668942,12
+W000763,10391,"WRIGHT, James Claude, Jr.",D,TX,12,-0.383,0.672,"Wright, James Claude, Jr. (D TX-12)",False,0.9806598407281001,17

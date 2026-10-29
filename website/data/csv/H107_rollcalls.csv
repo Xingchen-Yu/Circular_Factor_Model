@@ -1,0 +1,991 @@
+rollnumber,date,session,bill_number,vote_result,vote_question,vote_desc,yea_count,nay_count,psi_mean,zeta_mean,kappa_mean,kappa_q025,kappa_q975
+1,2001-01-03,1,,Hastert,ELECTION OF SPEAKER,,222,206,2.341642,-2.4253242,245.69798,67.82954235076905,584.1935668945312
+2,2001-01-03,1,HRES5,Failed,On Motion to Commit,Adopting Rules for the One Hundred Seventh Congress,199,213,-2.0042672,1.8538716,137.95697,39.060308361053465,399.6288261413571
+3,2001-01-03,1,HRES5,Passed,On Agreeing to the Resolution,Adopting Rules for the One Hundred Seventh Congress,215,206,2.3619611,-2.4439678,244.84103,68.5270112991333,576.9085128784178
+4,2001-01-30,1,HR93,Passed,"On Motion to Supend the Rules and Pass, as Amended",Federal Firefighters Retirement Age Fairness Act,401,0,0.3738243,-3.0126784,155.05232,22.0475643157959,476.6457618713378
+5,2001-01-31,1,HCONRES14,Passed,On Motion to Suspend the Rules and Agree,Permitting the Use of the Rotunda of the Capitol for a Ceremony as part of the Commemoration of the Days of Remembrance of Victims of the Holocaust,407,0,0.38812318,-3.0262444,150.99153,22.30537705421448,451.8422164916989
+6,2001-01-31,1,HCONRES15,Passed,On Motion to Suspend the Rules and Agree,Expressing Sympathy for the Victims of the Devastating Earthquake that Struck India,406,1,-0.36112526,3.086584,147.73108,22.325745582580566,424.88387145996063
+7,2001-01-31,1,,Passed,On Approving the Journal,,382,19,2.3023424,2.600175,171.9881,56.5285719871521,391.05594024658194
+8,2001-02-06,1,HJRES7,Passed,On Motion to Suspend the Rules and Pass,Recognizing the 90th birthday of Ronald Reagan,410,0,0.37858763,-3.0190547,153.49269,21.455905437469482,481.0727920532225
+9,2001-02-06,1,HRES28,Passed,On Motion to Suspend the Rules and Agree,Honoring the contributions of Catholic schools,412,0,0.18952686,-3.0839658,156.10298,22.463413763046265,468.133254241943
+10,2001-02-07,1,HR132,Passed,On Motion to Suspend the Rules and Pass,"To designate the Goro Hokama Post Office Building in Lanai City, Hawaii",413,0,0.39600727,-3.0358958,150.4168,22.090314292907713,450.57291793823225
+11,2001-02-13,1,HRES34,Passed,"On Motion to Suspend the Rules and Agree, as Amended","Congratulating the Prime Minister-elect of Israel, Airel Sharon, calling for an end to violence in the Middle East, reaffirming the friendship between the Governments of the United States and Israel",410,1,-0.34265673,3.0881894,144.67227,19.62355375289917,447.662082672119
+12,2001-02-13,1,HR2,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Social Security and Medicare Lock-Box Act,407,2,0.15398693,-2.3390105,94.349945,11.295273685455323,328.80303878784173
+13,2001-02-14,1,HR524,Passed,On Motion to Suspend the Rules and Pass,Electronic Commerce Enhancement Act,409,6,-0.7681613,2.7470486,121.97652,21.74238877296448,385.9251152038574
+14,2001-02-14,1,HR554,Passed,On Passage,Rail Passenger Disaster Family Assistance Act,404,4,-1.1146129,3.1160004,194.94328,32.670457458496095,538.5695129394524
+15,2001-02-27,1,HCONRES39,Passed,On Motion to Suspend the Rules and Agree,"Honoring the Ultimate Sacrifice Made by 28 U.S. Soldiers Killed by an Iraqi Missile Attack on February 25, 1991, During Operation Desert Storm",395,0,0.40456486,-3.0415542,155.88455,23.27716760635376,449.5710037231443
+16,2001-02-28,1,HR256,Passed,On Motion to Suspend the Rules and Pass,Family Farmer Bankruptcy Relief Extension,408,2,0.23903103,2.472587,87.12193,12.14781849384308,324.55371093749994
+17,2001-02-28,1,HR558,Passed,On Motion to Suspend the Rules and Pass,Edward N. Cahn Federal Building and United States Courthouse Designation,412,0,0.39940694,-3.060739,151.1497,21.481736373901366,462.2907035827636
+18,2001-02-28,1,HR621,Passed,On Motion to Suspend the Rules and Pass,James C. Corman Federal Building Designation,413,0,0.42725798,-3.0457263,153.25644,22.709808826446533,470.0581161499015
+19,2001-02-28,1,HCONRES27,Passed,On Motion to Suspend the Rules and Agree,Honoring the National Institute of Standards and Technology and its Employees for 100 Years of Service to the Nation,413,1,-0.3580846,3.0910187,148.40784,20.67997016906738,435.16299514770503
+20,2001-02-28,1,HRES54,Passed,On Motion to Suspend the Rules and Agree,Commending African American Pioneers in Colorado,411,0,0.37250078,-3.021476,153.14482,21.864840650558474,429.9736152648925
+21,2001-03-01,1,HRES71,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 333; Bankruptcy Abuse Prevention and Consumer Protection Act,281,132,0.8627712,-1.6181226,77.96647,11.256740379333497,276.3988861083981
+22,2001-03-01,1,HR333,Failed,Jackson-Lee of Texas Amendment Number 6,,160,258,-1.6313235,1.0262458,90.930626,14.974146151542664,330.0931289672843
+23,2001-03-01,1,HR333,Failed,On Motion to Recommit with Instructions,Bankruptcy Abuse Prevention and Consumer Protection Act,165,253,-2.83205,2.3017106,14.02756,6.1712993621826175,42.527677440642954
+24,2001-03-01,1,HR333,Passed,On Passage,Bankruptcy Abuse Prevention and Consumer Protection Act,306,108,0.94551325,-1.9038805,95.39003,16.40555911064148,356.82902450561517
+25,2001-03-06,1,HR724,Passed,On Motion to Suspend the Rules and Pass,"To Authorize Appropriations to Carry Out Part B of Title I of the Energy Policy and Conservation Act, relating to the Strategic Petroleum Reserve",400,2,0.08556991,2.5191724,96.72861,13.270961666107178,342.92350540161124
+26,2001-03-06,1,HR727,Passed,On Motion to Suspend the Rules and Pass,To Amend the Consumer Product Safety Act to Provide that Low-Speed Electric Bicycles are Consumer Products Subject to Such Act,401,1,-0.3506014,3.090228,146.59647,20.48398838043213,449.7887107849121
+27,2001-03-07,1,,Passed,On Approving the Journal,,337,72,2.4613886,2.59382,243.36732,89.76330127716065,484.7601554870604
+28,2001-03-07,1,HRES79,Passed,On Agreeing to the Resolution,Providing for consideration of S.J.Res. 6; Providing for Congressional Disapproval of the Rule Relating to Ergonomics,222,198,1.8796623,-2.1245062,141.9325,40.794654273986815,400.6860252380371
+29,2001-03-07,1,HCONRES31,Passed,On Motion to Suspend the Rules and Agree,"Expressing the sense of the Congress regarding the importance of organ, tissue, bone marrow, and blood donation and supporting National Donor Day.",418,0,0.38972366,-3.0237393,156.32925,23.632529401779173,467.90572662353514
+30,2001-03-07,1,HR624,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Organ Donation Improvement Act,404,0,0.059242062,-3.0711598,149.16711,19.579357767105105,455.7238548278808
+31,2001-03-07,1,HCONRES47,Passed,On Motion to Suspend the Rules and Agree,"Honoring the 21 members of the National Guard who were killed in the crash of a National Guard aircraft on March 3, 2001, in south-central Georgia.",413,0,0.4006283,-3.0321743,152.94112,22.05964379310608,459.4566116332997
+32,2001-03-07,1,SJRES6,Passed,On Passage,"Providing for Congressional Disapproval of the Rule Submitted by the Department of Labor Under Chapter 8 of Title 5, United States Code, Relating to Ergonomics",223,206,1.8887527,-2.0023365,41.20359,6.8768151044845585,222.6542411804197
+33,2001-03-08,1,,Passed,On Approving the Journal,,230,180,2.7825222,-2.9999218,45.41389,6.8859250664711,293.9218658447258
+34,2001-03-08,1,,Failed,On Motion to Adjourn,,174,241,-1.2683649,0.8575457,73.582924,7.082617163658142,273.9569824218748
+35,2001-03-08,1,,Failed,On Motion to Adjourn,,171,251,-1.3262597,0.8343009,76.48266,7.919018137454986,314.8894546508786
+36,2001-03-08,1,HRES83,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 3; Economic Growth and Tax Relief Act of 2001,220,204,2.7766893,-2.972201,110.9591,35.99237356185913,277.2276062011715
+37,2001-03-08,1,HRES83,Passed,Table Motion to Reconsider,Providing for consideration of H.R. 3; Economic Growth and Tax Relief Act of 2001,217,205,1.9952908,-2.1419044,144.95972,42.46061029434204,398.9317207336422
+38,2001-03-08,1,HRES83,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 3; Economic Growth and Tax Relief Act of 2001,220,204,2.8980203,-3.0421672,163.66806,45.15280199050903,439.41748733520507
+39,2001-03-08,1,HRES83,Passed,Table Motion to Reconsider,Providing for consideration of H.R. 3; Economic Growth and Tax Relief Act of 2001,221,197,1.7772682,-2.014326,125.64071,33.8210391998291,367.1053588867184
+40,2001-03-08,1,,Failed,On Motion to Adjourn,,160,253,-1.3599442,0.81965125,70.22044,6.594912159442901,319.06016845703084
+41,2001-03-08,1,HR3,Failed,Rangel of New York Substitute Amendment,,155,273,-1.3254457,0.7130159,77.16904,6.684186863899231,313.3649864196775
+42,2001-03-08,1,HR3,Agreed to,Table Motion to Reconsider,,228,197,1.7646624,-2.0720983,82.27713,20.88938398361206,297.1609344482422
+43,2001-03-08,1,HR3,Failed,On Motion to Recommit with Instructions,Economic Growth and Tax Relief Act of 2001,204,221,-2.4537897,2.30539,236.71071,72.02317276000977,566.1975585937496
+44,2001-03-08,1,HR3,Passed,On Passage,Economic Growth and Tax Relief Act of 2001,230,198,1.8580166,-2.2044897,136.1179,35.73205223083496,389.53898239135737
+45,2001-03-13,1,HR834,Passed,On Motion to Suspend the Rules and Pass,National Trails System Willing Seller Act,409,3,0.26067418,2.3391128,84.12645,10.58220570087433,297.09708938598595
+46,2001-03-13,1,HR223,Passed,On Motion to Suspend the Rules and Pass,"To amend the Clear Creek County, Colorado, Public Lands Transfer Act",413,0,0.4101362,-3.0567179,156.88959,22.55826621055603,471.03489608764477
+47,2001-03-14,1,HR725,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Made in America Information Act,407,3,-0.95659757,3.076988,174.42847,29.678363227844237,508.77853012084944
+48,2001-03-14,1,HR861,Passed,On Motion to Suspend the Rules and Pass,"To Make Technical Amendments to Section 10 of Title 9, United States Code",413,0,0.3986833,-3.0293314,152.60931,21.825621604919434,470.85677642822253
+49,2001-03-15,1,HR327,Passed,On Passage,Small Business Paperwork Relief Act,418,0,0.37546062,-3.030881,153.78494,23.550155019760133,468.25454559326164
+50,2001-03-20,1,HRES67,Passed,"On Motion to Suspend the Rules and Agree, as Amended","Recognizing the importance of combatting tuberculosis on a worldwide basis, and acknowledging the severe impact that TB has on minority population in the United States",405,2,0.24383454,2.4735653,85.4893,11.280176424980164,318.10538558959917
+51,2001-03-20,1,HCONRES41,Passed,On Motion to Suspend the Rules and Agree,"Expressing sympathy for the victims of the devastating earthquakes that struck El Salvador on January 13, 2001, and February 13, 2001, and supporting ongoing aid efforts",405,1,-0.35694146,3.0968492,149.8447,19.590953588485718,457.56520233154265
+52,2001-03-21,1,HCONRES43,Passed,On Motion to Suspend the Rules and Agree,"Authorizing the Printing of a Revised and Updated Version of the House Document Entitled “Black Americans in Congress, 1870-1989”",414,1,-0.36191663,3.1115394,145.31857,22.610272645950317,437.4116012573238
+53,2001-03-21,1,HR1042,Passed,"On Motion to Suspend the Rules and Pass, as Amended",To Prevent the Elimination of Certain Reports,414,2,1.6002915,2.3809724,98.42341,8.948101258277893,340.6921226501464
+54,2001-03-21,1,HR1098,Passed,On Motion to Suspend the Rules and Pass,Maritime Policy Improvement Act,415,3,-1.6575307,-2.3705878,112.936134,15.915655374526978,356.0440536499019
+55,2001-03-22,1,,Failed,On Motion to Adjourn,,71,336,-1.5785838,0.3079722,66.970436,5.144341230392456,299.7075225830076
+56,2001-03-22,1,HRES93,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 247; Tornado Shelters Act,246,169,0.97413373,-1.4567617,81.95721,10.339728856086731,331.57151641845644
+57,2001-03-22,1,HR1099,Passed,On Motion to Suspend the Rules and Pass,Coast Guard Personnel and Maritime Safety Act,415,0,0.38757503,-3.0311317,151.67082,22.32744245529175,446.16383895873867
+58,2001-03-22,1,HR802,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Public Safety Officer Medal of Valor Act,414,0,0.3531624,-3.0005305,152.59818,21.06439299583435,464.33594436645507
+59,2001-03-22,1,HR247,Agreed to,Traficant of Ohio Amendment,,396,0,0.39176774,-3.0479724,154.24924,21.34839382171631,474.96996994018554
+60,2001-03-22,1,HR247,Passed,On Passage,Tornado Shelters Act,401,6,-0.04940609,2.29728,84.88792,11.18756582736969,298.3195510864252
+61,2001-03-27,1,HRES84,Passed,On Agreeing to the Resolution,Committee Funding Resolution,357,61,-0.4575607,-2.6910644,5.1102996,0.9989740803837777,40.74885463714585
+62,2001-03-27,1,HR801,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Veterans Opportunities Act,417,0,0.3744682,-3.0330536,153.73956,23.411317777633666,475.851988220214
+63,2001-03-27,1,HR811,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Veterans Hospital Emergency Repair Act,417,0,0.37066433,-3.0100582,151.84578,21.824445152282713,449.8378746032707
+64,2001-03-28,1,HRES100,Passed,On Agreeing to the Resolution,Providing for consideration of H. Con. Res. 83; Congressional Budget for Fiscal Year 2002,282,130,0.6648768,-1.4219413,75.74351,6.806944227218628,306.8713470458979
+65,2001-03-28,1,HCONRES83,Failed,Kucinich Substitute Amendment,Congressional Budget for Fiscal Year 2002,79,343,-1.9405389,0.80557007,104.89095,17.657896041870117,362.5635803222651
+66,2001-03-28,1,HCONRES83,Failed,Stenholm Substitute Amendment,,204,221,-3.0407999,3.0367317,156.06702,26.342832374572755,468.3263153076165
+67,2001-03-28,1,HCONRES83,Failed,Flake Substitute Amendment,,81,341,1.4343624,-0.20212641,89.69825,7.9636351585388185,312.47326965331985
+68,2001-03-28,1,HCONRES83,Failed,Spratt Substitute Amendment,,183,243,-1.4133905,1.0070553,91.29391,12.701851868629456,313.5049499511716
+69,2001-03-28,1,HCONRES83,Passed,On Agreeing to the Resolution,Congressional Budget for Fiscal Year 2002,222,205,2.8552878,-3.029728,119.12938,31.126706075668334,391.8582344055176
+70,2001-03-29,1,HRES104,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 6; Marriage Penalty and Family Tax Relief Act,249,171,1.0644851,-1.5627034,72.895874,10.199464654922485,311.01738891601553
+71,2001-03-29,1,,Passed,On Approving the Journal,,354,62,2.4407506,2.5913749,238.53508,101.28834552764893,447.1758857727051
+72,2001-03-29,1,HR6,Failed,Rangel Substitute Amendment,,196,231,-2.97223,2.7034883,29.508358,15.762725901603698,53.358657741546594
+73,2001-03-29,1,HR6,Failed,On Motion to Recommit with Instructions,Marriage Penalty and Family Tax Relief Act,184,240,-1.8131269,1.3601177,104.72246,20.91374502182007,370.69626235961874
+74,2001-03-29,1,HR6,Passed,On Passage,Marriage Penalty and Family Tax Relief Act,282,144,0.9166506,-1.655197,83.69889,12.354509592056274,326.56768112182607
+75,2001-04-03,1,HR768,Passed,On Motion to Suspend the Rules and Pass,Need-Based Educational Aid Act,414,0,0.3726819,-3.0117166,149.02518,22.547238969802855,461.5426986694335
+76,2001-04-03,1,HRES91,Passed,On Motion to Suspend the Rules and Agree,Expressing the sense of the House of Representatives regarding the human rights situation in Cuba,347,44,1.6897576,-3.0365837,14.307939,6.833235108852387,24.90330958366394
+77,2001-04-03,1,HRES56,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Urging the appropriate representative of the US to the UN Commission on Human Rights to introduce at the annual meeting of the Commission a resolution calling upon China to end its human rights violations in China and Tibet,406,6,0.658655,3.1401527,14.252742,4.628614330291748,51.15874185562122
+78,2001-04-04,1,HCONRES66,Passed,On Motion to Suspend the Rules and Agree,"Authorizing the Printing of a Revised and Updated Version of the House Document Entitled “Women in Congress, 1917-1990”",414,1,-0.37487757,3.1137571,149.24559,22.693666791915895,430.4416854858391
+79,2001-04-04,1,HRES111,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 8; Death Tax Elimination Act of 2001,413,12,0.48863414,-2.2205105,89.337395,13.525137972831725,322.0839340209957
+80,2001-04-04,1,HR642,Passed,"On Motion to Suspend the Rules and Pass, as Amended",To reauthorize the Chesapeake Bay Office of the National Oceanic and Atmospheric Administration,406,13,-0.21963279,2.1858168,96.23157,13.131396102905274,358.60946273803694
+81,2001-04-04,1,HR8,Failed,Rangel Substitute Amendment,,201,227,-2.9830413,3.0239875,124.90769,20.629261112213136,325.6050224304199
+82,2001-04-04,1,HR8,Failed,On Motion to Recommit with Instructions,Death Tax Elimination Act of 2001,192,235,-1.7599456,1.4221916,79.486176,13.81506335735321,330.4023117065426
+83,2001-04-04,1,HR8,Passed,On Passage,Death Tax Elimination Act of 2001,274,154,0.7851521,-1.4144183,82.36817,9.447721099853515,323.1450592041012
+84,2001-04-24,1,HCONRES83,Failed,On Motion to Instruct Conferees,Congressional Budget for Fiscal Year 2002,200,207,-1.7672877,1.7029771,105.79416,25.617595386505126,350.1372459411616
+85,2001-04-24,1,HR428,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Concerning the participation of Taiwan in the World Health Organization,407,0,0.3914103,-3.016125,150.48082,25.55828266143799,443.8153671264648
+86,2001-04-25,1,HJRES41,Failed,On Passage,Proposing an amendment to the Constitution of the United States with respect to tax limitations,232,189,2.3720841,-2.6165524,6.795213,5.024002707004547,9.41283667087555
+87,2001-04-26,1,HR503,Failed,Lofgren Substitute Amendment,,196,229,-1.0833929,0.91085094,56.367012,4.055611717700958,257.41841583251926
+88,2001-04-26,1,HR503,Passed,On Passage,Unborn Victims of Violence Act,252,172,2.0664902,-2.4428935,4.264974,3.03644112944603,5.8490433335304255
+89,2001-05-01,1,HCONRES91,Passed,On Motion to Suspend the Rules and Agree,"Recognizing the importance of increasing awareness of the autism spectrum disorder, and supporting programs for greater research and improved treatment of autism",418,1,-0.3449505,3.0769718,146.91663,21.819313335418702,457.8255500793456
+90,2001-05-01,1,HCONRES95,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Supporting a National Charter Schools Week,404,6,-0.08825971,-2.1307292,82.210594,8.697377109527588,340.50772018432565
+91,2001-05-02,1,HRES127,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.R. 10, Comprehensive Retirement Security and Pension Reform Act",404,24,0.9561531,-2.4013362,108.511955,21.9390438079834,361.3701721191406
+92,2001-05-02,1,,Passed,On Approving the Journal,,377,47,2.4150932,2.571582,264.71683,94.04232501983643,568.7681091308593
+93,2001-05-02,1,HR10,Failed,On Agreeing to the Amendment,,207,223,-2.9919562,2.8518226,92.04529,34.77332963943481,232.21628532409636
+94,2001-05-02,1,HR10,Failed,On Motion to Recommit with Instructions,Comprehensive Retirement Security and Pension Reform Act,153,276,-2.9107955,2.2162907,12.6876335,8.017010617256165,18.624329566955563
+95,2001-05-02,1,HR10,Passed,On Passage,Comprehensive Retirement Security and Pension Reform Act,407,24,1.8420818,2.9410229,24.248457,8.739708518981933,49.828336048126204
+96,2001-05-03,1,,Failed,On Motion to Adjourn,,157,250,-1.3958372,0.8421828,58.766872,6.5699651598930355,234.9833713531494
+97,2001-05-03,1,,Failed,On Motion to Adjourn,,171,239,-1.226676,0.78388876,92.65733,9.624628520011902,300.1626281738281
+98,2001-05-04,1,,Passed,On Approving the Journal,,299,107,2.106927,3.1345215,5.597197,2.6165821850299835,10.603537893295279
+99,2001-05-08,1,HRES131,Passed,On Agreeing to the Resolution,Waiving a requirement of clause 6(a) of rule XIII with respect to consideration of certain resolutions reported from the Committee on Rules,214,200,2.3379095,-2.4180799,245.21704,72.1025197982788,574.7733078002927
+100,2001-05-08,1,HRES134,Passed,On Agreeing to the Resolution,"Providing for recommittal of the conference report to accompany H.Con.Res. 83, Establishing the Congressional Budget for the U.S. Government for F.Y. 2002",409,1,0.14603573,-2.42743,101.29422,13.376623606681823,347.80884552001936
+101,2001-05-09,1,,Passed,On Approving the Journal,,335,70,2.4521635,2.5999699,215.98053,85.84356632232667,432.3449592590332
+102,2001-05-09,1,HRES136,Passed,On Agreeing to the Resolution,"Waiving Points of Order Against the Conference Report on H. Con. Res. 83, Congressional Budget for FY 2001",218,208,2.3958793,-2.4767618,240.25864,66.62356929779052,597.8615539550781
+103,2001-05-09,1,HCONRES83,Passed,On Agreeing to the Conference Report,Congressional Budget for Fiscal Year 2002,221,207,2.7649093,-3.0044467,70.86157,21.339254331588744,226.70679588317861
+104,2001-05-10,1,HRES138,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 1646; Foreign Relations Authorization Act,226,192,1.2791622,-1.5629338,90.68183,15.239328408241272,344.29493179321275
+105,2001-05-10,1,HR1646,Agreed to,On Agreeing to the Amendment,,282,137,0.6998123,-1.4441003,75.45878,8.162736439704895,317.466941833496
+106,2001-05-10,1,HR1646,Agreed to,On Agreeing to the Amendment,,252,165,0.5449959,-0.97387725,67.788506,3.0754243612289427,261.5030464172359
+107,2001-05-10,1,HR1646,Failed,On Agreeing to the Amendment,,193,225,1.2879831,-1.1360781,66.86693,7.999859046936035,249.36348876953116
+108,2001-05-15,1,HR1696,Passed,On Motion to Suspend the Rules and Pass,To expedite the construction of the World War II memorial in the District of Columbia,400,15,-1.2337523,-1.929753,78.39001,6.082777869701386,271.9520866394041
+109,2001-05-15,1,HRES116,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Commemorating the dedication and sacrifices of the men and women of the United States who were killed or disabled while serving as law enforcement officers,416,0,0.37150037,-3.025864,149.79427,22.416300344467164,439.32546386718747
+110,2001-05-15,1,HR1727,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Fallen Hero Survivor Benefit Fairness Act,419,0,0.40887827,-3.0514004,155.87708,22.665416288375855,480.71349639892577
+111,2001-05-15,1,HR586,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Fairness for Foster Care Families Act,420,0,0.39678314,-3.030758,151.12866,22.621662139892578,463.52387313842763
+112,2001-05-15,1,HR428,Passed,On Motion to Suspend the Rules and Agree to Senate Amendment,Concerning the participation of Taiwan in the World Health Organization,415,0,0.39298064,-3.032863,148.83156,22.386922121047974,441.2346961975095
+113,2001-05-16,1,,Passed,On Approving the Journal,,348,53,2.4331918,2.5827792,282.98816,117.22445621490479,525.5816787719725
+114,2001-05-16,1,HR1646,Agreed to,On Agreeing to the Amendment,,218,210,0.92817795,-0.9948104,63.35172,4.153976321220398,275.4707305908195
+115,2001-05-16,1,HRES142,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.R. 1836, Economic Growth and Tax Relief Reconciliation Act",220,207,2.901017,-3.0383584,162.1168,47.8457124710083,418.1432983398436
+116,2001-05-16,1,HR1836,Failed,On Agreeing to the Amendment,,188,239,-1.9489189,1.5324249,90.26547,18.586988830566405,314.42029571533175
+117,2001-05-16,1,HR1836,Passed,On Passage,Economic Growth and Tax Relief Reconciliation Act,230,197,1.5686381,-1.9184278,112.1819,27.19513373374939,352.1434097290039
+118,2001-05-16,1,HR1646,Agreed to,On Agreeing to the Amendment,,216,210,-2.8949974,2.8825648,55.41657,0.2147002425044775,303.2378799438474
+119,2001-05-16,1,HR1646,Failed,On Motion to Recommit with Instructions,Foreign Relations Authorization Act,189,239,-2.815032,2.4289074,69.65518,18.33177704811096,199.50656051635738
+120,2001-05-16,1,HR1646,Passed,On Passage,Foreign Relations Authorization Act,352,73,-2.1679611,-2.5381064,35.001648,6.8738545179367065,110.3187856674194
+121,2001-05-17,1,,Passed,On Approving the Journal,,336,68,2.4477012,2.6030347,212.75049,83.47199573516846,441.7529907226559
+122,2001-05-17,1,HRES141,Passed,On Agreeing to the Resolution,"Providing for consideration of H.R. 622, Hope for Children Act",415,1,-0.13298595,-2.3193977,97.28198,12.326630449295044,364.00030059814407
+123,2001-05-17,1,HR622,Passed,On Passage,Hope for Children Act,420,0,0.38852155,-3.0290134,156.95544,23.595809984207154,474.9187332153319
+124,2001-05-17,1,HRES143,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.R. 1, No Child Left Behind Act",219,201,2.372274,-2.4517834,241.21165,71.54786739349365,581.5510986328121
+125,2001-05-21,1,HCONRES56,Passed,On Motion to Suspend the Rules and Agree,Expressing the sense of the Congress regarding National Pearl Harbor Remembrance Day,368,0,0.40281415,-3.0412753,151.0079,23.865880823135377,463.6264854431152
+126,2001-05-21,1,HR1885,Passed,On Motion to Suspend the Rules and Pass,Section 245(i) Extension Act,336,43,0.41212142,1.5969646,69.67225,2.2385080099105834,290.35842590332027
+127,2001-05-22,1,HR1,Agreed to,On Agreeing to the Amendment,,421,2,1.2555187,2.328863,86.790695,9.253866124153138,340.4319458007811
+128,2001-05-22,1,HR1,Agreed to,On Agreeing to the Amendment,,422,0,0.39153183,-3.01829,148.5241,20.923931407928468,465.75630111694335
+129,2001-05-22,1,HR1,Failed,On Agreeing to the Amendment,,173,255,2.9103725,2.4838352,16.400816,2.2717347860336305,98.06071224212634
+130,2001-05-22,1,HR1,Agreed to,On Agreeing to the Amendment,,420,3,1.0639929,2.2839112,81.33471,8.203959631919862,334.66105651855406
+131,2001-05-22,1,HR1,Agreed to,On Agreeing to the Amendment,,217,209,1.88819,-1.923413,114.70943,33.24363555908203,341.4196060180653
+132,2001-05-22,1,HR1,Agreed to,On Agreeing to the Amendment,,366,57,2.0468493,2.9765475,21.578024,11.042339372634888,36.64467105865478
+133,2001-05-22,1,HR1831,Passed,On Motion to Suspend the Rules and Pass,Small Business Liability Protection Act,419,0,0.3840257,-3.0207095,150.16689,22.164460515975954,479.98796386718743
+134,2001-05-23,1,HR1,Failed,On Agreeing to the Amendment,,155,273,2.6006274,-2.0533228,20.21165,4.554670882225037,188.21988372802704
+135,2001-05-23,1,HR1,Failed,On Agreeing to the Amendment,,186,241,2.7787614,-2.5340645,8.6742,5.21273044347763,17.105536174774162
+136,2001-05-23,1,HR1,Failed,On Agreeing to the Amendment,,191,236,1.7736567,-1.4409652,98.54074,20.285749626159667,335.97393035888655
+137,2001-05-23,1,HR1,Agreed to,On Agreeing to the Amendment,,246,181,0.6815197,-1.0027896,91.91329,4.664820921421051,354.8512725830071
+138,2001-05-23,1,HR1,Agreed to,On Agreeing to the Amendment,,361,67,-0.80746704,2.5252328,20.144598,1.416958248615265,160.10148277282644
+139,2001-05-23,1,HR1,Agreed to,On Agreeing to the Amendment,,415,9,1.0868897,2.600158,38.153038,3.8271790504455567,223.79537925720146
+140,2001-05-23,1,HR1,Agreed to,On Agreeing to the Amendment,,239,189,2.6320076,-3.0754287,21.63904,6.934991943836212,59.22563667297354
+141,2001-05-23,1,HR1,Agreed to,On Agreeing to the Amendment,,425,3,1.3456933,2.7576473,23.445377,5.652945733070373,103.29072742462152
+142,2001-05-23,1,HR1,Failed,On Agreeing to the Amendment,,101,326,3.0674322,-2.048275,11.540446,6.811422061920166,16.667541837692255
+143,2001-05-23,1,HR1,Failed,On Motion to Recommit with Instructions,No Child Left Behind Act,207,223,-2.899778,2.7849693,44.630722,22.29283380508423,77.678244972229
+144,2001-05-23,1,HR1,Passed,On Passage,No Child Left Behind Act,384,45,-2.0431278,-2.7230017,23.118961,11.339389514923095,42.06905279159546
+145,2001-05-23,1,HR1836,Failed,On Motion to Instruct Conferees,Economic Growth and Tax Relief Reconciliation Act,198,210,-2.998827,2.7792075,69.45064,26.472181177139284,182.01311569213863
+146,2001-05-24,1,,Passed,On Approving the Journal,,336,71,2.456534,2.584726,262.6799,110.86046047210694,503.5920257568359
+147,2001-05-26,1,HRES153,Passed,On Agreeing to the Resolution,"Waiving points of order against the conference report to accompany H.R. 1836, Economic Growth and Tax Relief Act of 2001",213,177,1.9878552,-2.1793323,138.52696,39.33427724838257,370.4504470825195
+148,2001-05-26,1,HR1836,Passed,On Agreeing to the Conference Report,Economic Growth and Tax Relief Reconciliation Act,240,154,1.1707647,-1.6734931,84.42773,14.697477459907532,312.07434005737264
+149,2001-06-05,1,HCONRES100,Passed,"On Motion to Suspend the Rules and Agree, as Amended","Commending Clear Channel Communications and the American Football Coaches Association for their dedication and efforts for protecting children by providing a vital means for locating the Nation’s missing, kidnapped, and runaway children.",405,0,0.3908475,-3.0291362,152.89598,23.124286890029907,469.02643432617185
+150,2001-06-05,1,HR2043,Passed,On Motion to Suspend the Rules and Pass,"Designating the Elwood Haynes “Bud” Hillis Post Office Building in Kokomo, Indiana.",407,0,0.40101823,-3.0311546,153.33266,21.884988260269164,455.65079421997024
+151,2001-06-06,1,HR1209,Passed,"On Motion to Suspend the Rules and Pass, As Amended",Child Status Protection Act,416,0,0.40538615,-3.0380337,156.09845,23.50338931083679,463.06652069091734
+152,2001-06-06,1,HR1914,Passed,On Motion to Suspend the Rules and Pass,Farmer Bankruptcy Code Extension Act,411,1,-0.38108137,3.1098247,147.94685,19.579200410842894,467.1257141113281
+153,2001-06-07,1,,Passed,On Approving the Journal,,362,36,2.3932848,2.5777426,236.75476,84.43576049804688,494.69755401611326
+154,2001-06-07,1,HR1699,Passed,On Passage,Coast Guard Authorization Act for FY 2002,411,3,-0.2312589,2.5827749,99.085594,16.24156436920166,326.9945304870604
+155,2001-06-12,1,HR700,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Asian Elephant Conservation Reauthorization Act of 2001,401,15,-0.73266095,2.7162158,54.666706,8.64271137714386,277.5817535400389
+156,2001-06-12,1,HRES97,Passed,On Motion to Suspend the Rules and Agree,"Recognizing Contributions, Achievements, and Work of Shirley Chisholm",415,0,0.3589932,-3.0170872,153.39014,22.698824071884154,470.38424377441356
+157,2001-06-13,1,,Passed,On Approving the Journal,,374,42,2.4187846,2.5686717,361.92993,159.6962112426758,674.6036117553707
+158,2001-06-13,1,HR1157,Passed,On Passage,Pacific Salmon Recovery Act,418,6,-0.2966764,2.4126797,97.74869,13.844850778579712,334.47970733642524
+159,2001-06-13,1,HR2052,Passed,On Passage,Sudan Peace Act,422,2,-0.81274647,3.115202,169.06816,26.104700660705568,485.5157852172847
+160,2001-06-13,1,HCONRES145,Passed,On Agreeing to the Resolution,Condemning the recent order by the Taliban regime of Afghanistan to require Hindus in Afghanistan to wear symbols identifying them as Hindu.,420,0,0.36997336,-3.0255122,151.61162,23.859985685348512,453.71252670287964
+161,2001-06-14,1,HRES161,Passed,On Ordering the Previous Question,"Providing for the consideration of H.R. 1088, Investor and Capital Markets Fee Relief Act",418,1,-0.78775704,-2.1547506,88.24942,10.32112376689911,343.0885520935054
+162,2001-06-14,1,HRES161,Passed,On Agreeing to the Resolution,"Providing for the consideration of H.R. 1088, Investor and Capital Markets Fee Relief Act",408,12,-0.62952197,-2.3854065,43.529095,3.482823544740677,241.66021347045898
+163,2001-06-14,1,HR1088,Failed,On Agreeing to the Amendment,,126,299,-1.572866,0.7342822,68.4403,8.249609112739563,282.7328956604003
+164,2001-06-14,1,HR1088,Passed,On Passage,Investor and Capital Markets Fee Relief Act,404,22,0.67757654,-2.9589627,5.925332,2.659520024061203,13.53857221603392
+165,2001-06-19,1,HR1291,Passed,On Motion to Suspend the Rules and Pass,21st Century Montgomery GI Bill Enhancement Act,416,0,0.40399012,-3.0102167,154.05428,21.38759136199951,468.2856285095208
+166,2001-06-19,1,HCONRES154,Passed,On Motion to Suspend the Rules and Agree,Honoring the continued commitment of the Army National Guard combat units deployed in support of Army operations in Bosnia.,417,0,0.3874005,-3.052005,151.39644,21.22591543197632,443.3432228088371
+167,2001-06-19,1,HCONRES163,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Recognizing the historical significance of Juneteenth Independence Day,415,0,0.36798826,-3.018629,148.75562,23.593132114410402,444.2214324951172
+168,2001-06-20,1,HRES171,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 2216; 2001 Supplemental Appropriations Act,222,205,2.2109542,-2.358182,105.991005,27.859376001358033,357.69533004760734
+169,2001-06-20,1,HRES171,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 2216; 2001 Supplemental Appropriations Act,223,205,2.8059425,-2.9804938,61.124912,23.64909634590149,143.49379501342767
+170,2001-06-20,1,HRES124,Passed,On Motion to Suspend the Rules and Agree,Recognizing the Importance of Children in the United States and Supporting the Goals and Ideals of American Youth Day,424,0,0.37429145,-3.0111554,155.21793,24.276626968383788,475.17465820312464
+171,2001-06-20,1,HR2216,Failed,On Agreeing to the Amendment,,50,376,3.0875595,1.7560129,9.828559,2.9548161149024965,20.020486879348752
+172,2001-06-20,1,HR2216,Failed,On Agreeing to the Amendment,,212,216,-3.0691833,2.916123,156.52242,27.42903690338135,447.82896118164047
+173,2001-06-20,1,HR2216,Failed,On Agreeing to the Amendment,,65,362,1.3658245,0.1751104,87.37884,3.56067231297493,370.00753707885684
+174,2001-06-20,1,HR2216,Failed,On Motion to Recommit with Instructions,2001 Supplemental Appropriations Act,209,218,-3.0058608,2.9209588,164.66129,47.4543098449707,448.3122505187987
+175,2001-06-20,1,HR2216,Passed,On Passage,2001 Supplemental Appropriations Act,341,87,2.0800433,2.954255,8.348602,3.9537732899188995,14.749090528488143
+176,2001-06-21,1,HR2217,Agreed to,On Agreeing to the Amendment,,221,193,-0.9792512,1.1037121,83.71647,6.228268110752106,327.79340972900354
+177,2001-06-21,1,HR2217,Failed,On Agreeing to the Amendment,,153,262,-1.12351,0.42800933,53.296616,0.8445352807641029,269.8572433471678
+178,2001-06-21,1,HR2217,Failed,On Agreeing to the Amendment,,129,287,-3.121389,2.07376,2.9149296,0.8612556427717208,6.770029258728025
+179,2001-06-21,1,HR2217,Agreed to,On Agreeing to the Amendment,,242,173,-0.9898863,1.3281056,61.91858,6.8180735349655155,300.67758331298825
+180,2001-06-21,1,HR2217,Agreed to,On Agreeing to the Amendment,,247,164,-0.7866022,1.1930306,52.101295,1.7899983942508697,249.6741485595702
+181,2001-06-21,1,HR2217,Agreed to,On Agreeing to the Amendment,,216,194,-1.0802131,1.1515673,73.90246,7.32146987915039,276.6415946960446
+182,2001-06-21,1,HR2217,Failed,On Agreeing to the Amendment,,187,222,-1.1619785,0.8836125,94.72359,9.945165729522705,375.18173370361325
+183,2001-06-21,1,HR2217,Failed,On Agreeing to the Amendment,,145,264,1.2949065,-0.741762,78.116776,7.879128110408783,309.8785034179686
+184,2001-06-21,1,HR2217,Passed,On Passage,Interior and Related Agencies Appropriations for FY 2002,376,32,-1.4276894,3.0331936,28.270348,6.514730095863342,175.6468856811505
+185,2001-06-25,1,HRES160,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Calling on the Government of the People’s Republic of China to Immediately and Unconditionally Release Li Shaomin and all other American Scholars of Chinese Ancestry Being Held in Detention,379,0,0.19046964,-3.054334,153.2596,23.67808780670166,474.9375015258784
+186,2001-06-25,1,HRES99,Passed,On Motion to Suspend the Rules and Agree,"Expressing the Sense of the House of Representatives that Lebanon, Syria, and Iran should Call Upon Hezbollah to Allow Representatives of the International Committee of the Red Cross to Visit Four Abducted Israelis",379,0,0.17006814,-3.0746121,150.69711,21.672967863082885,465.0925926208483
+187,2001-06-25,1,HCONRES161,Passed,"On Motion to Suspend the Rules and Agree, as Amended","Honoring the 19 United States Servicemen who Died in the Terrorist Bombing of the Khobar Towers in Saudi Arabia on June 25, 1996",379,0,0.17741522,-3.055399,150.18985,22.409570455551147,434.66126098632805
+188,2001-06-26,1,,Passed,On Approving the Journal,,346,45,2.4193149,2.5797071,277.97626,120.51560401916504,503.93730392456035
+189,2001-06-26,1,HRES178,Passed,On the Question of Consideration,"Providing for the consideration of H.R. 2299, Transportation and Related Agencies Appropriations for FY 2002",219,202,2.0961294,-2.2042277,105.10631,23.082716846466063,306.794905090332
+190,2001-06-26,1,HRES178,Passed,On Agreeing to the Resolution,"Providing for the consideration of H.R. 2299, Transportation and Related Agencies Appropriations for FY 2002",219,205,2.397109,-2.4781399,244.75595,72.31986503601074,572.9764038085935
+191,2001-06-26,1,HRES166,Passed,On motion to suspend the rules and agree,"Recognizing Disaster Relief Assistance Provided to Houston, TX after Tropical Storm Allison",411,0,0.34134957,-2.9869823,153.1077,23.2429217338562,458.792070007324
+192,2001-06-26,1,HR2299,Agreed to,On Agreeing to the Amendment,,285,143,-0.455099,1.1815789,54.431923,1.743206050992012,272.37543029785155
+193,2001-06-26,1,HR2299,Passed,On Passage,Transportation and Related Agencies Appropriations for FY 2002,426,1,-0.35971352,3.102305,147.15698,21.527524185180663,459.70690689086905
+194,2001-06-27,1,,Passed,On Approving the Journal,,368,49,2.4346693,2.5636377,359.02872,161.81277465820312,671.6600952148438
+195,2001-06-27,1,HRES180,Passed,On Agreeing to the Resolution,Providing for Consideration of H.R. 2311; Energy and Water Development Appropriations for FY 2002,425,1,1.5482501,2.3905408,98.39623,13.765343594551087,357.70375213623026
+196,2001-06-27,1,HRES172,Passed,On Motion to Suspend the Rules and Agree,"Honoring John J. Downing, Brian Fahey, and Harry Ford, who lost their lives in the course of duty as firefighters",424,0,0.3822871,-3.0228076,153.1762,24.056992721557616,478.01371383666987
+197,2001-06-27,1,HR2133,Passed,"On Motion to Suspend the Rules and Pass, As Amended",To establish a commission for the purpose of encouraging and providing for the commemoration of the 50th anniversary of the Supreme Court decision in Brown v. Board of Education,414,2,-0.80176497,3.1096833,166.06834,26.08060541152954,474.41840133666983
+198,2001-06-28,1,HR2311,Failed,On Agreeing to the Amendment,,39,372,-2.770064,-1.7096702,9.318132,1.5719702541828156,22.494053125381466
+199,2001-06-28,1,HR2311,Failed,On Agreeing to the Amendment,,84,333,-2.6299644,-2.022547,9.411824,2.739717757701874,25.664359378814694
+200,2001-06-28,1,HR2311,Failed,On Agreeing to the Amendment,,163,258,-2.9522853,2.3543398,19.03456,3.188754343986511,92.18415870666497
+201,2001-06-28,1,HR2311,Failed,On Agreeing to the Amendment,,91,331,3.002548,2.1477165,12.075228,6.9016109824180605,19.737249755859374
+202,2001-06-28,1,HR2311,Agreed to,On Agreeing to the Amendment,,265,157,-0.6824869,1.1569021,57.148354,2.719622850418091,270.03939437866165
+203,2001-06-28,1,HR2311,Failed,On Agreeing to the Amendment,,102,321,-1.3293605,0.19263735,70.12859,2.7694345712661743,323.0735221862786
+204,2001-06-28,1,HR2311,Failed,On Agreeing to the Amendment,,210,213,-1.6037277,1.5635893,53.08803,1.9372201263904572,264.4845489501951
+205,2001-06-28,1,HR2311,Passed,On Passage,Energy and Water Development Appropriations for FY 2002,405,15,-1.9146568,-2.5335898,51.407707,11.461461162567138,153.44333801269528
+206,2001-06-28,1,HRES183,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 2330; Agriculture Appropriations for F.Y. 2002,222,194,2.8278527,-3.0312347,61.721706,20.649160814285278,273.85129318237296
+207,2001-06-28,1,HR2330,Agreed to,On Agreeing to the Amendment,,324,89,-0.48383793,1.738207,36.139244,2.086715030670166,238.71760444641083
+208,2001-06-28,1,HR2330,Agreed to,On Agreeing to the Amendment,,271,140,-0.99746746,1.6287389,56.7877,3.3426875352859495,284.1768089294428
+209,2001-06-28,1,HR2330,Agreed to,On Agreeing to the Amendment,,291,115,-0.7316363,1.6326421,41.812363,2.2451497972011567,247.25395469665511
+210,2001-07-10,1,HCONRES170,Passed,On Motion to Suspend the Rules and Agree,Encouraging corporations to contribute to faith-based organizations,391,17,0.22812669,-2.0286717,79.80747,8.061925840377807,306.19279632568305
+211,2001-07-10,1,HCONRES168,Passed,On Motion to Suspend the Rules and Agree,Expressing the sense of Congress in support of victims of torture,409,0,0.17257555,-3.069563,150.18752,21.6501925945282,462.43980178833
+212,2001-07-10,1,HCONRES174,Passed,On Motion to Suspend the Rules and Agree,Authorizing use of the Rotunda to present Congressional Gold Medals to the original 29 Navajo Code Talkers,409,0,0.1918716,-3.0705156,149.86143,21.024499320983885,465.36975479125954
+213,2001-07-11,1,,Passed,On Approving the Journal,,366,42,2.4288647,2.560561,434.65128,184.98670043945313,828.4876129150385
+214,2001-07-11,1,,Failed,On Motion to Adjourn,,11,405,2.9267745,1.7729712,30.048018,5.943261766433716,152.2437801361074
+215,2001-07-11,1,HR2330,Failed,On Agreeing to the Amendment,,159,267,-2.7601974,2.0639348,1.4635484,0.9698589637875557,2.0879395127296445
+216,2001-07-11,1,HR2330,Agreed to,On Agreeing to the Amendment,,324,101,1.4082421,1.8078208,64.76522,1.1557786613702774,274.45759582519497
+217,2001-07-11,1,HR2330,Failed,On Agreeing to the Amendment,,145,279,-1.8797065,1.2369835,40.989635,2.36810787320137,252.5837463378906
+218,2001-07-11,1,HR2330,Failed,On Agreeing to the Amendment,,155,272,-2.4518769,-2.2654166,53.779064,0.9692675292491912,266.42831954956046
+219,2001-07-11,1,HR2330,Failed,On Agreeing to the Amendment,,85,341,2.1430335,1.540309,52.185764,0.8186556071043014,257.2002227783201
+220,2001-07-11,1,HR2330,Passed,On Passage,"Agriculture, Rural Development, Food and Drug Administration, and Related Agencies Appropriations for FY 2002",414,16,-1.8010199,-2.6518557,24.891674,9.699175238609314,52.19573698043822
+221,2001-07-12,1,,Passed,On Approving the Journal,,362,50,2.4167547,2.5897057,245.11382,110.51101303100586,442.91640853881785
+222,2001-07-12,1,,Failed,On Motion to Adjourn,,7,412,-2.0632482,-1.2635108,87.73348,9.108614230155945,307.3333007812498
+223,2001-07-12,1,HR2216,Passed,On Motion to Go to Conference,2001 Supplemental Appropriations Act,423,3,0.7721924,-2.591259,117.92949,17.90922656059265,376.38641433715804
+224,2001-07-12,1,HR2216,Failed,On Motion to Instruct Conferees,2001 Supplemental Appropriations Act,205,219,-3.0365095,2.9478424,152.60596,33.52339334487915,418.4892295837397
+225,2001-07-12,1,,Failed,On Motion to Adjourn,,6,418,-2.0698671,-0.93492585,75.30184,8.424652290344238,278.317273712158
+226,2001-07-12,1,HRES188,Failed,On Agreeing to the Resolution,Providing for consideration of H.R. 2356; Bipartisan Campaign Reform Act,203,228,3.0348868,-2.7979388,68.539154,24.314594078063966,142.60381507873532
+227,2001-07-17,1,S360,Passed,On Motion to Suspend the Rules and Pass,To honor Paul D. Coverdell,330,61,1.7799258,3.1340306,6.675804,2.108897465467453,12.689553952217095
+228,2001-07-17,1,HRES195,Passed,On Motion to Suspend the Rules and Agree,"Commending the United States military and defense contractor personnel responsible for a successful in-flight ballistic missile defense interceptor test on July 14, 2001",321,77,2.1929584,2.9831533,31.791304,17.586297512054443,50.90409173965452
+229,2001-07-17,1,HJRES36,Failed,On Agreeing to the Amendment,,100,324,-2.7242212,1.6638105,4.0399604,2.5171167314052583,6.027579057216643
+230,2001-07-17,1,HJRES36,Passed,On Passage,Proposing an amendment to the Constitution of the United States authorizing the Congress to prohibit the physical desecration of the flag of the United States,298,125,2.082829,-2.934756,5.5241385,2.7674388885498047,11.559675288200378
+231,2001-07-17,1,HR2500,Failed,On Agreeing to the Amendment,,187,227,-1.099831,-0.77965635,51.11378,0.12282806504517793,256.3415390014646
+232,2001-07-17,1,HR2500,Failed,On Agreeing to the Amendment,,172,244,-2.9676516,2.4457412,10.0353155,2.295885217189789,28.027804136276245
+233,2001-07-17,1,HR2500,Failed,On Agreeing to the Amendment,,169,253,-1.2984163,0.87700254,52.10656,4.410014128684997,271.2706619262695
+234,2001-07-18,1,,Passed,On Approving the Journal,,372,47,2.4147487,2.572768,288.7471,132.29414482116698,532.8943206787108
+235,2001-07-18,1,HR1,Passed,On Motion to go to Conference,No Child Left Behind Act,424,5,0.8810757,2.867282,16.119009,5.231868088245392,62.379644489288324
+236,2001-07-18,1,HR1,Passed,Table Motion to Instruct Conferees,No Child Left Behind Act,296,126,0.4183648,-1.3394756,47.785145,1.394574099779129,238.86024131774894
+237,2001-07-18,1,HR2500,Failed,On Agreeing to the Amendment,,209,217,-2.7647524,2.636233,80.897415,28.983175706863403,242.51079216003382
+238,2001-07-18,1,HR2500,Failed,On Agreeing to the Amendment,,215,215,-1.6163507,1.6558198,105.066696,23.31249680519104,371.59149246215793
+239,2001-07-18,1,HR2500,Agreed to,On Agreeing to the Amendment,,424,6,-0.07738981,-2.1110735,90.38367,9.82723581790924,342.4064765930172
+240,2001-07-18,1,HR2500,Failed,On Agreeing to the Amendment,,189,242,-1.2705629,0.9390578,91.94503,10.317417335510253,348.29236450195236
+241,2001-07-18,1,HR2500,Agreed to,On Agreeing to the Amendment,,395,33,1.7227635,2.2399323,71.96324,3.3540843069553374,296.4639938354489
+242,2001-07-18,1,HR2500,Failed,On Agreeing to the Amendment,,161,268,-1.3386487,0.82726896,54.094757,4.653618919849396,255.39906044006312
+243,2001-07-18,1,HR2500,Failed,On Agreeing to the Amendment,,62,364,1.5555301,-0.0230603,75.064644,6.898282921314239,297.0997291564938
+244,2001-07-18,1,HR2500,Failed,On Agreeing to the Amendment,,71,359,1.4155291,-0.068507135,87.5476,8.450816631317139,318.7780601501464
+245,2001-07-18,1,HR2500,Failed,On Agreeing to the Amendment,,123,306,-2.7454197,1.8810186,8.50949,5.251879298686982,12.858543705940246
+246,2001-07-18,1,HR2500,Passed,On Passage,"Commerce, Justice, and State Appropriations for FY 2002",408,19,-1.8017594,-2.7207391,27.623768,11.212125635147094,55.70869379043579
+247,2001-07-19,1,,Passed,On Approving the Journal,,368,52,2.4166598,2.574707,252.8195,109.1213357925415,475.9002540588377
+248,2001-07-19,1,HRES196,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 7; The Community Solutions Act,228,199,2.7254114,-3.0298052,48.54563,21.211250162124635,99.07916564941391
+249,2001-07-19,1,HRES196,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 7; The Community Solutions Act,233,194,1.3791162,-1.7166007,102.19993,19.381918001174927,374.47989120483396
+250,2001-07-19,1,HR7,Failed,On Agreeing to the Amendment,,168,261,-1.3571028,0.8239611,80.013084,11.304511022567748,301.1496131896972
+251,2001-07-19,1,HR7,Failed,On Motion to Recommit with Instructions,The Community Solutions Act,195,234,-1.6469797,1.3734739,92.47443,17.155293655395507,321.7552337646482
+252,2001-07-19,1,HR7,Passed,On Passage,The Community Solutions Act,233,198,2.6715817,-3.0066116,30.25616,15.078605008125304,59.251837062835676
+253,2001-07-19,1,HJRES50,Failed,On Passage,Disapproving Normal Trade Relations for China,169,259,2.778396,2.4715934,37.94595,1.8662623077630998,274.6528724670407
+254,2001-07-20,1,HR2216,Passed,On Agreeing to the Conference Report,2001 Supplemental Appropriations Act,375,30,-1.8077959,-2.6451833,14.348288,5.397551429271698,29.798377513885494
+255,2001-07-23,1,HR2137,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Criminal Law Technical Amendments Act of 2001,374,0,0.37071398,-3.0078304,151.9174,21.19554591178894,441.73498535156153
+256,2001-07-23,1,HR1892,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Family Sponsor Immigration Act,379,0,0.38832256,-3.0165193,145.35144,22.051311635971068,423.489798736572
+257,2001-07-23,1,S468,Passed,On Motion to Suspend the Rules and Pass,James C. Corman Federal Building Designation Act,381,0,0.37730455,-3.017418,156.11978,22.47566261291504,456.481876373291
+258,2001-07-24,1,HR2506,Agreed to,On Agreeing to the Amendment,,258,162,-0.23842588,0.96584773,52.214027,0.541862978041172,254.7686111450194
+259,2001-07-24,1,HR2506,Failed,On Agreeing to the Amendment,,47,375,-2.748215,-2.0486436,20.122734,9.611767077445984,36.9414451599121
+260,2001-07-24,1,HR2506,Failed,On Agreeing to the Amendment,,188,240,-2.8829038,2.501532,8.4065695,5.138691234588623,20.856603860855017
+261,2001-07-24,1,HR2506,Failed,On Agreeing to the Amendment,,179,249,3.0236564,2.586614,23.006437,6.5948100090026855,44.52751226425168
+262,2001-07-24,1,HR2506,Agreed to,On Agreeing to the Amendment,,268,159,-2.761767,2.8518286,5.9844403,3.190826678276062,11.219602608680722
+263,2001-07-24,1,HR2506,Agreed to,On Agreeing to the Amendment,,427,0,0.38190052,-3.0257585,154.35594,22.841061210632326,471.3882621765136
+264,2001-07-24,1,HR2506,Passed,On Passage,Foreign Operations Appropriations for Fiscal Year 2002,381,46,-1.9936237,-2.7860355,15.453668,7.746341264247894,27.983977890014646
+265,2001-07-25,1,HRES206,Passed,On Ordering the Previous Question,"Providing for consideration of H.R. 2590; Treasury, Postal Service and General Government Appropriations for Fiscal Year 2002",293,129,3.0988164,2.890478,47.155853,0.4780354343354702,273.58512191772456
+266,2001-07-25,1,HR2590,Failed,On Agreeing to the Amendment,,141,285,-1.4513127,0.7420347,64.57649,6.576536107063293,258.04863281249953
+267,2001-07-25,1,HR2590,Failed,On Agreeing to the Amendment,,151,274,-1.3774257,0.7434951,80.56353,7.95988917350769,328.59036712646474
+268,2001-07-25,1,HR2590,Agreed to,On Agreeing to the Amendment,,240,186,-0.9415098,1.2225928,52.037083,1.1800490885972976,273.6539329528806
+269,2001-07-25,1,HR2590,Failed,On Agreeing to the Amendment,,201,227,-2.4412994,2.2750053,8.788356,1.4860484182834626,76.44016323089599
+270,2001-07-25,1,HR2590,Failed,On Agreeing to the Amendment,,24,401,2.1592321,1.2142421,64.34848,2.66287756562233,289.65729217529287
+271,2001-07-25,1,HR2590,Failed,On Agreeing to the Amendment,,188,238,-1.6678112,1.2623056,95.51524,17.077494621276855,367.2960968017577
+272,2001-07-25,1,HR2590,Passed,On Passage,"Treasury, Postal Service, and General Government Appropriations for FY 2002",334,94,-2.3065856,-2.5342188,59.777504,16.694188261032103,183.00809478759763
+273,2001-07-26,1,HJRES55,Failed,On Passage,Disapproving the Extension of the Waiver Authority Contained in Section 402(c) of the Trade Act of 1974 with Respect to Vietnam,91,324,-2.881036,-2.004386,17.009064,1.7079421937465669,180.26959877014156
+274,2001-07-26,1,HR1954,Passed,"On Motion to Suspend the Rules and Pass, as Amended",ILSA Extension Act,409,6,-1.2818743,-2.2447774,82.5137,7.565441691875458,333.69800338745085
+275,2001-07-26,1,HRES209,Passed,On Agreeing to the Resolution,Waiving a requirement of clause 6(a) of rule XIII with respect to consideration of certain resolutions reported from the Committee on Rules.,216,200,2.253494,-2.4213972,132.36252,28.242288446426393,399.61648025512625
+276,2001-07-26,1,HRES210,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 2620; Departments of Veterans Affairs and Housing and Urban Development Appropriations for Fiscal Year 2002,220,204,2.3066041,-2.4529247,242.76819,72.46096763610839,591.1385238647455
+277,2001-07-26,1,HRES210,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 2620; Departments of Veterans Affairs and Housing and Urban Development Appropriations for Fiscal Year 2002,228,195,2.6630106,-2.9299798,8.855548,3.1734683871269227,55.70656633377072
+278,2001-07-26,1,,Failed,On Motion that the Committee Rise,,189,230,-3.0161445,2.7340326,28.101995,13.26315438747406,57.03018646240232
+279,2001-07-26,1,HR2620,Failed,On Agreeing to the Amendment,,107,311,1.3171958,0.75951123,61.16095,1.5370583951473236,290.7703376770019
+280,2001-07-26,1,HR2620,Failed,On Agreeing to the Amendment,,139,284,-2.5968726,1.8698723,15.024989,3.3892800509929657,124.52395782470681
+281,2001-07-26,1,HR2620,Failed,On Agreeing to the Amendment,,60,360,-1.5407462,-0.22024593,60.910343,1.9733937442302705,262.1470504760742
+282,2001-07-26,1,HR2620,Agreed to,On Agreeing to the Amendment,,216,209,-2.8648975,2.9247828,27.561,8.949365139007568,96.20426540374751
+283,2001-07-26,1,HR2620,Failed,On Agreeing to the Amendment,,124,300,-2.793094,1.9410784,7.499472,4.584534978866577,11.240697145462025
+284,2001-07-27,1,HR2620,Failed,On Agreeing to the Amendment,,163,247,-1.5270755,0.94312793,86.73646,11.815061235427857,336.1007324218749
+285,2001-07-27,1,HR2620,Failed,On Agreeing to the Amendment,,197,213,-0.9034437,0.7704035,76.01301,5.5902568101882935,270.0516654968252
+286,2001-07-27,1,HR2620,Agreed to,On Agreeing to the Amendment,,218,189,-1.2960517,1.4015753,83.45982,12.90167577266693,308.9327003479003
+287,2001-07-27,1,HR2620,Failed,On Agreeing to the Amendment,,182,214,-2.6090522,2.3045027,29.94745,8.148594403266907,181.47436370849474
+288,2001-07-30,1,HRES212,Passed,"On Motion to Suspend the Rules and Agree, as Amended","Expressing the sense of the House of Representatives that the World Conference Against Racism, Racial Discrimination, Xenophobia, and Related Intolerance presents a unique opportunity to address global discrimination",408,3,-1.1896983,-2.3395152,74.32022,8.437615418434143,294.92904281616194
+289,2001-07-30,1,HRES191,Passed,On Motion to Suspend the Rules and Agree,Expressing the sense of the House of Representatives that the UN should transfer to the Israeli Government an unedited videotape which could provide material evidence for the investigation into the abduction of 3 Israeli Defense Force soldiers by Hezbollah forces,411,4,-1.2817832,-2.2857068,79.15537,7.7542163848876955,310.0471794128418
+290,2001-07-30,1,HCONRES190,Passed,On Motion to Suspend the Rules and Agree,Supporting the goals and ideals of National Alcohol and Drug Addiction Recovery Month,418,0,0.39521,-3.03088,153.66118,21.797028589248658,464.30214538574205
+291,2001-07-30,1,HR2620,Failed,On Agreeing to the Amendment,,99,325,-2.7851436,0.34990278,1.1669921,0.4463109977543354,2.0821917414665188
+292,2001-07-30,1,HR2620,Failed,On Agreeing to the Amendment,,190,231,-0.7009928,0.4958923,76.44558,2.736150711774826,303.22878646850586
+293,2001-07-30,1,HR2620,Failed,On Agreeing to the Amendment,,212,212,-2.9855156,2.9643996,109.657364,29.095080614089966,306.12824783325135
+294,2001-07-30,1,HR2620,Failed,On Motion to Recommit with Instructions,Departments of Veterans Affairs and Housing and Urban Development Appropriations for FY 2002,196,230,-1.6210849,1.3490028,87.983086,12.95703682899475,333.16249694824205
+295,2001-07-31,1,HR2620,Passed,On Passage,Departments of Veterans Affairs and Housing and Urban Development Appropriations for FY 2002,336,89,1.1583893,-2.8142028,1.6490055,0.8889339759945869,3.2521726369857755
+296,2001-07-31,1,HR2647,Passed,On Passage,Legislative Branch Appropriations for Fiscal Year 2002,380,38,-1.9067327,-2.666646,15.012793,5.573641836643219,33.72449083328242
+297,2001-07-31,1,,Passed,On Approving the Journal,,359,44,2.4067235,2.563157,263.28818,105.38528385162354,526.1005416870116
+298,2001-07-31,1,HRES214,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 2505; Human Cloning Prohibition Act,239,188,1.8687048,-2.1295924,31.422194,4.074374437332153,218.87628440856926
+299,2001-07-31,1,HR2540,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Veterans Benefits Act,422,0,0.38662466,-3.031054,150.3118,22.180165672302245,463.82289581298807
+300,2001-07-31,1,HR2505,Failed,On Agreeing to the Amendment,,178,249,-1.1549909,0.8145552,55.894142,3.491847312450409,301.1899391174315
+301,2001-07-31,1,HR2505,Failed,On Motion to Recommit with Instructions,Human Cloning Prohibition Act,175,251,-1.2014958,0.8307953,58.720367,4.619992983341217,278.74312210082974
+302,2001-07-31,1,HR2505,Passed,On Passage,Human Cloning Prohibition Act,265,162,1.9716347,-2.4537406,4.2413673,2.992865514755249,5.969253122806548
+303,2001-07-31,1,HR1140,Passed,"On Motion to Suspend the Rules and Pass, Amended",Railroad Retirement and Survivors’ Improvement Act,384,33,0.6299597,1.644824,79.466736,4.801637315750122,311.8377563476562
+304,2001-08-01,1,HRES216,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 4; Securing America’s Future Energy Act,221,208,2.3596861,-2.4436464,239.18924,70.52518348693847,574.3297027587886
+305,2001-08-01,1,HRES216,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 4; Securing America’s Future Energy Act,220,206,2.3706815,-2.4499595,244.27698,72.95866203308105,570.4783493041991
+306,2001-08-01,1,,Passed,On Approving the Journal,,343,65,2.4470594,2.5745914,272.51648,121.7994981765747,512.3305892944331
+307,2001-08-01,1,HR4,Agreed to,On Agreeing to the Amendment,,281,148,2.0965495,-2.8199015,12.197133,7.5773717880249025,18.320947360992424
+308,2001-08-01,1,HR4,Agreed to,On Agreeing to the Amendment,,411,15,-1.6460317,-2.7532802,21.24243,6.813150978088379,45.97073574066161
+309,2001-08-01,1,HR4,Failed,On Agreeing to the Amendment,,160,269,-1.0698011,0.5062658,51.332558,1.614586952328682,235.5344017028806
+310,2001-08-01,1,HR4,Failed,On Agreeing to the Amendment,,154,275,0.8845588,-0.15120119,64.32633,1.1641883164644242,298.72273101806627
+311,2001-08-01,1,HR4,Failed,On Agreeing to the Amendment,,125,300,-3.0359745,1.7485604,8.150358,0.3846276976168156,92.01936092376681
+312,2001-08-01,1,HR4,Failed,On Agreeing to the Amendment,,154,274,-3.01801,2.317491,12.138884,7.587959241867066,18.41366543769834
+313,2001-08-01,1,HR4,Agreed to,On Agreeing to the Amendment,,241,186,2.3693063,-2.6889634,5.064818,3.6560922801494598,6.735976958274841
+314,2001-08-01,1,HR4,Agreed to,On Agreeing to the Amendment,,228,201,2.5009034,-2.6756618,3.512995,2.582843083143234,4.540005874633789
+315,2001-08-01,1,HR4,Failed,On Agreeing to the Amendment,,206,223,-2.1094708,2.0297294,25.583282,2.9324308037757874,185.57591629028303
+316,2001-08-01,1,HR4,Agreed to,On Agreeing to the Amendment,,345,85,0.33854252,1.2440735,71.00213,2.9420066237449647,282.40326004028316
+317,2001-08-02,1,HR4,Failed,On Motion to Recommit with Instructions,Securing America’s Future Energy Act,206,223,-2.0949337,1.9394726,133.51581,40.347635173797606,393.9325599670408
+318,2001-08-02,1,HR4,Passed,On Passage,Securing America’s Future Energy Act,240,189,2.3195457,-2.619228,5.3480926,3.886038863658905,7.040438079833984
+319,2001-08-02,1,,Passed,On Approving the Journal,,331,76,2.4678276,2.5826888,296.12842,108.89757919311523,633.0373016357421
+320,2001-08-02,1,,Failed,On Motion to Adjourn,,55,363,-1.6459824,0.2133621,80.434555,6.321391129493714,331.57707138061454
+321,2001-08-02,1,,Failed,On Motion to Adjourn,,56,355,-1.6480962,0.20201714,69.84218,5.382749187946319,303.7409767150875
+322,2001-08-02,1,HRES219,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 2563; Bipartisan Patient Protection Act,222,205,2.0956283,-2.2444732,172.81865,53.67298593521118,433.2332168579101
+323,2001-08-02,1,HRES219,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 2563; Bipartisan Patient Protection Act,222,205,2.377973,-2.460976,238.34372,70.86992149353027,576.2620300292967
+324,2001-08-02,1,,Failed,On Motion to Adjourn,,55,356,-1.7080046,0.34089598,82.69153,8.222090363502502,335.4570861816403
+325,2001-08-02,1,HR2563,Agreed to,On Agreeing to the Amendment,,236,194,1.1219862,-1.436899,88.209915,13.641380190849304,350.0970222473142
+326,2001-08-02,1,HR2563,Agreed to,On Agreeing to the Amendment,,218,213,1.6930594,-1.6957012,100.52172,24.5099157333374,312.88759765624997
+327,2001-08-02,1,HR2563,Failed,On Agreeing to the Amendment,,207,221,2.15446,-2.1037555,42.279015,6.859439253807068,253.9920112609858
+328,2001-08-02,1,HR2563,Failed,On Motion to Recommit with Instructions,Bipartisan Patient Protection Act,208,220,-1.947935,1.8864528,116.35034,31.107084798812867,367.8576400756832
+329,2001-08-02,1,HR2563,Passed,On Passage,Bipartisan Patient Protection Act,226,203,1.8102857,-2.041017,131.33255,35.76787185668945,393.4867736816405
+330,2001-09-05,1,HR2291,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Drug Free Communities Support Program Reauthorization Act,402,1,-0.68260443,3.0389476,158.54095,20.28218741416931,455.15996475219634
+331,2001-09-05,1,HRES233,Passed,On Motion to Suspend the Rules and Agree,Recognizing the Important Relationship Between the United States and Mexico,407,0,0.36873534,-3.0096893,147.31256,20.95314965248108,445.82869644165015
+332,2001-09-06,1,HR2833,Passed,On Passage,To promote freedom and democracy in Viet Nam,410,1,-0.36884746,3.1069362,147.95064,21.315383434295654,462.1799133300781
+333,2001-09-10,1,HR1766,Passed,On Motion to Suspend the Rules and Pass,Stan Parris Post Office Building,362,0,0.36934498,-3.0304995,152.47879,20.762711811065675,464.90138092040985
+334,2001-09-10,1,HR1761,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Herb Harris Post Office Building,365,0,0.3796111,-3.012446,151.12569,22.77730693817139,461.8408660888672
+335,2001-09-13,1,HJRES61,Passed,On Passage,"Expressing the sense of the Senate and House of Representatives regarding the terrorist attacks launched against the United States on Sept. 11, 2001",408,0,0.35878384,-3.0143042,152.11748,21.118208932876588,458.11079940795895
+336,2001-09-13,1,HR2882,Passed,On Passage,"To provide for the expedited payment of certain benefits for a public safety officer who was killed or suffered a catastrophic injury as a direct result of a personal injury sustaned in the line of duty in connection with the terrorist attacks on September 11, 2001",413,0,0.40547854,-3.0390787,152.2104,22.059539604187012,464.1022491455076
+337,2001-09-13,1,HR2884,Passed,On Passage,Victims of Terrorism Relief Act of 2001,418,0,0.36280274,-3.0242403,155.31076,21.784778308868407,472.43416671752914
+338,2001-09-14,1,HR2888,Passed,On Passage,2001 Emergency Supplemental Appropriations Act for Recovery from and Response to Terrorist Attacks on the United States,422,0,0.3582576,-3.0165293,153.52284,23.477477741241454,468.05126953124915
+339,2001-09-14,1,HJRES64,Passed,On Passage,To authorize the use of United States Armed Forces against those responsible for the recent attacks launched against the United States.,420,1,-0.1885027,-2.3198123,85.87271,11.726509523391723,303.20345687866205
+340,2001-09-20,1,HR2657,Passed,On Motion to Suspend the Rules and Pass,District of Columbia Family Court Act,408,0,0.36090448,-3.0006268,149.26448,22.41726870536804,437.9328628540039
+341,2001-09-21,1,HR2904,Passed,On Passage,Military Construction Appropriations for FY 2002,401,0,0.1770243,-3.0634177,150.38596,20.377361392974855,462.7907005310057
+342,2001-09-21,1,HRES242,Passed,On Agreeing to the Resolution,Waiving a Requirement of Clause 6(a) of Rule XIII with Respect to Consideration of Certain Resolutions Reported from the Committee on Rules,303,107,0.7028441,-1.648202,75.11581,9.3274489402771,309.4858688354489
+343,2001-09-21,1,HRES244,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.R. 2926, Air Transportation Safety and System Stabilization Act",285,130,0.71000284,-1.4795536,73.52698,7.348418986797333,314.9403663635245
+344,2001-09-21,1,HR2926,Failed,On Motion to Recommit with Instructions,Air Transportaion Safety and System Stabilization Act,174,239,-1.4886281,1.0076473,91.10833,13.818776297569276,307.8547782897948
+345,2001-09-21,1,HR2926,Passed,On Passage,Air Transportaion Safety and System Stabilization Act,356,54,1.7494183,3.0713189,8.46786,2.8105366587638856,26.687614774703974
+346,2001-09-24,1,HR717,Passed,"On Motion to Suspend the Rules and Pass, as Amended","Muscular Dystrophy Community Assistance, Research and Education Amendments",383,0,0.1816235,-3.0845504,149.8687,22.546673154830934,444.3612174987791
+347,2001-09-24,1,HJRES65,Passed,On Passage,"Making continuing appropriations for FY 2002, and for other purposes",392,0,0.40037668,-3.0424554,153.65146,22.839896583557127,456.51400375366177
+348,2001-09-25,1,HRES245,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 2944; District of Columbia Appropriations for F.Y. 2002,236,183,2.5362537,-3.0065603,102.79846,16.762188243865968,246.93517227172848
+349,2001-09-25,1,HR2944,Failed,On Agreeing to the Amendment,,194,226,1.4971043,-1.3434471,40.872047,4.241935920715332,190.9213539123529
+350,2001-09-25,1,HR2944,Failed,On Agreeing to the Amendment,,173,243,-1.2626668,0.92092854,68.66036,6.61801586151123,265.01228332519383
+351,2001-09-25,1,HR2944,Agreed to,On Agreeing to the Amendment,,262,152,0.7604952,-1.302224,78.15562,7.703335916996002,344.977347564697
+352,2001-09-25,1,HR2944,Passed,On Passage,District of Columbia Appropriations for Fiscal Year 2002,327,88,-0.95955604,2.182765,62.330067,6.525668907165527,308.1233306884764
+353,2001-09-25,1,HR2586,Agreed to,On Agreeing to the Amendment,,242,173,2.5475383,-3.1141276,8.821313,2.935948038101196,19.727707719802854
+354,2001-09-25,1,HR2586,Failed,On Agreeing to the Amendment,,199,217,-1.0238922,0.9328649,62.25426,3.834386396408081,282.4906394958495
+355,2001-09-25,1,HR2586,Failed,On Motion to Recommit with Instructions,Department of Defense Authorization for Fiscal Year 2002,197,221,-2.8356364,2.6372385,17.637598,11.145199799537659,28.59520907402037
+356,2001-09-25,1,HR2586,Passed,On Passage,Department of Defense Authorization for Fiscal Year 2002,398,17,1.1483953,-2.9573667,18.787172,4.937469971179962,68.21376018524131
+357,2001-10-02,1,HR169,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Notification and Federal Employee Antidiscrimination and Retaliation Act,420,0,0.3796696,-3.0137105,152.79054,23.704135513305665,472.214928436279
+358,2001-10-02,1,HJRES42,Passed,"On Motion to Suspend the Rules and Pass, as Amended","Memorializing fallen firefighters by lowering the American flag to half-staff in honor of the National Fallen Firefighters Memorial Service in Emittsburg, Maryland.",420,0,0.40199926,-3.0497923,151.84216,22.721493339538576,452.73443298339794
+359,2001-10-02,1,HR2904,Passed,On Motion to Instruct Conferees,Military Construction Appropriations for FY 2002,417,1,-0.35215515,3.0786388,148.00305,21.824588966369628,441.08200836181635
+360,2001-10-03,1,HR2646,Failed,On Agreeing to the Amendment,,100,323,-1.3097587,0.18967207,64.25302,2.2052567660808564,285.51216049194306
+361,2001-10-03,1,HR2646,Agreed to,On Agreeing to the Amendment,,418,5,1.7426666,2.661713,32.926,6.994582629203797,91.14597206115718
+362,2001-10-03,1,HR2646,Failed,On Agreeing to the Amendment,,187,238,2.8904002,2.6290607,26.532993,2.0491802215576174,176.01114540100073
+363,2001-10-04,1,HR2646,Failed,On Agreeing to the Amendment,,200,226,-0.73894733,0.60446936,64.275696,1.5060631155967712,293.46591339111313
+364,2001-10-04,1,HR2646,Failed,On Agreeing to the Amendment,,177,239,1.2339907,0.7834084,49.78357,0.25588334947824476,240.15531578063948
+365,2001-10-04,1,HR2646,Failed,On Agreeing to the Amendment,,194,224,-0.6172451,0.42961815,61.11715,1.1313101410865785,332.5722381591797
+366,2001-10-04,1,HR2646,Agreed to,On Agreeing to the Amendment,,235,183,-2.5008473,2.59758,2.362904,1.6959767431020736,3.196278446912765
+367,2001-10-04,1,HR2646,Agreed to,On Agreeing to the Amendment,,296,121,-0.0045032953,1.3484482,39.692955,0.522130885720253,234.9606815338134
+368,2001-10-05,1,HR2646,Passed,On Passage,Farm Security Act,291,120,2.5276113,2.8989067,15.262247,1.1525685906410217,72.19787921905501
+369,2001-10-09,1,HCONRES244,Passed,On Motion to Suspend the Rules and Agree,Authorizing the Printing of a Revised Edition of the Publication entitled “Our Flag”,412,0,0.36399022,-3.0237975,152.76906,22.653041458129884,465.2924346923823
+370,2001-10-09,1,HRES250,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Urging the Secretary of Energy to Fill the Strategic Petroleum Reserve,409,3,-0.9895139,-2.7481956,20.020628,6.851966106891632,54.6876722335815
+371,2001-10-10,1,HR1992,Failed,On Agreeing to the Amendment,,99,327,-1.5526882,0.47021666,50.607826,4.135091078281403,231.65437660217253
+372,2001-10-10,1,HR1992,Passed,On Passage,Internet Equity and Education Act,354,70,0.29703978,-1.6047391,72.11044,5.781848251819611,296.15438079833956
+373,2001-10-11,1,HR3061,Failed,On Agreeing to the Amendment,,76,349,1.3501601,-0.055390306,83.4302,6.583261048793793,319.43037719726544
+374,2001-10-11,1,HR3061,Failed,On Agreeing to the Amendment,,107,312,1.4667388,-0.5413653,88.239075,10.153683876991272,336.8560699462889
+375,2001-10-11,1,HR3061,Failed,On Agreeing to the Amendment,,106,311,1.1728005,-0.18433307,72.977875,3.7944469094276427,291.7085838317871
+376,2001-10-11,1,HR3061,Failed,On Agreeing to the Amendment,,156,262,1.4012308,-0.91451627,45.016712,4.409350562095642,206.07192535400375
+377,2001-10-11,1,HR3061,Passed,On Passage,Labor-HHS-Education Appropriations for Fiscal Year 2002,373,43,-2.0926514,-2.7602756,33.5135,17.256673431396486,59.12344217300414
+378,2001-10-12,1,HRES263,Passed,On Agreeing to the Resolution,Waiving the Requirement of Clause 6(e) of Rule XIII with Respect to Consideration of Certain Resolutions Reported from the Committee on Rules,216,205,2.8565419,-3.060047,88.109314,26.830185890197754,257.25379409790037
+379,2001-10-12,1,HRES264,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 2975; To Combat Terrorism,215,207,2.339973,-2.4872377,238.43484,69.68760204315186,589.6087005615234
+380,2001-10-12,1,HRES264,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 2975; To Combat Terrorism,214,208,2.8677244,-3.0746913,124.605354,36.79547939300537,352.19430007934557
+381,2001-10-12,1,HR2975,Failed,On Motion to Recommit with Instructions,To Combat Terrorism,73,345,-2.8564653,1.6142211,9.258426,4.713155496120453,15.787958025932308
+382,2001-10-12,1,HR2975,Passed,On Passage,To Combat Terrorism,337,79,2.1905396,2.9447289,24.546694,12.174977207183838,42.87614097595214
+383,2001-10-16,1,HCONRES248,Passed,On Motion to Suspend the Rules and Agree,Expressing the Sense of the Congress that Public Schools May Display the Words “God Bless America” as an Expression of Support for the Nation,404,0,0.368988,-3.0089476,150.23671,20.726658964157103,452.15139312744117
+384,2001-10-16,1,HCONRES217,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Recognizing the Historic Significance of the 50th Anniversary of the Alliance between Australia and the United States under the ANZUS Treaty,413,1,-0.35630366,3.0988677,152.1143,20.545007514953614,471.2052536010737
+385,2001-10-16,1,HR2272,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Coral Reef and Coastal Marine Conservation Act,382,32,-1.8246484,-2.8170187,13.881549,6.910599660873413,23.576875877380367
+386,2001-10-17,1,HR3004,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Financial Anti-Terrorism Act,412,1,-0.36807215,3.106933,149.66032,20.41510968208313,466.00714569091707
+387,2001-10-17,1,S1438,Passed,On Closing Portions of the Conference,National Defense Authorization Act for Fiscal Year 2002,420,0,0.3761094,-3.0228,155.04034,22.25894675254822,470.7726081848141
+388,2001-10-17,1,,Passed,On Approving the Journal,,365,34,2.3589182,2.5832844,159.99341,61.91323518753052,302.28285369873043
+389,2001-10-17,1,HR2217,Passed,On Agreeing to the Conference Report,Interior and Related Agencies Appropriations for FY 2002,380,28,-2.1072893,-2.6062539,67.37589,17.198926210403442,171.39999580383295
+390,2001-10-17,1,HR2904,Passed,On Agreeing to the Conference Report,Military Construction Appropriations for FY 2002,409,1,-0.35570723,3.0946708,147.85435,19.283880138397215,458.4123619079589
+391,2001-10-23,1,HR3086,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Higher Education Relief Opportunities for Students Act,415,0,0.4159368,-3.0422966,151.55963,23.427766132354737,459.18824386596634
+392,2001-10-23,1,HR3160,Passed,On Motion to Suspend the Rules and Pass,Bioterrorism Enforcement Act of 2001,419,0,0.3726152,-3.023913,147.34723,21.080321168899538,443.7213333129877
+393,2001-10-23,1,HR2924,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Property Protection Program for Power Marketing Administrations,418,0,0.42151254,-3.0626664,153.75745,24.755822467803956,463.7705322265624
+394,2001-10-24,1,HR3162,Passed,On Motion to Suspend the Rules and Pass,To deter and punish terrorist acts in the United States and around the world,357,66,2.0753114,2.9801803,19.418547,8.798643040657044,44.12256669998168
+395,2001-10-24,1,,Passed,On Approving the Journal,,367,48,2.4159472,2.5883965,250.48848,117.4988489151001,437.4355644226072
+396,2001-10-24,1,HRES270,Passed,On Ordering the Previous Question,Providing for the consideration of H.R. 3090; To provide tax incentives for economic recovery,219,207,2.337264,-2.4845564,240.55865,68.00417404174804,583.8645980834955
+397,2001-10-24,1,HRES270,Passed,On Agreeing to the Resolution,Providing for the consideration of H.R. 3090; To provide tax incentives for economic recovery,225,199,1.6053541,-1.8619831,75.3099,15.680286002159118,282.5997039794916
+398,2001-10-24,1,HR3090,Failed,On Agreeing to the Amendment,,166,261,-1.611281,1.0154332,86.18156,12.141101932525634,330.08047256469683
+399,2001-10-24,1,HR3090,Failed,On Motion to Recommit with Instructions,To Provide Tax Incentives for Economic Recovery,199,230,-3.0167909,2.8521268,90.84104,15.309737396240234,357.0701789855955
+400,2001-10-24,1,HR3090,Passed,On Passage,To Provide Tax Incentives for Economic Recovery,216,214,2.7819138,-2.7769365,28.889568,16.321456956863404,49.64925355911252
+401,2001-10-25,1,HJRES70,Passed,On Passage,Making further continuing appropriations for Fiscal Year 2002,419,0,0.40464166,-3.0327466,153.93242,23.978105783462524,440.42969512939425
+402,2001-10-25,1,,Passed,On Approving the Journal,,361,51,2.4080482,2.5708475,200.34679,77.33427047729492,396.41348571777337
+403,2001-10-25,1,HJRES71,Passed,On Passage,"Amending Title 36, United States Code, to designate September 11 as Patriot Day",407,0,0.36779085,-2.999916,150.9231,21.474381351470946,459.52982254028285
+404,2001-10-30,1,HCONRES243,Passed,On Motion to Suspend the Rules and Agree,"Expressing the Sense of Congress that the Public Safety Officer Medal of Valor should be presented to the Public Safety Officers who have perished and those who deserve special recognition for outstanding valor above and beyond the call of duty in the aftermath of the terrorist attacks on September 11, 2001",409,0,0.40122414,-3.0229466,150.59221,24.31621174812317,438.18954010009713
+405,2001-10-30,1,HR2559,Passed,On Motion to Suspend the Rules and Pass,Federal Long-Term Care Insurance Amendments Act,406,1,-0.36048216,3.0962703,146.01035,21.912899446487426,450.7926651000959
+406,2001-10-30,1,HR2910,Passed,On Motion to Suspend the Rules and Pass,Norman Sisisky Post Office Building Designation Act,405,0,0.4101872,-3.0331755,150.56355,23.148429298400877,437.57455902099576
+407,2001-10-30,1,HCONRES233,Passed,On Motion to Suspend the Rules and Agree,"Expressing the Profound Sorrow of the Congress for the Death and Injuries Suffered by the First Responders to the Terrorist Attacks on the World Trade Center and the Pentagon on September 11, 2001",405,0,0.38038307,-3.0295446,151.29167,20.25404272079468,457.3211372375482
+408,2001-10-31,1,,Passed,On Approving the Journal,,374,39,2.4080112,2.5728993,317.38077,138.70547790527343,586.2598220825195
+409,2001-10-31,1,HR2590,Passed,On Agreeing to the Conference Report,"Treasury, Postal Service, and General Government Appropriations for FY 2002",339,85,-2.241531,-2.5208392,48.358948,12.292470240592957,129.26686859130825
+410,2001-10-31,1,HRES273,Passed,On Agreeing to the Resolution,"Waiving points of order against the conference report to accompany H.R. 2647, Legislative Branch Appropriations for FY 2002",423,0,0.36919734,-3.0116858,155.52716,22.769454431533813,485.96435241699214
+411,2001-11-01,1,HRES272,Passed,On Agreeing to the Resolution,Waiving points of order against the conference report to accompany H.R. 2311; Energy and Water Appropriations for F.Y. 2002,421,2,-0.6128457,-2.1060658,92.04157,10.147231364250183,336.71723937988276
+412,2001-11-01,1,HR2311,Passed,On Agreeing to the Conference Report,Energy and Water Development Appropriations for FY 2002,399,29,-2.0635335,-2.428678,86.31573,17.036212158203124,276.34109649658194
+413,2001-11-01,1,HR2647,Passed,On Agreeing to the Conference Report,Legislative Branch Appropriations for Fiscal Year 2002,374,52,-2.0542667,-2.6851325,18.575794,8.150677418708801,35.48203287124632
+414,2001-11-01,1,,Passed,On Approving the Journal,,380,33,2.3674767,2.5764155,203.2901,73.41556320190429,404.0986259460449
+415,2001-11-01,1,HRES274,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 3150; Aviation Security Act,218,207,2.8929174,-3.0468872,168.30151,50.20563440322876,424.97048416137693
+416,2001-11-01,1,HRES274,Agreed to,On Agreeing to the Amendment,,379,50,0.8206729,-2.6995366,3.6438844,2.0531621277332306,6.452821183204649
+417,2001-11-01,1,HR3150,Agreed to,On Agreeing to the Amendment,,223,202,2.6643026,-2.8472147,17.332163,10.785154509544373,27.18579635620117
+418,2001-11-01,1,HR3150,Failed,On Motion to Rise,Secure Transportation for America Act,11,402,-1.9377676,-0.43334493,80.589134,6.831893181800842,345.37207489013605
+419,2001-11-01,1,HR3150,Failed,On Agreeing to the Amendment,,214,218,-1.4585792,1.3993585,92.56543,12.394762206077576,377.9259979248041
+420,2001-11-01,1,HR3150,Failed,On Motion to Recommit with Instructions,Secure Transportation for America Act,201,227,-1.8045142,1.527498,104.74195,23.10157861709595,343.6544395446773
+421,2001-11-01,1,HR3150,Passed,On Passage,Secure Transportation for America Act,286,139,2.1502,-2.9454067,11.0070095,6.806874549388885,16.754427433013916
+422,2001-11-06,1,HR768,Passed,On Motion to Suspend the Rules and Agree to Senate Amendments,Need-Based Educational Aid Act,400,0,0.40091655,-3.0375967,151.1265,23.192385530471803,445.84228286743064
+423,2001-11-06,1,HR1408,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Financial Services Antifraud Network Act,392,4,0.7298728,2.1959221,79.51252,8.540932416915894,294.82592010497996
+424,2001-11-06,1,S1447,Passed,On Motion to Instruct Conferees,Aviation Security Act,397,0,0.39574185,-3.030647,152.33766,21.464044666290285,452.5435951232908
+425,2001-11-07,1,HR2998,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Radio Free Afghanistan Act,405,2,0.46433896,2.3784907,89.44279,10.75122091770172,334.8288566589355
+426,2001-11-07,1,HR852,Passed,On Motion to Suspend the Rules and Pass,Nathaniel R. Jones and Frank J. Battisti Federal Building and United States Courthouse,410,0,0.37974975,-3.0294552,152.6274,19.78462686538696,499.940409851074
+427,2001-11-07,1,HR3167,Passed,On Passage,Gerald B.H. Solomon Freedom Consolidation Act,372,46,-1.8816226,-2.6836085,12.339618,4.8708113670349125,24.635538530349724
+428,2001-11-07,1,HCONRES262,Passed,On Motion to Suspend the Rules and Agree,"Expressing the sense of Congress that the President, at the WTO round of negotiations to be held at Doha, Qatar, from Nov. 9-11, 2001, should preserve the ability of the US to enforce its trade laws and should ensure that US exports are not subject to the abusive use of trade laws by other countries.",410,4,1.8576236,2.5565817,81.42477,8.50202968120575,283.23809890747066
+429,2001-11-08,1,,Passed,On Approving the Journal,,363,47,2.4268682,2.554681,388.16248,166.83206672668456,729.2945144653318
+430,2001-11-08,1,HR2620,Passed,On Agreeing to the Conference Report,Departments of Veterans Affairs and Housing and Urban Development Appropriations for FY 2002,401,18,-1.9607613,-2.5593562,50.173985,14.807197833061219,128.3244544982907
+431,2001-11-08,1,HR3061,Passed,On Motion to Instruct Conferees,Labor-HHS-Education Appropriations for Fiscal Year 2002,367,48,-2.0636115,-2.86521,40.696236,20.153456830978392,86.19152698516827
+432,2001-11-13,1,HR2330,Passed,On Agreeing to the Conference Report,"Agriculture, Rural Development, Food and Drug Administration, and Related Agencies Appropriations for FY 2002",379,33,-1.9340469,-2.6920128,18.540298,8.127221536636352,35.706124687194816
+433,2001-11-13,1,HR2541,Passed,"On Motion to Suspend the Rules and Pass, as Amended",To enhance the authorities of special agents and provide limited authorities to uniformed officers responsible for the protection of domestic Department of State occupied facilities.,410,0,0.3865932,-2.994177,151.73582,21.960988521575928,461.00472717285135
+434,2001-11-14,1,HR2500,Passed,On Agreeing to the Conference Report,"Commerce, Justice, and State Appropriations for FY 2002",411,15,-0.99297655,2.6954803,128.15855,32.19880609512329,371.6971649169915
+435,2001-11-14,1,HCONRES211,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Commending Daw Aung San Suu Kyi on the 10th anniversary of her receiving the Nobel Peace Prize and expressing the sense of the Congress with respect to the Government of Burma,420,0,0.3770533,-3.031073,152.60463,20.89082260131836,466.28689727783177
+436,2001-11-14,1,HCONRES257,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Expressing the sense of the Congress that the men and women of the United States Postal Service have done an outstanding job of delivering the mail during this time of national emergency.,418,0,0.3830372,-3.0292976,155.4087,22.53542203903198,462.0113258361809
+437,2001-11-15,1,HR2269,Failed,On Agreeing to the Amendment,,180,243,-1.4282207,0.97028774,102.65152,13.472651767730714,383.2743621826167
+438,2001-11-15,1,HR2269,Passed,On Passage,Retirement Security Advice Act,280,144,0.855992,-1.5951265,90.88284,12.624506449699402,329.4835052490233
+439,2001-11-15,1,HCONRES228,Passed,"On Motion to Suspend the Rules and Agree, As Amended","Expressing the sense of the Congress that the children who lost one or both parents or guardian in the Sept. 11, 2001, tragedies should be provided with all necessary assistance",418,0,0.3829727,-3.0250857,153.0697,20.927738189697266,464.47307357788054
+440,2001-11-15,1,HR2887,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Best Pharmaceuticals for Children Act,338,86,1.7124084,-2.9018583,4.89512,2.7135830163955688,8.064798831939697
+441,2001-11-15,1,HCONRES239,Passed,On Motion to Suspend the Rules and Agree,"Expressing the sense of Congress that schools in the US should set aside a sufficient period of time to allow children to pray for, or quietly reflect on behalf of, the Nation during this time of struggle against the forces of international terrorism.",297,125,1.9537108,-2.7885048,9.651099,5.901018881797791,15.808357191085808
+442,2001-11-16,1,HRES289,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 3009; Andean Trade Promotion and Drug Eradication Act,225,191,2.6941662,-2.9327595,35.77513,3.956835025548935,219.09971885681148
+443,2001-11-16,1,HR3009,Failed,On Motion to Recommit with Instructions,Andean Trade Promotion and Drug Eradication Act,168,250,-2.8863375,2.3646169,3.535102,2.3096900165081022,5.27604664564132
+444,2001-11-16,1,S1447,Passed,On Agreeing to the Conference Report,Aviation Security Act,410,9,0.068321824,2.1449833,85.914444,8.591534042358399,363.99885559081935
+445,2001-11-27,1,HR1259,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Computer Security Enhancement Act,391,4,0.26670027,2.2499034,87.73292,10.034227538108826,330.68065872192375
+446,2001-11-27,1,SCONRES44,Passed,On Motion to Suspend the Rules and Agree,Resolution expressing the sense of the Congress regarding National Pearl Harbor Remembrance Day.,393,0,0.41676787,-3.039824,151.45596,22.323659324645995,468.68381042480456
+447,2001-11-28,1,,Passed,On Approving the Journal,,372,39,2.41571,2.5658505,367.41467,149.6307460784912,777.954704284668
+448,2001-11-28,1,HCONRES77,Passed,On Motion to Suspend the Rules and Agree,Expressing the sense of the Congress regarding the efforts of people of the United States of Korean ancestry to reunite with their family members in North Korea.,420,0,0.3970184,-3.0176604,151.22299,22.200940132141113,457.37078094482405
+449,2001-11-28,1,HR2722,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Clean Diamond Trade Act,408,6,0.18499415,2.1877244,92.81524,9.6092999458313,356.9796760559081
+450,2001-11-28,1,HRES296,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 3338; Department of Defense Appropriations for Fiscal Year 2002,216,211,2.8848116,-2.9303148,106.50169,19.337530088424682,410.7877380371093
+451,2001-11-28,1,HR3338,Passed,On Sustaining the Ruling of the Chair,Department of Defense Appropriations for Fiscal Year 2002,275,141,0.6797307,-1.3827873,80.10582,7.52179137468338,324.5049507141113
+452,2001-11-28,1,HR3338,Failed,On Agreeing to the Amendment,,201,220,-3.0798736,3.0191846,141.64032,27.54031820297241,414.0516220092771
+453,2001-11-28,1,HR3338,Passed,On Passage,Department of Defense Appropriations for Fiscal Year 2002,406,20,1.1967139,-2.975639,14.328027,4.859588861465454,34.20992088317867
+454,2001-11-29,1,,Passed,On Approving the Journal,,349,48,2.4354925,2.5700774,350.80627,152.88465690612793,657.7307312011717
+455,2001-11-29,1,HRES297,Passed,On Ordering the Previous Question,"Providing for the consideration of H.R. 3210, Terrorism Risk Protection Act",220,204,2.3198647,-2.4657207,236.69852,68.48204555511475,596.5347747802731
+456,2001-11-29,1,HRES297,Passed,On Agreeing to the Resolution,"Providing for the consideration of H.R. 3210, Terrorism Risk Protection Act",216,202,2.8311908,-2.9760456,123.684715,36.26036834716797,323.14804534912093
+457,2001-11-29,1,HR3210,Failed,On Agreeing to the Amendment,,197,222,-2.202251,2.0320606,48.914783,8.653077173233033,240.45549087524407
+458,2001-11-29,1,HR3210,Failed,On Motion to Recommit with Instructions,Terrorism Risk Protection Act,173,243,-1.3595461,0.9233268,77.75326,9.100083827972412,288.02463684081994
+459,2001-11-29,1,HR3210,Passed,On Passage,Terrorism Risk Protection Act,227,193,2.729488,3.119847,56.989494,17.723558807373045,133.23742713928223
+460,2001-11-30,1,HR2299,Passed,On Agreeing to the Conference Report,Transportation and Related Agencies Appropriations for FY 2002,371,11,-1.721269,-2.672597,30.123014,9.264957714080811,68.6500179290771
+461,2001-12-04,1,HR3323,Passed,"Suspend Rules and Pass, As Amended",Administrative Simplification Compliance Act,410,0,0.35875684,-3.0053918,154.39917,23.48150238990784,465.41781082153227
+462,2001-12-04,1,HR3391,Passed,On Motion to Suspend the Rules and Pass,Medicare Regulatory and Contracting Reform Act,408,0,0.38461748,-3.0306525,150.16,21.31233401298523,455.72212753295855
+463,2001-12-04,1,S494,Passed,"Suspend Rules and Pass, As Amended",Zimbabwe Democracy and Economic Recovery Act,396,11,-1.4083674,-2.896687,22.698307,5.9439433217048645,139.4897750854487
+464,2001-12-05,1,HCONRES242,Passed,On Motion to Suspend the Rules and Agree,Recognizing Radio Free Europe/Radio Liberty’s success in promoting democracy and its continuing contribution to US national interests,404,1,-0.3805782,3.1117787,147.27042,21.738453483581544,450.4742301940912
+465,2001-12-05,1,HR3348,Passed,On Motion to Suspend the Rules and Pass,Designating the National Foreign Affairs Training Center as the George P. Shultz National Foreign Affairs Training Center,407,0,0.3834761,-3.024074,151.91827,21.324118232727052,480.5430351257323
+466,2001-12-05,1,HCONRES102,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Hunger to Harvest: Decade of Support for Sub-Saharan Africa Resolution,400,9,0.45974323,2.5694237,60.21412,5.556572210788727,313.8694168090819
+467,2001-12-05,1,HRES298,Passed,On Motion to Suspend the Rules and Agree,Veterans’ Day National Observance,415,0,0.3283948,-2.9848576,156.63855,21.474830770492552,471.2766067504882
+468,2001-12-05,1,HCONRES232,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Expressing the sense of the Congress in honoring the crew and passengers of United Airlines Flight 93,415,0,0.3580575,-3.0177448,149.14966,21.978531074523925,453.25604934692376
+469,2001-12-05,1,HCONRES280,Passed,On Motion to Suspend the Rules and Agree,Expressing Solidarity with Israel in the Fight Against Terrorism,384,11,-1.0455844,-2.285304,52.74214,4.798519432544708,243.5925716400145
+470,2001-12-05,1,,Passed,On Hour of Meeting,,322,82,1.1135819,-2.334795,30.477188,2.482479292154312,199.7646156311035
+471,2001-12-06,1,HRES305,Passed,On Agreeing to the Resolution,Providing for Consideration of Motions to Suspend the Rules,207,179,1.059318,-1.311393,90.43813,11.102192044258118,343.42936401367115
+472,2001-12-06,1,HR3008,Passed,"On Motion to Suspend the Rules and Pass, as Amended",To Reauthorize the Trade Assistance Program Under the Trade Act of 1974,420,3,-1.5876265,-2.404308,100.61333,12.575415325164794,330.7027290344237
+473,2001-12-06,1,HR3129,Failed,"On Motion to Suspend the Rules and Pass, as Amended",Customs Border Security Act,256,168,2.3184237,-2.9136994,12.662725,8.101943206787109,19.198501300811763
+474,2001-12-06,1,HRES306,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.R. 3005, Bipartisan Trade Promotion Authority Act",224,202,1.4870073,-1.7247528,99.36819,20.372090911865236,330.7871170043944
+475,2001-12-06,1,HR3005,Failed,On Motion to Recommit with Instructions,Bipartisan Trade Promotion Authority Act,162,267,-1.3411222,0.7579357,75.77228,7.851941788196564,288.24093856811504
+476,2001-12-06,1,HR3005,Passed,On Passage,Bipartisan Trade Promotion Authority Act,215,214,2.5806494,-2.7534807,5.571476,3.918314480781555,7.606451535224914
+477,2001-12-06,1,HR2944,Passed,On Agreeing to the Conference Report,District of Columbia Appropriations for Fiscal Year 2002,302,84,-2.330736,-2.775733,23.250685,9.11689133644104,53.98869609832756
+478,2001-12-11,1,HCONRES281,Passed,On Motion to Suspend the Rules and Agree,"Honoring the Ultimate Sacrifice Made by Johnny Michael Spann, the first American Killed in Combat During the War Against Terrorism",401,0,0.39661747,-3.0456758,149.54805,23.249299669265746,473.8486740112302
+479,2001-12-11,1,HR3282,Passed,On Motion to Suspend the Rules and Pass,Mike Mansfield Federal Building and U.S. Courthouse Designation Act,401,0,0.37117806,-3.0340595,154.19234,20.90025577545166,474.91263656616206
+480,2001-12-11,1,HR10,Passed,Suspend the Rules and Agree to Senate Amendments,Comprehensive Retirement Security and Pension Reform Act,369,33,0.51500434,1.5642831,88.173515,6.932756567001343,327.1559181213377
+481,2001-12-12,1,,Passed,On Approving the Journal,,355,44,2.4187903,2.5740364,277.64536,109.88095874786377,530.3947769165036
+482,2001-12-12,1,HRES311,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 3295; Help America Vote Act,223,193,0.98780036,-1.2460821,90.36216,10.409099960327149,318.64141921997054
+483,2001-12-12,1,HR3295,Failed,On Motion to Recommit with Instructions,Help America Vote Act,197,226,-2.0072296,1.7388569,77.923515,17.35475993156433,287.25647583007776
+484,2001-12-12,1,HR3295,Passed,On Passage,Help America Vote Act,362,63,-0.78970385,-2.8023205,4.294008,1.043775314092636,18.68123049736022
+485,2001-12-12,1,HCONRES282,Passed,On Motion to Suspend the Rules and Agree,Expressing the sense of Congress that the Social Security promise should be kept.,415,5,1.6134984,2.2715487,90.64455,12.708892750740052,316.9453483581541
+486,2001-12-12,1,HR3209,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Anti-Hoax Terrorism Act,423,0,0.3940061,-3.0575514,153.14307,24.026783227920532,456.3366661071771
+487,2001-12-12,1,HR1022,Passed,On Passage,Community Recognition Act of 2001,420,0,0.39407513,-3.0466914,152.05174,22.963306999206544,446.37671279907175
+488,2001-12-12,1,HR3448,Passed,On Motion to Suspend the Rules and Pass,Public Health Security and Bioterrorism Response Act,418,2,0.66591394,2.345764,80.278496,9.76065981388092,310.2561668395995
+489,2001-12-12,1,HR3338,Passed,On Motion to Instruct Conferees,Department of Defense Appropriations for Fiscal Year 2002,370,44,-0.103939086,1.6492361,91.20094,8.887419605255127,329.7566947937011
+490,2001-12-12,1,HR3338,Passed,On Closing Portions of the Conference,Department of Defense Appropriations for Fiscal Year 2002,407,0,0.38567665,-3.0270588,155.36276,22.82099852561951,469.5603683471671
+491,2001-12-13,1,S1438,Passed,On Agreeing to the Conference Report,National Defense Authorization Act for Fiscal Year 2002,382,40,-1.2069889,-2.1672444,45.8596,2.538151502609253,234.34859352111778
+492,2001-12-13,1,HR1,Passed,On Agreeing to the Conference Report,No Child Left Behind Act,381,41,-2.0339952,-2.7325494,22.174702,10.941791987419128,39.307549953460686
+493,2001-12-13,1,HRES314,Passed,On Agreeing to the Resolution,Providing for the Consideration of Motions to Suspend the Rules,306,100,1.9140682,-2.9066997,9.1972065,5.174138367176056,14.206362175941466
+494,2001-12-18,1,HR3379,Passed,On Motion to Suspend the Rules and Pass,Raymond M. Downey Post Office Building,393,0,0.39940953,-3.0470886,155.19328,21.911347770690917,488.4568527221672
+495,2001-12-18,1,HR3054,Passed,"On Motion to Suspend the Rules and Pass, as Amended",True American Heroes Act,392,2,1.2487868,2.7422998,102.297356,13.418193936347961,366.25157775878904
+496,2001-12-19,1,HR3275,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Terrorist Bombings Convention Implementation Act,381,36,1.8891956,2.9479198,16.491148,7.118319594860077,30.73344955444334
+497,2001-12-19,1,HR2657,Passed,Suspend the Rules and Agree to Senate Amendment,District of Columbia Family Court Act,418,1,1.015172,2.4130971,85.88511,10.572538423538209,331.3909446716303
+498,2001-12-19,1,HR2199,Passed,Suspend the Rules and Agree to Senate Amendment,District of Columbia Police Coordination Amendment Act,420,0,0.36588848,-3.0085084,148.39299,21.265097665786744,451.47999801635723
+499,2001-12-19,1,HR3061,Passed,On Agreeing to the Conference Report,Labor-HHS-Education Appropriations for Fiscal Year 2002,393,30,-1.3442062,2.8833852,82.24414,22.22476544380188,296.93278961181636
+500,2001-12-19,1,HR2506,Passed,On Agreeing to the Conference Report,Foreign Operations Appropriations for Fiscal Year 2002,357,66,-2.0818648,-2.9041843,24.386066,8.40564467906952,87.25491695404021
+501,2001-12-19,1,HRES319,Passed,On Agreeing to the Resolution,Waiving a requirement of clause 6(a) of rule XIII with respect to consideration of certain resolutions reported from the Committee on Rules,214,206,2.9168732,-3.0347962,107.10748,30.31806883811951,356.95850143432494
+502,2001-12-20,1,HRES320,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 3529; to provide tax incentives for economic recovery and assistance to displaced workers,219,198,2.2843585,-2.4853048,240.14372,65.1884801864624,594.2638458251951
+503,2001-12-20,1,HR3529,Failed,On Motion to Recommit with Instructions,Economic Security and Worker Assistance Act,177,238,-1.5398257,1.1208445,93.07784,14.328097653388976,320.3665214538573
+504,2001-12-20,1,HR3529,Passed,On Passage,Economic Security and Worker Assistance Act,224,193,1.5034924,-1.7193241,98.855385,21.623281478881836,332.03499374389634
+505,2001-12-20,1,HR3338,Passed,On Agreeing to the Conference Report,Department of Defense Appropriations for Fiscal Year 2002,408,6,0.21945252,-3.033127,12.606722,4.710346066951752,42.08068771362301
+506,2001-12-20,1,HJRES75,Passed,"On Motions to Suspend the Rules and Pass, as Amended","Regarding the Monitoring of Weapons Development in Iraq, as Required by United Nations Security Council Resolution 687 (April 3, 1991)",392,12,-0.7011337,-2.4175162,49.653618,4.953483545780182,289.78113479614245
+507,2001-12-20,1,S1762,Failed,On Motion to Suspend the Rules and Pass,"To establish fixed interest rates for student and parent borrowers, and for other purposes.",257,148,2.24267,-2.8886576,9.218028,5.954709863662719,13.599187064170827
+508,2002-01-23,2,HR700,Passed,On Motion to Suspend the Rules and Agree to Senate Amendment,To reauthorize the Asian Elephant Conservation Act,349,23,-0.7034065,2.3278143,92.036736,18.252185010910033,307.4598770141601
+509,2002-01-23,2,HR2234,Passed,"On Motion to Suspend the Rules and Pass, As Amended",Tumacacori National Historical Park Boundary Revision Act,356,14,-0.3493177,2.2272735,85.37877,12.087408971786498,312.1000732421866
+510,2002-01-24,2,S1762,Passed,On Passage,Higher Education Act Amendments,372,3,0.09197484,2.3842835,91.20429,11.666354274749756,327.397740936279
+511,2002-01-29,2,HRES335,Passed,On Motion to Suspend Rules and Agree,A resolution honoring the contributions of Catholic Schools.,388,0,0.21572728,-3.09333,150.14801,21.889558362960816,454.4453720092765
+512,2002-02-05,2,HR577,Passed,"On Motion to Suspend the Rules and Pass, as amended",To require any organization that is established for the purpose of raising funds for the creation of a Presidential archival depository to disclose the sources and amounts of any funds raised.,392,3,-1.567606,-2.4119964,100.00846,11.25656590461731,341.40040435791
+513,2002-02-05,2,S970,Passed,On Motion to Suspend the Rules and Pass,"Designating the facility of the US Postal Service located at 39 Tremont Street, Paris Hill, Maine, as the Horatio King Post Office Building.",394,0,0.365377,-2.9942431,154.10765,21.677170038223267,471.31737365722654
+514,2002-02-06,2,HRES342,Passed,On Ordering the Previous Question,Providing for the Consideration of Motions to Suspend the Rules,212,204,2.3547626,-2.438819,243.74771,72.44529876708984,585.1628158569334
+515,2002-02-06,2,S1888,Passed,On Motion to Suspend the Rules and Pass,Correct a Technical Error in the Codification of Title 36 of the United States Code,413,0,0.37603223,-3.014201,150.10374,22.381268739700317,443.67446899413983
+516,2002-02-06,2,HCONRES312,Failed,On Motion to Suspend the Rules and Agree,Expressing the sense of the House of Representatives that the scheduled Tax Relief Provided by the Economic Growth and Tax Relief Reconciliation Act of 2001 passed by a Bipartisan Majority in Congress should not be suspended or repealed,235,181,1.0931935,-1.5260289,80.47565,13.449595069885254,289.31918106079075
+517,2002-02-06,2,HJRES82,Passed,On Motion to Suspend the Rules and Pass,Recognizing the 91st birthday of Ronald Reagan,408,0,0.37082276,-3.0075932,152.39111,24.005572080612183,458.4700614929193
+518,2002-02-07,2,HRES343,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 3394; Cyber Security Research and Development Act,392,0,0.39305425,-3.0125694,152.20946,21.092075061798095,452.19647216796784
+519,2002-02-07,2,HR3394,Passed,On Passage,Cyber Security Research and Development Act,400,12,-0.50138444,2.3717864,97.79701,15.824161267280578,342.17057495117183
+520,2002-02-07,2,,Passed,On Approving the Journal,,363,33,2.3599486,2.5840957,162.47726,62.25295505523682,319.0324638366698
+521,2002-02-12,2,HR2998,Passed,On Motion to Suspend the Rules and Agree to Senate Amendment,Radio Free Afghanistan Act,421,2,0.42950937,2.3967967,82.50419,10.543838715553283,315.296643829345
+522,2002-02-12,2,HR3699,Passed,On Motion to Suspend the Rules and Pass,To revise certain grants for continuum of care assistance for homeless individual and families,421,0,0.39398807,-3.0216322,151.6847,23.17294235229492,473.1984039306637
+523,2002-02-13,2,,Passed,On Approving the Journal,,378,40,2.4124155,2.554852,358.3952,147.25358238220215,685.5596038818358
+524,2002-02-13,2,,Failed,On Motion to Adjourn,,13,405,2.3944175,1.4655817,74.15133,3.254902923107147,321.0979881286618
+525,2002-02-13,2,HR2356,Failed,On Agreeing to the Amendment,,179,249,-3.0739048,-2.7987664,120.95254,9.413766646385193,325.6228286743161
+526,2002-02-13,2,HR2356,Failed,On Agreeing to the Amendment,,53,377,1.8283951,0.631466,49.538975,1.6174766361713409,255.89657592773426
+527,2002-02-13,2,HR2356,Agreed to,On Agreeing to the Amendment,,240,191,-2.8481588,-3.0008366,318.6689,111.06041965484619,679.8111236572264
+528,2002-02-13,2,HR2356,Failed,On Agreeing to the Amendment,,188,237,-3.0318084,-2.8480954,284.27728,96.94253063201904,579.5735900878905
+529,2002-02-13,2,HR2356,Agreed to,On Agreeing to the Amendment,,327,100,0.024855232,-1.162386,77.37133,4.380355203151703,305.0894836425777
+530,2002-02-13,2,HR2356,Failed,On Agreeing to the Amendment,,209,219,1.1782966,-1.1667306,65.69823,5.245405089855194,284.6028884887689
+531,2002-02-13,2,HR2356,Failed,On Agreeing to the Amendment,,185,237,-3.0495415,-2.8392968,252.18785,90.87627296447754,546.2801315307617
+532,2002-02-13,2,HR2356,Failed,On Agreeing to the Amendment,Bipartisan Campaign Reform Act,200,228,1.3016084,-1.1879598,87.26847,10.252116131782532,372.06600494384753
+533,2002-02-13,2,HR2356,Failed,On Agreeing to the Amendment,,191,237,-3.0751784,-2.8173652,202.36208,27.025869846343994,476.04267196655263
+534,2002-02-13,2,HR2356,Agreed to,On Agreeing to the Amendment,,218,211,2.753744,-2.8545947,14.035219,4.809265267848969,54.254516696929926
+535,2002-02-13,2,HR2356,Failed,On Agreeing to the Amendment,,185,244,-3.0590904,-2.872368,197.18994,51.680726528167725,481.9624687194824
+536,2002-02-13,2,HR2356,Failed,On Agreeing to the Amendment,,160,268,2.6951826,-2.1921225,7.87702,5.1107424855232235,10.944814085960385
+537,2002-02-14,2,HR2356,Failed,On Agreeing to the Amendment,,190,238,-3.0990403,-2.853102,162.33777,58.78524761199951,361.96269836425745
+538,2002-02-14,2,HR2356,Agreed to,On Agreeing to the Amendment,,232,196,2.6776795,-2.9166908,16.46933,8.76926121711731,30.64517121315001
+539,2002-02-14,2,HR2356,Failed,On Agreeing to the Amendment,,181,248,2.9471028,-2.487002,195.58014,15.020953726768495,500.68665084838807
+540,2002-02-14,2,HR2356,Passed,On Passage,Bipartisan Campaign Reform Act,240,189,-2.8316097,-2.9940598,260.28247,89.33193531036378,565.2473373413086
+541,2002-02-14,2,,Passed,On Approving the Journal,,342,51,2.4128528,2.577642,208.12552,66.23630809783936,471.90383071899413
+542,2002-02-14,2,HRES347,Passed,On Ordering the Previous Question,"Providing for the Consideration of the Senate Amendments to H.R. 622, To Amend the Internal Revenue Code of 1986 to Expand the Adoption Credit, and for other purposes",216,207,2.3792949,-2.4585862,239.55374,70.37005996704102,566.5224487304686
+543,2002-02-14,2,HRES347,Passed,On Agreeing to the Resolution,"Providing for the Consideration of the Senate Amendments to H.R. 622, To Amend the Internal Revenue Code of 1986 to Expand the Adoption Credit, and for other purposes",213,206,2.369534,-2.4501748,237.10353,67.7855785369873,570.2434570312498
+544,2002-02-14,2,HR622,Passed,On motion to agree to Senate amendments with amendments,Adoption Credit Expansion,225,199,1.5908991,-1.8895584,110.33149,25.984902954101564,374.05906753540023
+545,2002-02-26,2,HR1892,Passed,On Motion to Suspend the Rules and Agree to Senate Amendment,Family Sponsor Immigration Act,404,3,0.8431641,2.2831671,75.44258,8.501982164382934,285.19897537231446
+546,2002-02-26,2,HCONRES304,Passed,"On Motion to Suspend the Rules and Agree, As Amended","Expressing sympathy to the people of the Democratic Republic of the Congo who were tragically affected by the eruption of the Nyriagongo volcano on January 17, 2002.",405,1,-0.3547807,3.0910945,150.67033,20.843569898605345,466.4628974914549
+547,2002-02-27,2,,Passed,On Approving the Journal,,355,48,2.4325545,2.5706682,381.42365,160.65760383605956,726.6767852783202
+548,2002-02-27,2,HRES350,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 1542; Internet Freedom and Broadband Deployment Act,282,142,1.9912254,-2.7845209,2.081193,1.3259167671203613,3.129764229059219
+549,2002-02-27,2,HR1542,Agreed to,On Agreeing to the Amendment,,421,7,1.0167681,2.1307244,76.87472,7.270476222038269,317.2021080017085
+550,2002-02-27,2,HR1542,Failed,On Ordering the Previous Question,Internet Freedom and Broadband Deployment Act,173,256,2.8401134,2.5005698,31.379871,1.1189054042100905,202.95331420898424
+551,2002-02-27,2,HR1542,Passed,On Passage,Internet Freedom and Broadband Deployment Act,273,157,2.199054,3.018066,9.040958,0.2777411207556725,79.2917276382441
+552,2002-02-28,2,HR3448,Passed,On Motion to Instruct Conferees,Bioterrorism Response Act,412,0,0.38159525,-3.017862,154.46416,23.5925621509552,487.5473220825191
+553,2002-03-05,2,HCONRES305,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Permitting the Use of the Rotunda of the Capitol for a Ceremony to Present a Gold Medal on Behalf of Congress to Former President Ronald Reagan and his Wife Nancy Reagan,392,0,0.41864952,-3.0072532,154.75688,22.44229612350464,471.32891311645477
+554,2002-03-06,2,,Passed,On Approving the Journal,,352,43,2.4152372,2.560684,298.04855,116.04347114562988,597.5888259887695
+555,2002-03-06,2,HRES354,Passed,On Ordering the Previous Question,Providing for consideration of motions to suspend the rules,218,191,2.3334754,-2.482378,242.80803,66.45958881378174,575.4655899047848
+556,2002-03-06,2,SJRES32,Passed,On Motion to Suspend the Rules and Pass,"Congratulating the United States Military Academy at West Point on its Bicentennial Anniversary, and Commending its Outstanding Contributions to the Nation",407,1,-0.14668594,-2.297569,93.08557,12.462214493751526,332.64698410034157
+557,2002-03-07,2,HRES360,Passed,On Ordering the Previous Question,Providing for consideration of Senate Amendment to H.R. 3090; Job Creation and Worker Assistance Act,217,192,1.7560669,-1.9783952,125.720764,32.577513980865476,379.5892692565916
+558,2002-03-07,2,HR3090,Passed,On Agreeing to Senate Amendment with an Amendment,Job Creation and Worker Assistance Act,417,3,-1.1101981,-2.0939403,90.98367,10.87670407295227,327.29379653930664
+559,2002-03-12,2,HRES365,Passed,On Motion to Suspend the Rules and Agree,Providing for the concurrence by the House with amendments in the amendment of the Senate to H.R. 1885.,275,137,-0.60211825,1.3356738,53.936207,1.736175963282585,234.21922035217258
+560,2002-03-13,2,,Passed,On Approving the Journal,,355,45,2.4368153,2.555267,492.9166,215.245503616333,892.7223541259764
+561,2002-03-13,2,HRES367,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 2341; Class Action Fairness Act,221,198,1.6506975,-1.9096138,110.768585,27.350177097320557,343.60319442748977
+562,2002-03-13,2,HR2341,Failed,On Agreeing to the Amendment,,174,251,-1.4215504,0.97181517,73.76331,9.6382244348526,281.7708259582515
+563,2002-03-13,2,HR2341,Failed,On Agreeing to the Amendment,,194,231,-2.944843,2.6714296,37.987717,17.923268413543703,113.08302993774413
+564,2002-03-13,2,HR2341,Failed,On Agreeing to the Amendment,,202,223,-2.8402004,2.6464849,17.340237,11.114136433601379,26.822316741943354
+565,2002-03-13,2,HR2341,Failed,On Agreeing to the Amendment,,177,248,-2.8513546,2.3905215,12.054365,7.776107037067414,19.00369043350218
+566,2002-03-13,2,HR2341,Failed,On Agreeing to the Amendment,,191,234,-2.9502888,2.6424735,20.214024,11.85440707206726,36.63382568359372
+567,2002-03-13,2,HR2341,Failed,On Motion to Recommit with Instructions,Class Action Fairness Act,191,235,-1.973273,1.5929015,124.14643,33.08603963851929,368.51127853393524
+568,2002-03-13,2,HR2341,Passed,On Passage,Class Action Fairness Act,233,190,2.0892286,-2.4455762,67.06486,10.809002232551574,225.48819465637155
+569,2002-03-14,2,HR2146,Agreed to,On Agreeing to the Amendment,,259,161,-0.5382643,1.0654297,67.73804,3.2217817664146424,294.5260719299305
+570,2002-03-14,2,HR2146,Passed,On Passage,Two Strikes and Your Out Child Protection Act,382,34,0.4153796,-1.9177058,82.89321,10.549671626091003,313.511463165283
+571,2002-03-19,2,,Passed,On Approving the Journal,,363,44,2.4069533,2.572719,262.89767,107.94159812927246,535.2607330322264
+572,2002-03-19,2,HRES368,Passed,On Motion to Suspend the Rules and Agree,"Commending the great work that the Pentagon Renovation Program and its contractors have completed thus far, in reconstructing the portion of the Pentagon that was destroyed by the terrorist attack of September 11, 2001",413,0,0.3953297,-3.0386806,156.7589,24.067843008041383,470.8765235900874
+573,2002-03-19,2,HR2509,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Bureau of Engraving and Printing Security Printing Amendments Act,403,11,0.51064223,1.9744565,86.09512,7.6706796288490295,351.979595184326
+574,2002-03-19,2,HR2804,Passed,On Motion to Suspend the Rules and Pass,James R. Browning United States Courthouse,403,1,1.2292897,2.3788285,91.718895,10.44049391746521,337.77130813598586
+575,2002-03-20,2,,Passed,On Approving the Journal,,351,55,2.445826,2.5638072,391.50946,180.64450874328614,716.0391555786128
+576,2002-03-20,2,HRES339,Passed,"On Motion to Suspend the Rules and Agree, as Amended","Urging the Government of Ukraine to Ensure a Democratic, Transparent, and Fair Election Process Leading Up to the March 31, 2002 Parliamentary Elections",408,1,-0.41652852,3.135421,147.49026,19.797944641113283,441.45453109741175
+577,2002-03-20,2,HR3924,Passed,On Passage,Freedom to Telecommute Act,421,0,0.40668648,-3.0403688,154.75648,21.297980213165285,476.0255630493152
+578,2002-03-20,2,HRES371,Passed,On Motion to Suspend the Rules and Agree,Expressing the sense of the House of Representatives regarding Women’s History Month,423,0,0.3897201,-3.0539632,145.16982,21.074058771133423,430.9440338134765
+579,2002-03-20,2,,Failed,On Motion to Adjourn,,77,337,-2.4604561,1.2269262,33.413597,3.5302889704704286,228.9983001708984
+580,2002-03-20,2,,Failed,On Motion to Adjourn,,72,333,-1.6747645,0.4544421,71.9798,7.127716910839081,291.91701812744117
+581,2002-03-20,2,HRES372,Passed,On Ordering the Previous Question,Providing for consideration of H.Con.Res. 353; Budget Resolution for Fiscal Year 2003,221,206,2.938718,-3.0105639,176.36691,50.68314390182495,464.70789718627924
+582,2002-03-20,2,HRES372,Passed,Table Motion to Reconsider,Providing for consideration of H.Con.Res. 353; Budget Resolution for Fiscal Year 2003,222,206,2.5202956,-2.6242971,141.8798,31.445033884048463,387.5231857299804
+583,2002-03-20,2,HRES372,Passed,On Agreeing to the Resolution,Providing for consideration of H.Con.Res. 353; Budget Resolution for Fiscal Year 2003,222,206,2.381502,-2.4655094,242.68877,74.20895919799804,578.2653640747067
+584,2002-03-20,2,HRES372,Passed,Table Motion to Reconsider,Providing for consideration of H.Con.Res. 353; Budget Resolution for Fiscal Year 2003,213,206,2.302151,-2.3860674,243.60583,70.2052677154541,578.6579406738277
+585,2002-03-20,2,HCONRES353,Passed,On Agreeing to the Resolution,Congressional Budget Resolution,221,209,2.8059337,-2.9070907,69.92818,26.341496086120607,234.34976692199706
+586,2002-04-09,2,,Passed,On Approving the Journal,,361,43,2.4199803,2.5550811,344.04846,129.93976364135742,656.9201705932617
+587,2002-04-09,2,HRES377,Passed,On Motion to Suspend the Rules and Agree,Recognizing the Ellis Island Medal of Honor and commending the National Ethnic Coalition of Organizations.,403,0,0.39116466,-3.0230832,153.11916,22.64496808052063,481.22866363525384
+588,2002-04-09,2,HR3958,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Bear River Migratory Bird Refuge Settlement Act,396,6,-0.46782872,2.5297432,95.16468,15.727983212471008,321.7562019348143
+589,2002-04-10,2,HR3925,Failed,On Agreeing to the Amendment,,204,219,-1.631291,1.4709138,95.005615,17.597740030288698,326.13701477050756
+590,2002-04-10,2,HRES363,Passed,"On Motion to Suspend the Rules and Agree, as Amended","Congratulating the people of Utah, the Salt Lake Organizing Committee and the athletes of the world for a successful and inspiring 2002 Olympic Winter Games",425,0,0.39253438,-3.0223305,157.01392,22.35495982170105,475.20740051269496
+591,2002-04-10,2,HR3991,Failed,"On Motion to Suspend the Rules and Pass, as Amended",Taxpayer Protection and IRS Accountability Act,205,219,2.1580935,-2.1383371,37.741238,5.509098863601684,245.91675376892044
+592,2002-04-10,2,HR2646,Passed,On Motion to Instruct Conferees,Farm Security Act,424,3,-0.4074785,2.6727767,107.70923,15.721998023986817,374.71268310546867
+593,2002-04-11,2,HRES386,Passed,On Ordering the Previous Question,"Providing for the Consideration of H.R. 3762, Pension Security Act",218,208,2.3432593,-2.4257665,241.36427,68.26930961608886,576.6598815917968
+594,2002-04-11,2,HRES386,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.R. 3762, Pension Security Act",215,209,2.9273582,-3.0122714,171.34859,48.90442714691162,443.64307098388633
+595,2002-04-11,2,,Passed,On Approving the Journal,,360,56,2.4157405,2.6039643,177.51166,74.03764343261719,350.09667816162096
+596,2002-04-11,2,HR3762,Failed,On Agreeing to the Amendment,,187,232,-1.5423845,1.1321194,109.54991,18.132942628860473,410.1883735656738
+597,2002-04-11,2,HR3762,Failed,On Motion to Recommit with Instructions,Pension Security Act,204,212,-2.5240297,2.322496,245.31647,70.5405200958252,591.0127304077145
+598,2002-04-11,2,HR3762,Passed,On Passage,Pension Security Act,255,163,2.593117,3.0175815,56.18756,23.223809480667114,102.50474281311034
+599,2002-04-16,2,HR1374,Passed,On Motion to Suspend the Rules and Pass,Philip E. Ruppe Post Office Building Designation Act,408,0,0.40491518,-3.030065,152.56067,22.465255975723267,442.0743194580073
+600,2002-04-16,2,HR4156,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Clergy Housing Allowance Clarification Act,408,0,0.40696335,-3.0318296,153.00652,22.42765235900879,465.09245681762684
+601,2002-04-16,2,HR4167,Passed,On Motion to Suspend the Rules and Pass,Family Farmer Bankruptcy Extension Act,407,3,-0.37650704,2.6445458,110.848434,16.578334999084472,348.9067817687984
+602,2002-04-17,2,HR476,Failed,On Motion to Recommit with Instructions,Child Custody Protection Act,173,246,-1.2851214,0.89638144,65.11908,6.574952173233032,268.07543869018525
+603,2002-04-17,2,HR476,Passed,On Passage,Child Custody Protection Act,260,161,2.039699,-2.5278163,5.386636,3.765533411502838,7.6161295652389525
+604,2002-04-17,2,,Passed,On Approving the Journal,,361,51,2.4367292,2.5793738,309.81512,132.88605804443358,615.7474136352535
+605,2002-04-18,2,,Passed,On Approving the Journal,,369,52,2.4290335,2.568666,290.6588,113.49922389984131,582.9852539062499
+606,2002-04-18,2,HR2646,Passed,On Motion to Instruct Conferees,Farm Security Act,265,158,-2.1951542,2.8628051,71.76672,0.6260316923260689,302.9133529663084
+607,2002-04-18,2,HRES390,Passed,On Ordering the Previous Question,"Providing for the Consideration of the Senate Amendment to H.R. 586, Fairness for Foster Care Families Act",219,206,2.3462331,-2.4261827,245.55656,73.41763172149658,597.8649307250977
+608,2002-04-18,2,HRES390,Passed,On Agreeing to the Resolution,"Providing for the Consideration of the Senate Amendment to H.R. 586, Fairness for Foster Care Families Act",218,205,2.3337917,-2.4149292,246.93738,72.46621513366699,589.9363662719718
+609,2002-04-18,2,HR586,Passed,On Motion to Agree to the Senate Amendment with an Amendment,Fairness for Foster Care Families Act,229,198,1.5644938,-1.8392315,108.03721,25.803593587875366,339.6077774047851
+610,2002-04-23,2,HR3839,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Keeping Children and Families Safe Act,411,5,-0.94126564,2.9206843,152.55438,30.377283906936647,431.9816390991206
+611,2002-04-23,2,HR2646,Passed,On Motion to Instruct Conferees,Farm Security Act,273,143,-0.11301504,0.89542526,64.13732,2.0647221148014068,286.2791351318357
+612,2002-04-23,2,HR2646,Passed,On Motion to Instruct Conferees,Farm Security Act,244,171,-0.91405225,1.3030212,75.98767,8.094691610336303,300.0513931274409
+613,2002-04-24,2,HR3763,Failed,On Agreeing to the Amendment,,39,381,-1.8945686,0.4164952,85.73737,10.729298973083496,309.9952018737792
+614,2002-04-24,2,HR3763,Failed,On Agreeing to the Amendment,,202,219,-2.9819577,2.7478278,57.417454,24.365692138671875,120.1544757843017
+615,2002-04-24,2,HR3763,Failed,On Motion to Recommit with Instructions,Corporate and Auditing Accountability and Responsibility Act,205,222,-2.274573,2.0590885,170.06038,48.690054416656494,423.8517509460446
+616,2002-04-24,2,HR3763,Passed,On Passage,Corporate and Auditing Accountability and Responsibility Act,334,90,2.0146573,-3.1160853,16.115582,9.5262220621109,24.934714269638057
+617,2002-04-25,2,HRES396,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 3231; Immigration Reform and Accountability Act,384,36,0.6320798,-2.0851107,81.784615,12.559984874725341,316.4277000427242
+618,2002-04-25,2,HRES396,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 3231; Immigration Reform and Accountability Act,388,34,-0.6527027,-2.540377,5.153759,2.003930240869522,15.161286711692792
+619,2002-04-25,2,,Passed,On Approving the Journal,,372,47,2.4094563,2.5938134,245.65237,108.02089042663575,459.88048248291005
+620,2002-04-25,2,HR3231,Failed,On Agreeing to the Amendment,,145,272,1.2636286,-0.62409633,64.84554,4.8632080078125,283.6371109008789
+621,2002-04-25,2,HR3231,Failed,On Agreeing to the Amendment,,105,312,1.1899283,0.46565112,65.397896,1.4708379179239273,278.4807403564452
+622,2002-04-25,2,HR3231,Passed,On Passage,Immigration Reform and Accountability Act,405,9,-1.1184219,-1.9396231,81.85052,9.652479577064515,296.5160789489745
+623,2002-04-30,2,HR169,Passed,Suspend the Rules and Agree to Senate Amendments,Notification and Federal Employee Antidiscrimination and Reataliation Act,412,0,0.35192618,-3.0151339,151.39536,21.327899408340453,470.7952331542966
+624,2002-04-30,2,S2248,Passed,On Motion to Suspend the Rules and Pass,"To Extend the Authority of the Export-Import Bank until May 31, 2002",318,92,-2.1899507,-2.6109974,17.403664,5.9532073616981505,43.33551988601673
+625,2002-04-30,2,HCONRES386,Passed,On Motion to Suspend the Rules and Agree,Supporting a National Charter Schools Week,404,3,-0.3334173,-2.1268876,91.38417,10.056006503105163,330.3471519470213
+626,2002-05-01,2,HR2871,Failed,On Agreeing to the Amendment,,135,283,-3.0105174,2.1200511,3.1876836,1.413294905424118,5.749871456623077
+627,2002-05-01,2,HR2215,Passed,On Motion to Instruct Conferees,"To authorize appropriations for the Department of Justice for fiscal year 2002, and for other purposes.",416,3,-0.6351689,2.8242943,125.33958,21.06920108795166,378.51408767700184
+628,2002-05-02,2,HR2646,Failed,On Motion to Recommit with Instructions,Farm Security Act,172,251,2.9826427,2.5848525,29.51285,0.8087855547666549,167.91169891357393
+629,2002-05-02,2,HR2646,Passed,On Agreeing to the Conference Report,Farm Security Act,280,141,-2.2762518,-2.4802368,59.90752,0.7962175965309143,268.3913696289062
+630,2002-05-02,2,HRES404,Passed,On Ordering the Previous Question,Providing for consideration of motions to suspend the rules.,328,82,0.8268598,-2.1001747,41.833614,2.320902907848358,249.7193958282466
+631,2002-05-02,2,HRES404,Passed,On Agreeing to the Resolution,Providing for consideration of motions to suspend the rules.,329,76,0.35546425,-1.7029628,61.389008,2.7239890575408934,295.2644073486328
+632,2002-05-02,2,HRES392,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Expressing Solidarity with Israel in its Fight Against Terrorism,352,21,-0.12030483,-2.8341491,4.1528473,2.251704514026642,8.925668549537656
+633,2002-05-07,2,HR2911,Passed,On Motion to Suspend the Rules and Pass,"Designating the Federal Building located at 5100 Paint Branch Parkway in College Park, Maryland, as the Harvey W. Wiley Federal Building",402,0,0.3958734,-3.0332077,154.34578,21.88455476760864,472.4290443420409
+634,2002-05-07,2,HCONRES271,Passed,On Motion to Suspend the Rules and Agree,Sense of Congress Supporting the National Importance of Health Care Coverage Month,402,1,-0.34320238,3.0817032,146.37262,21.521200227737427,454.0691749572748
+635,2002-05-08,2,HRES414,Passed,On Ordering the Previous Question,Providing for the disposition of H.J.Res. 84; Disapproval of the Actions taken by the President Under Sec. 203 of the Trade Act,355,62,-0.19596268,-1.4104358,73.68525,3.528592324256897,319.24236068725577
+636,2002-05-08,2,HRES414,Passed,On Agreeing to the Resolution,Providing for the disposition of H.J.Res. 84; Disapproval of the Actions taken by the President Under Sec. 203 of the Trade Act,386,30,-2.12749,-2.5708401,78.0272,6.357454991340637,284.76714019775375
+637,2002-05-08,2,HR3525,Passed,On Motion to Suspend the Rules and Agree to Senate Amendments,Enhanced Border Security and Visa Entry Reform Act,411,0,0.38309813,-3.0336542,150.6759,20.94467854499817,470.32272796630843
+638,2002-05-08,2,HJRES87,Passed,On Consideration of the Resolution,Yucca Mountain Repository Site Approval Act,308,105,2.0985184,3.1406343,6.671684,3.1327344715595244,11.05677599906921
+639,2002-05-08,2,HJRES87,Passed,On Passage,Yucca Mountain Repository Site Approval Act,306,117,2.1418426,-3.1376288,6.1677747,3.2574447631835937,10.105694746971128
+640,2002-05-09,2,,Failed,On Motion to Adjourn,,44,366,-1.7382321,-0.18350871,61.59269,2.6777100920677186,287.7551147460937
+641,2002-05-09,2,HRES415,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 4546; Department of Defense Authorization for F.Y. 2003,215,202,1.9788148,-2.012268,134.98761,37.71941270828247,404.2285850524897
+642,2002-05-09,2,HRES415,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 4546; Department of Defense Authorization for F.Y. 2003,216,200,2.6426306,-2.793196,17.221125,11.216581916809082,25.796271848678586
+643,2002-05-09,2,,Failed,On Motion to Adjourn,,35,375,-1.5868409,-0.42505938,88.22398,4.828140020370483,357.5093727111813
+644,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,51,356,-1.461136,-0.20005815,78.33618,4.33941251039505,317.9107192993164
+645,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,49,352,-1.6555009,-0.4486423,65.16348,2.4098426043987273,290.40606384277334
+646,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,51,360,-1.5929288,0.011911597,69.828415,5.170991337299347,299.18730239868114
+647,2002-05-09,2,HR4546,Failed,On Agreeing to the Amendment,,172,243,-1.5130435,1.0560892,89.182945,12.340859174728394,359.3670791625976
+648,2002-05-09,2,HR4546,Agreed to,On Agreeing to the Amendment,,362,53,1.7706901,-3.078016,17.2451,8.810898327827454,29.243274307250935
+649,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,46,356,-1.6227921,-0.10554213,68.853806,3.800118017196655,301.2694198608396
+650,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,48,356,-1.5675399,-0.045892533,76.4524,5.1487125039100645,288.20556259155273
+651,2002-05-09,2,HR4546,Failed,On Agreeing to the Amendment,,159,253,3.113361,2.4861202,35.10206,14.36905105113983,68.18957977294916
+652,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,55,336,-1.5677804,0.013559714,61.366383,4.192112243175506,265.0658210754394
+653,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,56,339,-1.5235728,-0.021519853,71.02834,4.099557232856751,318.4445831298825
+654,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,58,325,-1.5956837,0.06953729,61.09558,3.35364345908165,319.4169052124023
+655,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,75,319,-1.5312282,0.2537709,64.44695,4.027407169342041,312.77568740844714
+656,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,83,312,-1.55642,0.38421997,58.517265,4.474545061588287,247.69641151428186
+657,2002-05-09,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,154,249,-1.3166195,0.75670135,82.74786,7.010096096992493,365.0328872680663
+658,2002-05-10,2,HR4546,Failed,On Motion that the Committee Rise,Department of Defense Authorization Act for FY 2003,168,241,-1.3561665,0.90124077,74.253586,7.761896324157715,279.11564559936505
+659,2002-05-10,2,HR4546,Failed,On Agreeing to the Amendment,,202,215,-1.0391728,0.94648606,56.69073,4.3008408665657045,252.24404754638638
+660,2002-05-10,2,HR4546,Agreed to,On Agreeing to the Amendment,,232,183,2.594295,-3.032603,14.963972,3.448271578550339,62.260390472412105
+661,2002-05-10,2,HR4546,Agreed to,On Agreeing to the Amendment,,264,152,0.59547406,-1.146848,86.15597,5.3185555815696715,318.6974494934074
+662,2002-05-10,2,HR4546,Agreed to,On Agreeing to the Amendment,,412,2,0.9790525,2.9227822,16.686295,5.874065256118774,47.989572811126564
+663,2002-05-10,2,HR4546,Failed,On Motion to Recommit with Instructions,Department of Defense Authorization Act for FY 2003,193,223,-1.7014748,1.4400538,96.0644,19.654119443893432,338.62447433471635
+664,2002-05-10,2,HR4546,Passed,On Passage,Department of Defense Authorization Act for FY 2003,359,58,1.8701085,-3.1326227,21.3107,10.726983118057252,35.538082885742185
+665,2002-05-14,2,HR3694,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Highway Funding Restoration Act,410,5,-0.23773175,2.4107625,97.88511,13.032503771781922,348.43898925781224
+666,2002-05-14,2,HR4069,Passed,"On Motion to Suspend the Rules and Pass, as Amended",To amend title II of the Social Security Act to provide for miscellaneous enhancements in Social Security benefits and for other purposes.,418,0,0.3855127,-3.026601,156.65216,21.42489013671875,470.415069580078
+667,2002-05-14,2,,Passed,On Approving the Journal,,371,40,2.4086802,2.5694823,270.96262,113.1445779800415,518.5782699584961
+668,2002-05-15,2,HRES419,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 3994; Afghanistan Freedom Support Act,415,0,0.40978202,-3.0473316,153.66489,22.23908166885376,466.80445785522437
+669,2002-05-15,2,,Passed,On Approving the Journal,,352,55,2.4392967,2.5814004,302.05194,128.95501136779785,595.725369262695
+670,2002-05-15,2,HRES420,Passed,On Agreeing to the Resolution,Waiving a requirement of clause 6(a) of rule XIII with respect to consideration of certain resolutions reported from the Committee on Rules,219,200,2.2556314,-2.395038,119.75795,28.976682806015013,355.67537384033176
+671,2002-05-15,2,HRES422,Passed,On Ordering the Previous Question,"Providing for the consideration of H.R. 4737; Personal Responsibility, Work, and Family Promotion Act",213,204,2.387721,-2.4714947,250.94463,75.39441528320313,595.570506286621
+672,2002-05-15,2,HRES422,Passed,On Agreeing to the Resolution,"Providing for the consideration of H.R. 4737; Personal Responsibility, Work, and Family Promotion Act",214,205,2.3721445,-2.390852,249.52182,70.62977905273438,615.7643371582025
+673,2002-05-16,2,,Passed,On Approving the Journal,,330,63,2.4714844,2.573899,513.7841,234.79770851135254,927.7945709228513
+674,2002-05-16,2,HR4737,Failed,On Agreeing to the Amendment,,198,222,-2.6720598,2.697172,96.1549,18.26696276664734,327.0022819519042
+675,2002-05-16,2,HR4737,Failed,On Motion to Recommit with Instructions,"Personal Responsibility, Work, and Family Promotion Act",207,219,-2.4595432,2.3760357,240.22438,71.81930732727051,582.912077331543
+676,2002-05-16,2,HR4737,Passed,On Passage,"Personal Responsibility, Work, and Family Promotion Act",229,197,2.6693692,-3.011734,32.991608,14.782405066490174,97.21953067779538
+677,2002-05-20,2,HCONRES314,Passed,On Motion to Suspend the Rules and Agree,Recognizing the Members of AMVETS for their Service to the Nation and Supporting the Goals of AMVETS National Charter Day,360,0,0.37990433,-3.0168097,155.86938,19.871191358566286,481.0000701904296
+678,2002-05-20,2,HCONRES165,Passed,On Motion to Suspend the Rules and Agree,Expressing the Sense of the Congress that Continual Research and Education into the Cause and Cure for Fibroid Tumors be Addressed,363,0,0.3830546,-3.0510046,150.84557,21.99102649688721,473.43259048461897
+679,2002-05-20,2,HCONRES309,Passed,On Motion to Suspend the Rules and Agree,Recognizing the Importance of Good Cervical Health and of Detecting Cervical Cancer During its Earliest Stages,361,0,0.3883868,-3.0299559,151.06287,21.95906972885132,450.40720138549807
+680,2002-05-21,2,HR3833,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Dot Kids Implementation and Efficiency Act,406,2,-0.7515645,-2.7135382,79.80633,10.007287430763245,302.6514839172359
+681,2002-05-21,2,HR1877,Passed,"On Motion to Suspend the Rules and Pass, As Amended",Child Sex Crimes Wiretapping Act,396,11,-0.43373945,-2.5292444,38.61501,5.0956462860107425,190.225578689574
+682,2002-05-21,2,HR3375,Passed,On Motion to Suspend the Rules and Pass,Embassy Employee Compensation Act,391,18,0.14349538,1.9630651,71.438034,6.366858851909638,297.62733917236295
+683,2002-05-21,2,HR4626,Passed,"On Motion to Suspend the Rules and Pass, As Amended",Encouraging Work and Supporting Marriage Act,409,1,-0.80765843,-2.1578422,87.05267,10.948185014724732,315.4554786682119
+684,2002-05-21,2,HCONRES405,Passed,"On Motion to Suspend the Rules and Agree, As Amended",Commemorating the Independence of East Timor and expressing the sense of Congress that the President should establish diplomatic relations with East Timor,405,1,-0.3651555,3.0969326,148.00284,19.74007315635681,451.8410621643053
+685,2002-05-21,2,HR3994,Agreed to,On Agreeing to the Amendment,,407,4,0.05617311,2.357635,93.22432,11.138334393501282,362.078204345703
+686,2002-05-21,2,HR3994,Agreed to,On Agreeing to the Amendment,,413,0,0.38983753,-3.036169,149.77734,21.978219652175902,467.571585845947
+687,2002-05-21,2,HR3994,Agreed to,On Agreeing to the Amendment,,412,0,0.37643662,-3.0243402,151.511,20.885444402694702,480.06673278808574
+688,2002-05-21,2,HR3994,Passed,On Passage,Afghanistan Freedom Support Act,390,22,-1.6180347,-2.9197245,20.196169,6.311665177345276,99.27013854980349
+689,2002-05-21,2,HR4514,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Veterans’ Major Medical Facilities Construction Act,411,0,0.36286208,-3.011833,148.98679,21.774413681030275,452.3249809265136
+690,2002-05-21,2,HR4015,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Jobs for Veterans Act,409,0,0.33898437,-3.0096984,152.72443,22.37812876701355,478.9234909057612
+691,2002-05-21,2,HR4085,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Veterans’ and Survivors’ Benefits Expansion Act,410,0,0.3618033,-3.0125797,148.11493,22.144372320175172,448.4025878906247
+692,2002-05-22,2,HRES427,Passed,On Agreeing to the Resolution,"Waiving Points of Order Against the Conference Report on H.R. 3448, Public Health Security and Bioterrorism Preparedness and Response Act",403,19,1.062152,-2.521198,120.75403,27.536281633377076,374.5364822387694
+693,2002-05-22,2,,Passed,On Approving the Journal,,361,57,2.4410303,2.5747414,324.83163,160.16238822937012,586.9192657470703
+694,2002-05-22,2,HRES426,Passed,On Agreeing to the Resolution,"Providing for the consideration of H.R. 3129, Customs Border Security Act",386,32,1.926357,2.9393797,24.445751,10.062595653533936,47.467307567596414
+695,2002-05-22,2,HR3448,Passed,On Agreeing to the Conference Report,Public Health Security and Bioterrorism Preparedness and Response Act,425,1,-0.34846842,3.0781467,152.83945,20.489215755462645,481.1942810058593
+696,2002-05-22,2,HR3717,Passed,"On Motion to Suspend the Rules and Pass, As Amended",Federal Deposit Insurance Reform Act,408,18,-1.6523507,-2.9319339,16.77342,3.3267021775245667,55.32265214920039
+697,2002-05-22,2,HRES424,Passed,On Motion to Suspend the Rules and Agree,Paying Tribute to the Workers at Ground Zero in New York,416,0,0.39253095,-3.048388,155.14,21.877102613449097,485.37100753783994
+698,2002-05-22,2,HR3129,Failed,On Agreeing to the Amendment,,197,231,-3.1071799,2.6854177,68.99518,17.87277994155884,229.57491035461422
+699,2002-05-22,2,HR3129,Passed,On Passage,Customs Border Security Act,327,101,2.127007,3.110896,15.006364,8.88051540851593,22.8461124420166
+700,2002-05-22,2,HRES428,Passed,On Agreeing to the Resolution,"Providing for the consideration of H.R. 4775, 2002 Supplemental Appropriations Act for Further Recovery From and Respnse To Terrorist Attacks on the United States",216,209,2.954623,-3.0425758,157.91011,35.54525623321533,452.600510406494
+701,2002-05-22,2,,Failed,On Motion to Adjourn,,94,300,-2.7584286,1.723307,9.780927,2.678115117549896,89.62669544219906
+702,2002-05-22,2,HR4775,Failed,On Motion that the Committee Rise,2002 Supplemental Appropriations Act for Further Recovery From and Response To Terrorist Attacks on the United States,134,250,-2.7799382,2.11308,8.1476145,5.256381583213806,11.85659499168396
+703,2002-05-23,2,HR4775,Failed,On Motion that the Committee Rise,2002 Supplemental Appropriations Act for Further Recovery From and Response To Terrorist Attacks on the United States,99,289,-1.5437783,0.60693187,66.89767,6.372364521026611,291.9841323852539
+704,2002-05-23,2,HR4775,Passed,Sustain the Ruling of the Chair,2002 Supplemental Appropriations Act for Further Recovery From and Response To Terrorist Attacks on the United States,215,203,2.343987,-2.4265578,236.81367,69.26951465606689,574.7796813964841
+705,2002-05-23,2,HR4775,Failed,On Motion that the Committee Rise,2002 Supplemental Appropriations Act for Further Recovery From and Response To Terrorist Attacks on the United States,144,252,-2.801527,2.1459208,6.7314134,4.542424142360687,9.513855767250059
+706,2002-05-23,2,HR4775,Failed,On Agreeing to the Amendment,,199,213,-2.073218,2.0457292,139.54402,39.144980335235594,398.31278686523416
+707,2002-05-23,2,HR4775,Failed,On Agreeing to the Amendment,,197,216,-2.1548538,2.0028214,143.75455,42.78017206192017,379.3894714355466
+708,2002-05-23,2,HR4775,Failed,On Agreeing to the Amendment,,192,225,-2.9776306,2.639609,10.40044,4.557132077217102,35.76739225387571
+709,2002-05-24,2,,Passed,Adjourn to Time Certain,,211,189,2.7471302,-2.9763775,42.784866,20.074112844467162,86.19533538818357
+710,2002-05-24,2,HRES431,Passed,On Agreeing to the Resolution,"Providing for the Further Consideration of H.R. 4775, 2002 Supplemental Appropriations Act for Further Recovery From and Response To Terrorist Attacks on the United States",213,201,2.9221992,-3.0112536,173.19397,49.61595964431763,459.50314254760724
+711,2002-05-24,2,HR4775,Failed,On Motion to Recommit with Instructions,2002 Supplemental Appropriations Act for Further Recovery From and Response To Terrorist Attacks on the United States,201,215,-2.4246757,2.3408728,243.07571,67.35864944458008,569.0379394531247
+712,2002-05-24,2,HR4775,Passed,On Passage,2002 Supplemental Appropriations Act for Further Recovery From and Response To Terrorist Attacks on the United States,280,138,2.256771,-3.1260383,6.0769734,3.3634345531463623,9.9135427236557
+713,2002-06-04,2,HR4823,Passed,On Motion to Suspend the Rules and Pass,Holocaust Restitution Tax Fairness Act,392,1,-0.8618147,-2.2516005,96.421776,11.201295185089112,329.2200233459471
+714,2002-06-04,2,HR4800,Passed,On Motion to Suspend the Rules and Pass,To repeal the sunset of the Economic Growth and Tax Relief Reconciliation Act of 2001 with respect to the expansion of the adoption credit and adoption assistance programs.,391,1,-0.8456419,-2.2950659,105.916115,12.237059617042542,386.29060058593734
+715,2002-06-05,2,,Passed,On Approving the Journal,,363,40,2.3718681,2.5893714,158.41692,61.812593173980716,313.1347244262692
+716,2002-06-05,2,S1372,Passed,On Agreeing to the Conference Report,Export-Import Bank Reauthorization Act,344,78,-2.234875,-2.6521826,28.641344,12.245717787742615,58.57696914672851
+717,2002-06-05,2,HR4664,Failed,On Agreeing to the Amendment,,165,259,-1.4006412,0.8492546,90.165085,11.550012373924256,333.996862030029
+718,2002-06-05,2,HR4664,Passed,On Passage,Investing in America’s Future Act,397,25,-1.5570364,-3.0183358,20.502104,5.762717604637146,115.54663295745837
+719,2002-06-06,2,,Failed,On Motion to Adjourn,,37,363,-1.6128771,-0.35590893,80.06469,6.228227412700653,314.89919662475586
+720,2002-06-06,2,,Passed,Table the Appeal of the Ruling of the Chair,,254,169,0.87667954,-1.4001356,83.67035,9.526981091499328,331.38952789306626
+721,2002-06-06,2,HRES435,Passed,On Ordering the Previous Question,"Providing for the Consideration of H.R. 2143, Permanent Death Tax Repeal Act",223,201,1.7615001,-2.024705,115.12662,29.329064655303956,346.36211624145466
+722,2002-06-06,2,HRES435,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.R. 2143, Permanent Death Tax Repeal Act",227,195,1.6768845,-2.007412,115.918976,28.012146186828613,371.98582992553713
+723,2002-06-06,2,HR2143,Failed,On Agreeing to the Amendment,,197,231,-2.9938114,3.0846112,157.88004,32.327650737762454,444.55113525390567
+724,2002-06-06,2,HR2143,Failed,On Motion to Recommit with Instructions,Permanent Death Tax Repeal Act,205,223,-2.026473,1.8212228,127.06483,36.76036710739136,364.87139511108387
+725,2002-06-06,2,HR2143,Passed,On Passage,Permanent Death Tax Repeal Act,256,171,0.9300266,-1.418285,76.37156,9.843610167503357,289.03159027099605
+726,2002-06-11,2,HRES438,Passed,On Motion to Suspend the Rules and Agree,Expressing the sense of the House of Representatives that improving men’s health through fitness and the reduction of obesity should be a priority.,400,2,-0.777761,3.0864005,167.56169,26.034697914123537,496.10546874999983
+727,2002-06-11,2,HCONRES394,Passed,On Motion to Suspend the Rules and Agree,Expressing the Sense of the Congress Concerning the 2002 World Cup and Co-Hosts Republic of Korea and Japan,402,1,0.9851133,2.4264438,80.5948,10.171502566337585,305.7416542053218
+728,2002-06-11,2,HCONRES213,Passed,"On Motion to Suspend the Rules and Agree, as Amended","Expressing the Sense of Congress Regarding North Korea Refugees who are Detained in China and Returned to North Korea Where they Face Torture, Imprisonment, and Execution",406,0,0.40415975,-3.031698,151.9752,24.03887720108032,467.17062835693326
+729,2002-06-12,2,HR4,Passed,Markey Motion to Instruct Conferees,"To enhance energy conservation, research and development and to provide for security and diversity in the energy supply for the American people",412,1,0.13656877,-2.4336202,95.881874,12.619091033935547,343.71212615966795
+730,2002-06-12,2,HR4775,Failed,On Motion to Instruct Conferees,2002 Supplemental Appropriations Act for Further Recovery From and Response To Terrorist Attacks on the United States,181,235,-1.3887308,1.0303605,78.43784,11.16578233242035,293.6763504028318
+731,2002-06-12,2,HJRES96,Failed,On Passage,Proposing a Tax Limitation Amendment to the Constitution of the United States,227,178,2.0771346,-2.319927,27.068789,4.771557104587555,194.44274291992144
+732,2002-06-13,2,HRES440,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 4819; Marriage Penalty Relief Provisions Made Permanent,385,22,0.4401398,-2.063245,81.76336,11.304696774482727,307.75249404907214
+733,2002-06-13,2,,Passed,On Approving the Journal,,344,56,2.456993,2.5716586,476.42062,227.43298110961913,854.2360595703122
+734,2002-06-13,2,HR4019,Failed,On Agreeing to the Amendment,,198,213,-1.6377089,1.4552463,94.64691,16.204726123809813,370.907632446289
+735,2002-06-13,2,HR4019,Passed,On Passage,Marriage Penalty Relief Provisions Made Permanent,271,142,0.8951668,-1.6090615,73.13602,9.782772755622863,304.4890586853025
+736,2002-06-17,2,,Passed,On Approving the Journal,,307,45,2.4328818,2.567954,346.62637,141.84857559204102,673.7016616821288
+737,2002-06-17,2,HCONRES415,Passed,On Motion to Suspend the Rules and Agree,Recognizing National Homeownership Month and the importance of homeownership in the United States.,358,0,0.39690486,-3.0243623,157.38412,22.285853242874147,480.09105606079044
+738,2002-06-17,2,HCONRES340,Passed,On Motion to Suspend the Rules and Agree,Supporting the goals and ideals of Meningitis Awareness Month,360,0,0.378897,-3.01468,151.05342,22.93046169281006,450.600756072998
+739,2002-06-18,2,HR327,Passed,On Motion to Agree to Senate Amendments,Small Business Paperwork Relief Act,418,0,0.36950874,-2.9963298,154.05089,21.897954368591307,498.73826217651316
+740,2002-06-18,2,HR4794,Passed,On Motion to Suspend the Rules and Pass,Ronald C. Packard Post Office Designation,418,0,0.37727973,-3.0167925,151.18289,22.304284286499023,462.5685592651367
+741,2002-06-18,2,HR4717,Passed,On Motion to Suspend the Rules and Pass,Jim Fonteno Post Office Designation,415,0,0.40596485,-3.037858,148.71368,20.889024257659912,446.05156631469674
+742,2002-06-19,2,,Passed,On Approving the Journal,,353,42,2.4142864,2.5785115,288.00568,124.55987873077393,530.2645492553709
+743,2002-06-19,2,HR3389,Passed,On Passage,National Sea Grant College Program,407,2,-0.81091255,3.1189454,172.62082,26.289921045303345,496.6744850158691
+744,2002-06-19,2,HR3295,Failed,On Motion to Instruct Conferees,Help America Vote Act,206,210,-1.7210897,1.7365944,111.94911,26.94467339515686,361.59580459594696
+745,2002-06-20,2,,Passed,On Approving the Journal,,352,50,2.4359279,2.5781252,350.37796,164.97713203430175,622.6150909423827
+746,2002-06-20,2,HRES447,Passed,On Agreeing to the Resolution,"Providing for consideration of H.R. 1979; Airport Safety, Security and Air Service Improvement Act",419,0,0.37987804,-3.009676,151.74342,21.22328391075134,436.17693252563436
+747,2002-06-20,2,HR1979,Failed,On Agreeing to the Amendment,,202,223,-2.9952571,2.7910516,41.879387,15.350322437286376,124.57698612213086
+748,2002-06-20,2,HR1979,Agreed to,On Agreeing to the Amendment,,415,12,-1.1391351,-2.122255,68.44617,3.8172167420387266,296.1977050781247
+749,2002-06-20,2,HR1979,Passed,On Passage,"Airport Safety, Security and Air Service Improvement Act",284,143,1.9347199,-2.6515322,6.8917274,4.618530642986298,10.007175445556635
+750,2002-06-21,2,,Passed,On Approving the Journal,,318,44,2.430906,2.578729,290.2909,112.58586044311524,558.4248016357421
+751,2002-06-21,2,HRES451,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 4931; Retirement Savings Security Act,344,51,0.15213491,-1.6156061,73.37722,5.828054404258728,328.4520584106445
+752,2002-06-21,2,HR4931,Failed,On Agreeing to the Amendment,,182,204,-1.7427121,1.5232925,100.712906,22.235701656341554,332.53865051269526
+753,2002-06-21,2,HR4931,Failed,On Motion to Recommit with Instructions,Retirement Savings Security Act,186,192,-2.198546,2.2191234,184.45752,54.17721071243286,460.89790649414
+754,2002-06-21,2,HR4931,Passed,On Passage,Retirement Savings Security Act,308,70,0.42119855,-1.6117182,72.635475,6.82876341342926,310.64343032836905
+755,2002-06-24,2,HR3937,Passed,"On Motion to Suspend the Rules and Pass, as Amended","To revoke a Public Land Order with respect to certain lands erroneously included in the Cibola National Wildlife Refuge, California",375,0,0.36815515,-3.0248854,152.48625,22.318226671218873,465.5145164489745
+756,2002-06-24,2,HR3786,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Glen Canyon National Recreation Area Boundary Revision Act of 2002,374,0,0.40992224,-3.0527709,151.49745,22.378906106948854,468.30736312866185
+757,2002-06-24,2,HR3971,Passed,On Motion to Suspend the Rules and Pass,Independent investigation of Forest Service firefighter deaths that are caused by wildfire entrapment or burnover.,377,0,0.35603192,-3.0105374,154.40924,23.506401014328002,439.4012748718261
+758,2002-06-24,2,HJRES95,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Designating an Official Flag of the Medal of Honor and Providing for Presentation of that Flag to each Recipient of that Medal of Honor,380,0,0.4110814,-3.0507174,154.9034,20.5020761013031,465.38530426025386
+759,2002-06-25,2,,Passed,On Approving the Journal,,371,40,2.407781,2.5803952,291.335,129.92317848205568,567.4346847534179
+760,2002-06-25,2,HR4858,Passed,On Motion to Suspend the Rules and Pass,To Improve access to physicians in medically underserved areas,407,7,0.7682869,2.1320534,75.17965,6.655062997341156,309.6459762573242
+761,2002-06-25,2,HR4679,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Lifetime Consequences for Sex Offenders Act of 2002,409,3,-0.37723273,-2.1418803,83.23703,9.376367688179016,331.6075347900386
+762,2002-06-25,2,HR4623,Passed,"On Motion to Suspend the Rules and Pass, As Amended",Child Obscenity and Pornography Prevention Act of 2002,413,8,-1.1684953,-2.273522,59.299187,6.196963167190551,249.71527748107906
+763,2002-06-25,2,HR4846,Passed,"On motion to Suspend the Rules and Pass, as Amended",Silver Eagle Coin Continuation Act of 2002,417,1,1.4369079,2.3573904,96.97375,11.495841836929321,330.4194030761717
+764,2002-06-26,2,HR4598,Passed,On Passage,Homeland Security Information Sharing Act,422,2,-0.14664026,-2.248544,92.68077,10.852152776718139,341.297080993652
+765,2002-06-26,2,HR4477,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Sex Tourism Prohibition Improvement Act,418,8,-1.1475177,-2.308372,61.538532,5.9304775357246395,246.8039592742919
+766,2002-06-26,2,HR4070,Passed,"ON Motion to Suspend the Rules and Pass, as Amended",Social Security Program Protection Act,425,0,0.39877644,-3.0310917,154.94307,21.974697494506835,448.63922805786075
+767,2002-06-26,2,,Passed,On Approving the Journal,,369,41,2.387401,2.5779867,200.27556,84.91768321990966,371.78994522094723
+768,2002-06-26,2,,Failed,On Motion to Adjourn,,45,378,-1.4902416,-0.45077518,75.911285,5.416048574447632,280.90712127685543
+769,2002-06-26,2,,Failed,On Motion to Adjourn,,40,384,-2.3313773,0.44597054,38.805676,2.770366632938385,237.70836219787566
+770,2002-06-26,2,HRES450,Passed,On Agreeing to the Resolution,Relating to consideration of the Senate Amendment to H.R. 3009; Andean Trade Preference Act,216,215,2.642095,-2.775672,10.256502,6.967021286487579,14.47039701938628
+771,2002-06-26,2,HR3764,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Securities and Exchange Commission Authorization Act,422,4,-0.74202776,-2.8834004,42.244507,5.3988318800926205,270.01502456664997
+772,2002-06-26,2,HR3180,Passed,On Motion to Suspend the Rules and Pass,To Consent to Certain Amendments to the New Hampshire-Vermont Interstate School Compact,425,0,0.37321684,-3.0123208,149.16422,22.25930371284485,463.5777244567863
+773,2002-06-27,2,,Passed,On Approving the Journal,,348,59,2.4454556,2.5946555,256.6878,104.3476188659668,517.60354309082
+774,2002-06-27,2,,Failed,On Motion to Adjourn,,70,332,-1.4550627,-0.08202229,61.94496,1.8997864425182343,257.5036979675289
+775,2002-06-27,2,HR5010,Failed,On Agreeing to the Amendment,,112,314,3.020872,2.264549,18.752592,9.586399793624878,28.834057807922353
+776,2002-06-27,2,HR5010,Passed,On Passage,Department of Defense Appropriations for Fiscal Year 2003,413,18,1.6525538,3.0416508,26.012169,7.599340152740479,53.801256847381524
+777,2002-06-27,2,HCONRES424,Passed,On Motion to Suspend the Rules and Agree,Commending the Patriotic Contibutions of the Roofing Professionals Involved in the Rebuilding of the Pentagon,428,0,0.40984595,-3.0441518,153.60689,21.41135334968567,453.07970352172833
+778,2002-06-27,2,HR3034,Passed,On Motion to Suspend the Rules and Pass,Frank Sinatra Post Office Building,427,0,0.36084643,-3.0016675,155.42485,23.119306087493896,456.30828247070303
+779,2002-06-27,2,HRES459,Passed,On Motion to Suspend the Rules and Agree,"Expressing the Sense of the House of Representatives that Newdow v. U.S. Congress was Erroneously Decided, and for other purposes",416,3,-0.19115725,-2.2125788,78.30361,9.226387667655946,297.5549331665036
+780,2002-06-27,2,HRES462,Passed,On Ordering the Previous Question,Providing for consideration of H.R. 5011; Military Construction Appropriations for Fiscal Year 2003,221,210,2.3686287,-2.4511766,245.3482,73.6798677444458,587.7495925903319
+781,2002-06-27,2,HRES462,Agreed to,On Agreeing to the Amendment,,219,211,2.3855171,-2.4674077,239.8457,75.3885892868042,575.4950027465819
+782,2002-06-27,2,HRES462,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 5011; Military Construction Appropriations for Fiscal Year 2003,269,160,0.877014,-1.4517071,68.040474,7.2679061651229855,315.40852203369093
+783,2002-06-27,2,HR5011,Passed,On Passage,Military Construction Appropriations for Fiscal Year 2003,426,1,-0.37688643,3.1124246,146.84305,20.50524730682373,440.5415222167965
+784,2002-06-27,2,S2578,Failed,Motion to Commit with Instructions,To amend title 31 of the United States Code to increase the public debt limit.,207,222,-2.9648702,2.799366,64.47919,25.88567442893982,175.9232948303217
+785,2002-06-27,2,S2578,Passed,On Passage,To amend title 31 of the United States Code to increase the public debt limit.,215,214,2.9374628,-3.097911,171.97357,38.97187719345093,468.7655075073233
+786,2002-06-27,2,HRES465,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 4954; Medicare Modernization and Prescription Drug Act of 2002,218,213,2.9788566,-3.0052118,161.46486,45.984215927124026,409.0066581726073
+787,2002-06-28,2,HR4954,Failed,On Motion to Recommit with Instructions,Medicare Modernization and Prescription Drug Act of 2002,204,223,-2.0210443,1.8424366,135.9695,37.84896068572998,368.31442871093714
+788,2002-06-28,2,HR4954,Passed,On Passage,Medicare Modernization and Prescription Drug Act of 2002,221,208,2.7403262,-3.0417247,36.937126,15.853696298599242,86.97679157257078
+789,2002-07-08,2,HR4609,Passed,On Motion to Suspend the Rules and Pass,Rathdrum Prairie Spokane Valley Aquifer Study Act,340,9,-1.1135324,2.8969111,154.09569,35.88548727035523,412.26724548339837
+790,2002-07-08,2,HR2643,Passed,"On motion to suspend the rules and pass, as amended",Fort Clatsop National Memorial Expansion Act,331,18,-1.986346,-2.6261594,40.76702,15.727488660812378,89.39290409088133
+791,2002-07-09,2,HR3295,Passed,On Motion to Instruct Conferees,Help America Vote Act,410,2,-0.81049025,3.0939674,164.54314,23.808969831466676,486.3625366210929
+792,2002-07-09,2,HR5063,Passed,On Motion to Suspend the Rules and Pass,Armed Forces Tax Fairness Act,413,0,0.4126554,-3.0513422,148.29436,21.237614154815674,461.62684936523374
+793,2002-07-09,2,HRES393,Passed,"On Motion to Suspend the Rules and Agree, As Amended",Concerning the Rise in Anti-Semitism in Europe,412,0,0.38747522,-3.0532234,147.96698,19.915904474258422,461.95218658447254
+794,2002-07-10,2,HR4635,Agreed to,On Agreeing to the Amendment,,250,175,1.8932407,-2.5904033,44.683315,4.746794807910919,251.24561614990216
+795,2002-07-10,2,HR4635,Failed,On Agreeing to the Amendment,,169,256,0.98590976,-0.4692051,47.892994,0.9550966277718544,267.7661849975584
+796,2002-07-10,2,HR4635,Failed,On Agreeing to the Amendment,,49,376,1.4889688,0.68756366,82.17468,5.873004937171936,310.87788238525366
+797,2002-07-10,2,HR4635,Agreed to,On Agreeing to the Amendment,,251,172,0.91992784,-1.215819,59.132442,3.666978543996811,276.3779083251951
+798,2002-07-10,2,HR4635,Passed,On Passage,Arming Pilots Against Terrorism Act,310,113,1.5030153,-2.4814181,34.21858,3.5569485306739805,205.4349021911621
+799,2002-07-11,2,HR2733,Passed,On Passage,Enterprise Integration Act,397,22,-1.093352,2.7017238,128.745,32.25908527374268,382.53947143554683
+800,2002-07-11,2,HR2486,Passed,On Passage,Inland Flood Forecasting and Warning System Act,413,3,0.445659,2.3238845,80.59067,9.986581420898437,308.16963424682547
+801,2002-07-12,2,HR4687,Passed,On Passage,National Construction Safety Team Act,338,23,-0.36978757,2.073098,83.86449,9.910557556152344,365.8927688598632
+802,2002-07-15,2,HR3482,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Cyber Security Enhancement Act,385,3,-1.0549593,-2.4777398,74.69035,9.052493691444397,290.8131149291991
+803,2002-07-15,2,HR4755,Passed,On Motion to Suspend the Rules and Pass,Clarence Miller Post Office Building Designation Act,389,0,0.3917517,-3.0038497,150.32474,20.64794487953186,466.56273040771464
+804,2002-07-15,2,HR3479,Failed,"On Motion to Suspend the Rules and Pass, as Amended",National Aviation Capacity Expansion Act,247,143,-1.6856855,2.7748084,21.231327,0.3942158974707127,169.78369750976523
+805,2002-07-16,2,HR5118,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Corporate Fraud Accountability Act of 2002,391,28,1.8046341,3.0363533,28.66407,10.722730493545532,53.98775949478148
+806,2002-07-16,2,HRES482,Passed,On Motion to Suspend the Rules and Agree,Honoring Ted Williams and extending the condolences of the House of Representatives on his death.,418,0,0.37666547,-3.0278158,155.17111,20.465301513671875,462.7575187683105
+807,2002-07-16,2,HRES452,Passed,On Motion to Suspend the Rules and Agree,Congratulating the Detroit Red Wings for winning the 2002 Stanley Cup Championship,410,0,0.38459304,-3.0140848,153.53142,20.63301110267639,488.7831207275389
+808,2002-07-16,2,HRES483,Passed,On Agreeing to the Resolution,Providing for the consideration of H.R. 5093; Department of Interior Appropriations for Fiscal Year 2003,322,101,1.8334818,3.1075673,3.2146504,0.8982352912425995,6.893218505382534
+809,2002-07-16,2,HR4866,Failed,"On Motion to Suspend the Rules and Pass, as Amended",Fed Up Higher Education Technical Amendments of 2002,246,177,1.1959798,-1.6808481,99.90772,16.244384670257567,381.27656326293896
+810,2002-07-16,2,HCONRES395,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Celebrating the 50th anniversary of the constitution of the Commonwealth of Puerto Rico.,389,32,0.5546542,-3.0029798,4.84339,1.873943343758583,13.13626422882079
+811,2002-07-16,2,HR5093,Failed,On Agreeing to the Amendment,,84,332,2.1459649,-0.85071135,53.690823,7.407371771335602,261.1455741882323
+812,2002-07-16,2,HR5093,Passed,On motion to limit debate,Department of Interior Appropriations for Fiscal Year 2003,324,79,-1.9942352,-2.8275373,6.8360386,2.92747757434845,12.585984373092638
+813,2002-07-16,2,HR5093,Failed,On Agreeing to the Amendment,,85,337,-2.977238,-2.0848117,16.341692,4.676701378822327,89.68282146453853
+814,2002-07-16,2,,Failed,On Motion that the Committee Rise,,209,210,-3.1024802,2.9334059,162.05577,39.50234584808349,429.4596221923825
+815,2002-07-17,2,,Passed,On Approving the Journal,,361,50,2.4284196,2.5779872,283.0815,124.72092037200927,534.5166595458984
+816,2002-07-17,2,HR5093,Agreed to,On Agreeing to the Amendment,,234,192,-1.1022475,1.3088617,57.362293,6.041419291496277,253.7221290588378
+817,2002-07-17,2,HR5093,Agreed to,On Agreeing to the Amendment,,281,144,-0.45338497,1.1990598,55.039494,1.4183648198843002,309.2392761230466
+818,2002-07-17,2,HR5093,Agreed to,On Agreeing to the Amendment,,273,151,-0.18651153,0.9375469,60.29473,1.1534374862909318,259.29759826660137
+819,2002-07-17,2,HR3763,Failed,On Motion to Instruct Conferees,Corporate and Auditing Accountability and Responsibility Act,207,218,-1.8774688,1.8640609,123.865776,33.33601236343384,383.25668029785135
+820,2002-07-17,2,HR5093,Failed,On Agreeing to the Amendment,,123,300,2.2306826,-1.3787949,58.384228,10.565039229393005,289.3210327148436
+821,2002-07-17,2,HR5093,Agreed to,On Agreeing to the Amendment,,252,172,-1.5759335,1.9394581,26.2772,2.045827788114548,187.66369705200185
+822,2002-07-17,2,HR5093,Failed,On Agreeing to the Amendment,,201,223,-1.1444906,1.0204264,65.13961,5.044896280765533,303.9893089294433
+823,2002-07-17,2,HR5093,Failed,On Agreeing to the Amendment,,153,269,1.2387103,-0.6811724,74.53097,6.081005549430848,301.8248077392577
+824,2002-07-17,2,HR5093,Passed,On Passage,Department of Interior Appropriations for Fiscal Year 2003,377,46,-1.8867381,-2.9006405,14.265573,7.4712553977966305,24.383186960220335
+825,2002-07-18,2,HRES489,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 5121; Legislative Branch Appropriations for Fiscal Year 2003,219,206,2.3978384,-2.4775798,234.62175,68.25756320953369,556.4062820434566
+826,2002-07-18,2,HR5121,Failed,On Agreeing to the Amendment,,206,213,-3.0351605,2.9156353,126.24295,25.669435930252074,424.1476150512694
+827,2002-07-18,2,HR5121,Passed,On Passage,Legislative Branch Appropriations for Fiscal Year 2003,365,49,-1.9933646,-2.7095566,14.643516,6.885551702976227,27.782572841644253
+828,2002-07-18,2,HRES488,Passed,On Ordering the Previous Question,"Providing for the consideration of H.R. 5120, Treasury and General Appropriations Act, 2003",258,156,1.0954523,1.4469781,54.90656,0.613756139576435,262.6791778564451
+829,2002-07-18,2,HRES488,Passed,On Agreeing to the Resolution,"Providing for the consideration of H.R. 5120, Treasury and General Appropriations Act, 2003",224,188,3.010644,-2.944623,37.182957,9.682167434692383,139.62151679992667
+830,2002-07-22,2,HCONRES439,Passed,On Motion to Suspend the Rules and Agree,Honoring Corinne “Lindy” Clairborne Boggs on the Occasion of the 25th Anniversary of the Founding of the Congressional Women’s Caucus,378,0,0.36075628,-2.999396,155.28067,21.703408765792847,486.5202720642088
+831,2002-07-22,2,HRES492,Passed,On Motion to Suspend the Rules and Agree,"Expressing gratitude for the 10-month World Trade Center cleanup and recovery efforts at the Fresh Kills Landfill on Staten Island, New York, following the terrorist attacks of September 11, 2001",375,0,0.37651613,-3.0167744,158.09586,24.718005180358887,474.15513992309565
+832,2002-07-23,2,,Passed,On Approving the Journal,,339,45,2.4323812,2.574572,353.81546,155.57282218933105,675.9831146240234
+833,2002-07-23,2,HR3479,Passed,"On Motion to Suspend the Rules and Pass, as Amended",National Aviation Capacity Expansion Act,343,87,-2.228343,-2.5792813,34.02502,6.5956023812294005,122.96705608367876
+834,2002-07-23,2,HR4775,Passed,On Agreeing to the Conference Report,2002 Supplemental Appropriations Act for Further Recovery From and Response To Terrorist Attacks on the United States,397,32,-1.4495443,-2.8393428,6.9596705,2.4361606895923615,15.256343054771422
+835,2002-07-23,2,HJRES101,Failed,On Passage,Disapproving the Extension of the Waiver Authority Contained in Section 402(c) of the Trade Act of 1974 with Respect to Vietnam,91,338,2.9860885,-1.7164904,20.520287,0.9019299104809761,175.72544403076168
+836,2002-07-23,2,HR5120,Failed,On Agreeing to the Amendment,,182,247,2.937562,-2.6977007,12.1344385,1.6020808577537538,57.71130933761588
+837,2002-07-23,2,HR5120,Agreed to,On Agreeing to the Amendment,,262,167,-0.4797193,0.971103,59.54583,1.6169660359621048,246.8464416503903
+838,2002-07-23,2,HR5120,Agreed to,On Agreeing to the Amendment,,251,177,-2.4530249,2.8506753,16.747265,2.0460977971553804,121.86547107696532
+839,2002-07-23,2,HR5120,Failed,On Agreeing to the Amendment,,204,226,-2.6573462,2.47141,3.0912666,2.144050031900406,4.224339723587036
+840,2002-07-23,2,HR3609,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Pipeline Infrastructure Protection to Enhance Security and Safety Act,423,4,-1.4811165,-2.5019925,90.567184,10.717014241218568,337.4889450073242
+841,2002-07-24,2,HR4547,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Cost of War Against Terrorism Authorization Act of 2002,413,3,-0.29213813,-2.2079668,83.29212,10.483852458000182,319.54383697509763
+842,2002-07-24,2,HR5120,Agreed to,On Agreeing to the Amendment,,261,166,-0.70088667,1.1706338,86.09636,6.03106038570404,375.33475723266525
+843,2002-07-24,2,HR5120,Failed,On Agreeing to the Amendment,,165,265,1.0201056,-0.5250063,53.558468,1.5094277113676071,265.9442573547363
+844,2002-07-24,2,HR5120,Failed,On Agreeing to the Amendment,,147,282,1.0711454,-0.4512239,63.905155,2.5645871222019196,319.75325393676724
+845,2002-07-24,2,HR5120,Agreed to,On Agreeing to the Amendment,,308,121,-0.6159998,1.5395745,36.336533,2.128466731309891,200.5348957061766
+846,2002-07-24,2,HRES498,Passed,On Agreeing to the Resolution,Providing for consideration of the bill H.R. 4965; Partial-Birth Abortion Ban Act,248,177,0.93911946,-1.3553562,76.51646,7.609326243400574,342.16595306396465
+847,2002-07-24,2,HR5120,Passed,On Passage,"Treasury and General Government Appropriations Act, 2003",308,121,-2.3833482,-2.5849998,76.96005,9.699636387825013,317.64390716552725
+848,2002-07-24,2,HR4965,Failed,On Motion to Recommit with Instructions,Partial-Birth Abortion Ban Act,187,241,-1.1744807,0.87728065,61.062008,5.333799088001252,264.4132286071777
+849,2002-07-24,2,HR4965,Passed,On Passage,Partial-Birth Abortion Ban Act,274,151,0.71866995,-1.3175511,73.03619,5.987376010417938,305.73999938964835
+850,2002-07-24,2,HCONRES188,Passed,"On Motion to Suspend the Rules and Agree, As Amended",Expressing the sense of Congress that the Government of the People’s Republic of China should cease its persecution of Falun Gong practitioners,420,0,0.40792438,-3.05079,153.67195,22.32669243812561,459.7127525329584
+851,2002-07-24,2,HRES495,Failed,On motion to postpone consideration,"In the matter of James A. Traficant, Jr.",146,285,2.6669421,-1.2336665,11.939526,0.27407616227865217,121.91881523132264
+852,2002-07-24,2,HRES495,Passed,On Agreeing to the Resolution,"In the matter of James A. Traficant, Jr.",420,1,-1.1052173,-2.2092974,99.589485,12.303250241279603,360.50810165405267
+853,2002-07-25,2,HR4628,Agreed to,On Agreeing to the Amendment,,219,188,-2.7373207,2.7810888,11.114054,6.71843169927597,21.87990260124206
+854,2002-07-25,2,HR3763,Passed,On Agreeing to the Conference Report,Corporate and Auditing Accountability and Responsibility Act,423,3,-0.063663185,2.463518,97.260284,13.68220100402832,332.1795211791991
+855,2002-07-25,2,HR4546,Passed,On Motion to Instruct Conferees,Department of Defense Authorization Act for FY 2003,419,2,0.85926753,2.3661356,76.95058,9.627280640602113,291.30779876708914
+856,2002-07-25,2,HR4546,Passed,On Closing Portions of the Conference,Department of Defense Authorization Act for FY 2003,420,3,-0.2452339,-2.1647093,84.705605,10.937450051307678,311.06446609497
+857,2002-07-25,2,HR4946,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Improving Access to Long-Term Care Act,362,61,0.18429987,-1.6055917,69.712326,4.747723996639252,298.15822601318354
+858,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,175,248,-1.5400792,1.0563029,77.9169,12.485043263435363,304.1074615478515
+859,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,165,261,-2.928072,2.3253238,6.277393,4.048202872276306,9.486198306083676
+860,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,177,245,-2.8787663,2.4077675,9.571239,5.585576236248016,22.22243075370787
+861,2002-07-26,2,HR5005,Agreed to,On Agreeing to the Amendment,,240,188,2.6346903,-3.049601,15.366371,6.65680193901062,37.7046549797058
+862,2002-07-26,2,HR5005,Agreed to,On Agreeing to the Amendment,,229,201,2.6027493,-2.9093127,26.665264,15.346721577644349,45.83064947128294
+863,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,208,222,-2.8738158,2.690376,23.895496,13.530430483818055,45.15672674179071
+864,2002-07-26,2,HR5005,Agreed to,On Agreeing to the Amendment,,227,202,1.6342404,-1.897844,107.49629,27.56100387573242,324.42666931152337
+865,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,214,215,-1.8824197,1.9141899,123.94725,35.66021890640259,359.0731315612792
+866,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,208,220,-2.1483135,1.9818599,153.8637,45.50486450195312,405.37552032470643
+867,2002-07-26,2,HR5005,Agreed to,On Agreeing to the Amendment,,222,204,2.432571,-2.6417959,66.68351,17.42659487724304,255.04002761840724
+868,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,211,217,-0.8635173,0.79993933,69.82872,5.8208842992782595,258.3579795837395
+869,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,188,240,-3.0044777,2.5455513,19.270271,10.16837203502655,44.76258716583251
+870,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,195,233,2.7368205,-2.9666238,28.45226,4.1483903408050535,156.19826164245603
+871,2002-07-26,2,HR5005,Failed,On Agreeing to the Amendment,,118,309,1.0919557,-0.1286972,73.21811,2.1420556962490083,324.14722061157175
+872,2002-07-26,2,HR5005,Passed,On Motion to Recommit with Instructions,Homeland Security Act,318,110,-0.5231196,1.5561496,38.91964,2.127694070339203,201.30636138916012
+873,2002-07-26,2,HR5005,Passed,On Passage,Homeland Security Act,295,132,2.3631172,2.9939497,20.319887,12.609443616867065,30.912603187561032
+874,2002-07-27,2,HRES507,Passed,On Agreeing to the Resolution,Waiving a requirement of clause 6(a) of rule XIII with respect to consideration of certain resolutions reported from the Committee on Rules,217,207,2.7373013,-3.0424302,45.870827,15.758965492248535,114.59099502563475
+875,2002-07-27,2,HRES509,Passed,On Agreeing to the Resolution,"Waiving Points of Order Against the Conference Report on H.R. 2002, Trade Act of 2002",220,200,2.6618316,-3.0304828,25.222195,11.699181866645812,48.80832881927487
+876,2002-07-27,2,HR3009,Passed,On Agreeing to the Conference Report,Andean Trade Preference Act,215,212,2.5857682,-2.8234942,5.614944,3.6416031420230865,12.962411737442
+877,2002-09-04,2,HR5203,Failed,"On Motion to Suspend the Rules and Pass, As Amended",Education Savings and School Excellence Permanence Act of 2002,213,188,1.2850114,-1.484338,81.27586,12.58911862373352,302.96653442382785
+878,2002-09-04,2,HR3287,Passed,On Motion to Suspend the Rules and Pass,"To redesignate the facility of the United States Postal Service located at 900 Brentwood Road, NE, in Washington D.C. as the Joseph Curseen, Jr. and Thomas Morris, Jr. Processing and Distribution Center",401,0,0.3697157,-3.021059,154.66988,21.077429389953615,472.22480010986317
+879,2002-09-05,2,HR4727,Passed,On Passage,Dam Safety and Security Act,401,2,-0.8112571,3.1178439,167.07243,26.369328260421753,470.97511444091674
+880,2002-09-05,2,HRES94,Passed,On Motion to Suspend the Rules and Agree,Honoring the contributions of Venus and Serena Williams,398,0,0.38386685,-3.0210054,155.53201,21.927895259857177,486.4380676269528
+881,2002-09-09,2,HR5157,Passed,On Motion to Suspend the Rules and Pass,Federal Transit Formula Grants Flexibility,350,0,0.39816713,-3.0196118,149.94731,22.263280296325686,462.5483169555664
+882,2002-09-09,2,HCONRES401,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Recognizing the Heroism and Courage Displayed by Airline Flight Attendants Each Day,351,0,0.38651916,-3.0175438,154.39064,20.993432664871214,475.0872001647945
+883,2002-09-09,2,HRES516,Passed,On Motion to Suspend the Rules and Agree,"Congratulating the Valley Sports American Little League Baseball Team from Louisville, Kentucky, for their Outstanding Performance in the Little League World Series",344,0,0.37100765,-3.0042212,152.48576,21.410324478149413,445.561131286621
+884,2002-09-10,2,HR5010,Passed,On Closing Portions of the Conference,Department of Defense Appropriations for Fiscal Year 2003,365,0,0.40874714,-3.033909,151.93367,22.669111347198488,476.5244750976561
+885,2002-09-10,2,HR3210,Passed,On Motion to Instruct Conferees,Trade Act of 2002,373,0,0.40582147,-3.046158,152.9721,24.46733388900757,470.6431495666498
+886,2002-09-10,2,,Passed,On Approving the Journal,,335,35,2.4209166,2.5539968,421.05502,172.8515193939209,829.7609588623045
+887,2002-09-10,2,HRES513,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Recognizing the Historical Significance and Timeliness of the United States-Ireland Business Summit,372,0,0.44412768,-3.0567193,151.20251,21.348603200912475,452.8538169860838
+888,2002-09-10,2,HR3880,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Temporary Waiver for New York Areas for Clean Air Transportation Conformity and Metropolitan Planning Requirements,377,0,0.38418522,-3.013705,151.2127,22.04364194869995,467.3503234863279
+889,2002-09-10,2,HCONRES320,Passed,"On Motion to Suspend the Rules and Agree, As Amended",Expressing the sense of the Congress regarding Scleroderma,369,2,-0.79876727,3.076601,172.34544,26.21269545555115,488.94590225219713
+890,2002-09-11,2,HCONRES464,Passed,On Agreeing to the Resolution,"Expressing the Sense of the Congress on the Anniversary of the Terrorist Attacks Launched Against the United States on September 11, 2001",370,0,0.17894997,-3.070934,148.15894,22.460625648498535,439.21162490844694
+891,2002-09-12,2,HR1646,Passed,On Motion to Go to Conference,Department of State Authorization for FY 2002 and 2003,382,0,0.3623339,-3.0267437,152.85934,21.235324382781982,471.4727165222168
+892,2002-09-12,2,,Passed,On Approving the Journal,,342,42,2.4318364,2.5580726,453.34207,190.07647972106935,888.2924438476559
+893,2002-09-12,2,HRES521,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.R. 5193, Back to School Tax Relief Act",208,201,2.2905781,-2.2573295,220.74901,62.3158200263977,553.2515747070313
+894,2002-09-17,2,HCONRES435,Passed,On Motion to Suspend the Rules and Agree,Expressing the Sense of the Congress that the Therapeutic Technique Known as Rebirthing is a Dangerous and Harmful Practice and Should be Prohibited,397,0,0.36586183,-3.0212417,148.79831,22.664181423187255,427.8098014831541
+895,2002-09-17,2,HR4102,Passed,On Motion to Suspend the Rules and Pass,Rollan D. Melton Post Office Building,398,0,0.37245554,-3.0183551,154.63484,22.163798809051514,452.31330490112254
+896,2002-09-17,2,HR5333,Passed,On Motion to Suspend the Rules and Pass,Joseph D. Early Post Office Building,397,0,0.36862564,-3.015641,154.08533,21.824869537353514,450.15072860717765
+897,2002-09-18,2,HRES528,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.R. 1701, Consumer Rental Purchase Agreement Act",238,178,1.1878791,-1.6420218,92.40992,14.935165071487427,360.6823860168451
+898,2002-09-18,2,HR1701,Failed,On Agreeing to the Amendment,,184,232,-1.4908221,1.1332457,85.65735,12.300513672828675,324.64333953857414
+899,2002-09-18,2,HR1701,Failed,On Agreeing to the Amendment,,157,255,-1.4288392,0.8665666,85.43448,10.222736525535584,339.08256683349606
+900,2002-09-18,2,HR1701,Failed,On Motion to Recommit with Instructions,Consumer Rental Purchase Agreement Act,190,227,-3.0190048,2.6195345,49.97524,4.312104070186615,245.8521049499506
+901,2002-09-18,2,HR1701,Passed,On Passage,Consumer Rental Purchase Agreement Act,215,201,2.6821432,3.0162652,41.1989,2.868052053451538,208.99278640747045
+902,2002-09-19,2,,Passed,On Approving the Journal,,329,53,2.4411879,2.565823,343.0136,147.90561141967774,673.0259170532223
+903,2002-09-19,2,HRES527,Passed,On Ordering the Previous Question,"Providing for consideration of H.Res. 524; sense of the House that Congress should complete action on the Permanent Death Tax Repeal Act, and H.Res. 525 sense of the House that Congress should complete action on legislation extendingand strengthing the successful 1996 welfare reforms.",214,202,2.9388595,-3.0096076,174.3784,49.80668888092041,474.44916381835924
+904,2002-09-19,2,HRES527,Passed,On Agreeing to the Resolution,"Providing for consideration of H.Res. 524; sense of the House that Congress should complete action on the Permanent Death Tax Repeal Act, and H.Res. 525 sense of the House that Congress should complete action on legislation extendingand strengthing the successful 1996 welfare reforms.",213,200,1.9973975,-2.1441097,136.3438,38.52216367721557,371.28877487182615
+905,2002-09-19,2,HRES523,Passed,On Motion to Suspend the Rules and Agree,Recognizing the Contributions of Historically Black Colleges and Universities,413,0,0.38392624,-3.0421257,153.02553,20.74202651977539,467.48849868774414
+906,2002-09-19,2,HRES525,Passed,On Agreeing to the Resolution,"Expressing the sense of the House of Representatives that the 107th Congress should complete action on and present to the President, before September 30, 2002, legislation extending and strengthing the successful 1996 welfare reforms.",280,123,2.0270987,-2.8695676,12.811331,7.732793176174164,19.38861379623413
+907,2002-09-19,2,HRES524,Passed,On Agreeing to the Resolution,Expressing the sense of the House that Congress should complete action on the Permanent Death Tax Repeal Act of 2002,242,158,0.90105206,-1.4322714,83.714745,10.916902542114258,333.98197097778313
+908,2002-09-19,2,HCONRES337,Passed,On Motion to Suspend the Rules and Agree,"Recognizing the Teams and Players of the Negro Baseball Leagues for their Achievements, Dedication, Sacrifices, and Contributions to Baseball and the Nation",394,0,0.3773527,-3.0205426,154.8312,20.634488439559938,472.2191352844237
+909,2002-09-19,2,HR3295,Passed,On Motion to Instruct Conferees,Help America Vote Act,365,26,0.2035669,1.7507085,82.68429,7.131617331504822,317.5446632385254
+910,2002-09-24,2,HCONRES472,Passed,On Motion to Suspend the Rules and Agree,Recognizing the 100th Anniversary of the 4-H Youth Development Program,407,0,0.3831273,-3.0178287,154.33911,21.908766269683838,477.20820770263646
+911,2002-09-24,2,HCONRES301,Passed,On Motion to Suspend the Rules and Agree,"Expressing the Sense of Congress regarding American Gold Star Mothers, Inc., Blue Star Mothers of America, Inc., the Service Flag, and the Service Lapel Button",411,0,0.3997566,-3.0238643,153.2186,24.602657747268676,453.37255935668816
+912,2002-09-24,2,HRES533,Passed,On Motion to Suspend the Rules and Agree,"Welcoming Madame Chen Wu Sue-jen, the First Lady of Taiwan, to Washington, D.C.",410,0,0.3938222,-3.0359552,149.88594,20.79870824813843,473.95500640869085
+913,2002-09-25,2,,Passed,On Approving the Journal,,366,48,2.4016385,2.587478,207.63454,91.34616355895996,398.71587142944327
+914,2002-09-25,2,HR2982,Passed,"On Motion to Suspend the Rules and Pass, As Amended",Victims of Terrorist Attacks Memorial Act,418,0,0.18062097,-3.0714498,152.54231,23.424773073196413,462.4626182556148
+915,2002-09-25,2,HCONRES297,Passed,On Motion to Suspend the Rules and Agree,Recognizing the historical significance of 100 years of Korean immigration to the United States,417,0,0.17350358,-3.0702417,147.79924,22.70009183883667,428.65371551513607
+916,2002-09-25,2,HRES546,Passed,On Agreeing to the Resolution,"Providing for Consideration of H.R. 4691, Abortion Non-Discrimination Act",229,194,0.97658175,-1.1756353,62.14924,6.3502100825309755,232.69028739929186
+917,2002-09-25,2,HR4691,Failed,On Motion to Recommit with Instructions,Abortion Non-Discrimination Act,191,230,-1.1730125,0.9440276,64.090065,5.845267653465271,296.1168785095212
+918,2002-09-25,2,HR4691,Passed,On Passage,Abortion Non-Discrimination Act,229,189,0.7996368,-1.0001991,71.19781,4.916427159309388,295.95246582031217
+919,2002-09-25,2,HRES547,Passed,On Ordering the Previous Question,"Providing for consideration of H.Res 540 regarding completion of Congressional action on H.R. 3762, Pension Security; H. Res. 544, regarding permanency of pension reform provisions; and H.Res. 543, regarding completion of Congressionalaction on H.R. 4019, making marriage tax relief permanent.",217,200,2.105629,-2.2498126,171.34155,53.46785516738892,419.76676788330036
+920,2002-09-25,2,HRES540,Passed,On Agreeing to the Resolution,"Sense of the House that Congress should complete action on H.R. 3762, Pension Security Act of 2002",258,152,2.363153,-3.016778,30.904667,12.733576989173889,86.78539314270007
+921,2002-09-25,2,HRES544,Passed,On Agreeing to the Resolution,Expressing the Sense of the House of Representatives on Permanency of Pension Reform Provisions,291,118,0.8637818,-1.715942,79.66482,11.730330610275269,311.10509033203095
+922,2002-09-26,2,HRES552,Passed,On Ordering the Previous Question,Waiving points of order against the conference report to accompany H.R. 2215; Department of Justice Authorization,208,199,1.8695489,-1.8753024,130.82018,36.05837507247925,383.98805084228513
+923,2002-09-26,2,,Passed,On Approving the Journal,,346,58,2.450455,2.5953066,314.61407,152.09811058044434,561.0589660644531
+924,2002-09-26,2,HR3295,Passed,On Motion to Instruct Conferees,Help America Vote Act,385,16,-0.059438888,2.0462422,80.378006,8.369907999038697,308.38621597290035
+925,2002-09-26,2,HRES553,Passed,On Agreeing to the Resolution,"Providing for consideration of H.R. 4600; Help Efficient, Accessible, Low Cost, Timely Healthcare Act of 2002",221,197,2.6781871,-2.9743392,46.3787,21.40901050567627,97.10011634826645
+926,2002-09-26,2,HR4600,Failed,On Motion to Recommit with Instructions,"Help Efficient, Accessible, Low Cost, Timely Healthcare Act of 2002",193,225,-3.0194948,2.7156515,40.23899,10.222113919258117,134.42463302612282
+927,2002-09-26,2,HR4600,Passed,On Passage,"Help Efficient, Accessible, Low Cost, Timely Healthcare Act of 2002",217,203,2.6087985,-2.7927055,10.442765,6.5895885825157166,21.718556404113738
+928,2002-09-26,2,HR2215,Passed,On Agreeing to the Conference Report,"To authorize appropriations for the Department of Justice for fiscal year 2002, and for other purposes.",400,4,-0.5052421,2.6594214,107.8516,17.42969012260437,359.92429504394505
+929,2002-09-26,2,HJRES111,Passed,On Passage,"Making continuing appropriations for fiscal year 2003, and for other purposes",370,1,0.42889634,-2.5718975,113.43732,13.460398602485657,379.34183349609367
+930,2002-10-01,2,S434,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Yankton Sioux Tribe of South Dakota and Santee Sioux Tribe of Nebraska Compensation,357,37,1.312893,2.054782,59.14531,2.101305055618286,253.5534271240227
+931,2002-10-01,2,HR4125,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Federal Courts Improvement Act of 2002,370,21,1.3523501,-3.1327562,11.125044,3.4808610022068023,28.443385601043694
+932,2002-10-01,2,HRES538,Passed,On Motion to Suspend the Rules and Agree,Honoring Johnny Unitas and extending condolences to his family on his passing,389,0,0.39365947,-3.0201724,154.70045,22.996604776382448,459.7215538024898
+933,2002-10-02,2,,Passed,On Approving the Journal,,343,55,2.451648,2.571839,371.56433,158.05145454406738,696.1628952026366
+934,2002-10-02,2,HCONRES476,Passed,On Motion to Suspend the Rules and Agree,Expressing support for the goals and ideas of a day of tribute to all fire- fighters who have died in the line of duty and recognizing the important mission of the National Fallen Firefighters Foundation,407,0,0.3957489,-3.0026522,150.98703,20.514090728759765,474.95829086303706
+935,2002-10-02,2,HR2357,Failed,On Motion to Suspend the Rules and Pass,House of Worship Political Speech Protection Act,178,239,1.0966109,-0.8001254,76.684586,4.952682733535767,284.0152214050292
+936,2002-10-02,2,HRES543,Passed,On Agreeing to the Resolution,Expressing the sense of the House that Congress should complete action on H.R. 4019; making marriage tax relief permanent,285,130,0.79587954,-1.6002645,70.918625,9.016933226585389,294.23663482665967
+937,2002-10-02,2,HRES559,Passed,On Agreeing to the Resolution,"Expressing the sense of the House that each State should examine its existing statutes, practices, and procedures governing special elections so that, in the event of a catastrophe, vacancies in the House of Representatives may be filled in a timely fashion.",414,0,0.38556764,-3.0357718,152.34496,21.614196825027467,480.10440750122024
+938,2002-10-02,2,HR3295,Passed,On Motion to Instruct Conferees,Help America Vote Act,400,14,-0.045278832,2.1108303,79.07613,8.546035766601562,322.01187210082924
+939,2002-10-02,2,,Passed,Table the Appeal of the Ruling of the Chair,,210,200,2.3613474,-2.441961,241.31584,71.49875812530517,577.0756423950195
+940,2002-10-02,2,,Passed,Table the Appeal of the Ruling of the Chair,,212,204,2.7935789,-2.809596,162.6818,39.94965419769287,446.1659423828125
+941,2002-10-02,2,,Passed,Table the Appeal of the Ruling of the Chair,,214,202,2.3287537,-2.4094172,249.45299,73.97521076202392,600.4490341186514
+942,2002-10-02,2,,Passed,Table the Appeal of the Ruling of the Chair,,212,202,2.3607907,-2.4383159,239.9114,71.89568843841553,576.4828460693358
+943,2002-10-03,2,,Passed,On Approving the Journal,,327,52,2.4379032,2.5762153,323.8716,142.46698608398438,609.4513275146484
+944,2002-10-03,2,HRES568,Passed,On Ordering the Previous Question,Providing for consideration of H.J.Res. 112; Making further continuing appropriations for fiscal year 2003,206,198,2.3626828,-2.4444122,244.51648,70.77094879150391,615.1700317382813
+945,2002-10-03,2,HJRES112,Passed,On Passage,Making further continuing appropriations for fiscal year 2003,404,6,1.6737499,3.1357663,49.20351,6.361803889274597,229.60961875915518
+946,2002-10-03,2,,Passed,Table appeal of the ruling of the chair,,206,192,2.3774242,-2.4573157,239.00487,71.65947093963624,564.144984436035
+947,2002-10-03,2,,Passed,Table appeal of the ruling of the chair,,203,192,2.389894,-2.4698653,239.92537,69.27758808135987,577.4838058471678
+948,2002-10-07,2,HR3340,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Thrift Savings Plan Catch-Up Contributions; Merit Systems Protection Board Reauthorization; Office of Special Counsel Reauthorization,372,0,0.3868761,-3.0342672,151.04187,20.18696608543396,457.4585540771484
+949,2002-10-07,2,HR5531,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Sudan Peace Act,359,8,-1.6961175,-2.5813062,38.76763,8.508903455734252,109.24950008392297
+950,2002-10-07,2,HRES468,Passed,"On Motion to Suspend the Rules and Agree, as Amended",Transatlantic Security and NATO Enhancement Resolution,358,9,-0.38906464,-2.9716785,8.721093,3.5570860862731934,26.350368309020986
+951,2002-10-08,2,S2690,Passed,"On Motion to Suspend the Rules and Pass, as Amended",To reaffirm the reference to one Nation under God in the Pledge of Allegiance,401,5,0.072599724,-2.2226062,79.81184,9.197932004928589,301.53091049194325
+952,2002-10-08,2,HR5422,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Child Abduction Prevention Act,390,24,0.45953685,-2.644806,11.100274,3.5125395476818086,55.81224689483633
+953,2002-10-08,2,HRES549,Passed,On Motion to Suspend the Rules and Agree,Expressing appreciation for the Prime Minister of Great Britain for his loyal support and leadership in the war on terrorism and reaffirming the strong relationship between the people of the United States and Great Britain.,408,1,-0.3276764,-2.2576537,86.49103,11.661294984817506,331.22119827270484
+954,2002-10-09,2,HR5542,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Black Lung Consolidation of Administrative Responsibility Act,404,0,0.386661,-3.0314991,153.16914,22.272202348709108,466.529133605956
+955,2002-10-09,2,HJRES113,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Recognizing the contributions of Patsy T. Mink,410,0,0.37964422,-3.0173156,155.93121,22.074545431137086,475.12442474365224
+956,2002-10-09,2,HR3580,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Medical Device User Fee and Modernization Act,406,3,-0.58567977,2.7893665,123.731895,18.722803783416747,391.98513031005854
+957,2002-10-09,2,HR5557,Passed,On Motion to Suspend the Rules and Pass,Armed Forces Tax Fairness Act,412,0,0.3775066,-3.0318487,153.3115,22.385450410842896,474.2545120239256
+958,2002-10-10,2,HJRES114,Failed,On Agreeing to the Amendment,,72,355,-1.7980927,0.600725,86.70057,12.24089732170105,329.15361633300773
+959,2002-10-10,2,HJRES114,Failed,On Agreeing to the Amendment,,155,270,-2.7701683,2.1461427,4.7076163,3.3033206462860107,6.462362241744994
+960,2002-10-10,2,HJRES114,Failed,On Motion to Recommit with Instructions,To Authorize the Use of United States Armed Forces Against Iraq,101,325,-3.0185528,1.993583,17.82478,10.77172155380249,27.027146625518792
+961,2002-10-10,2,HJRES114,Passed,On Passage,To Authorize the Use of United States Armed Forces Against Iraq,296,133,2.3465972,3.0607862,19.712545,8.78425965309143,30.218187952041617
+962,2002-10-10,2,HRES579,Passed,On Agreeing to the Resolution,Waiving points of order against the conference report to accompany H.R. 5010 making appropriations for the Department of Defense for FY 2003,374,37,1.0912752,-2.4189022,120.051346,30.79044380187988,361.1323471069335
+963,2002-10-10,2,HR5010,Passed,On Agreeing to the Conference Report,Department of Defense Appropriations for Fiscal Year 2003,409,14,1.5402503,3.092122,25.794369,7.243701529502869,64.30763111114497
+964,2002-10-10,2,HR5011,Passed,On Agreeing to the Conference Report,Military Construction Appropriations for Fiscal Year 2003,419,0,0.17939593,-3.0673504,150.7081,21.818487119674682,458.7293136596677
+965,2002-10-10,2,HRES580,Passed,On Agreeing to the Resolution,"Providing for the Consideration of H.J. Res. 122, Further Continuing Approriations for FY 2003",225,193,1.3637606,-1.6287044,86.11777,13.324198079109191,306.423941040039
+966,2002-10-10,2,HJRES122,Failed,On Motion to Recommit with Instructions,Making further continuing appropriations for the fiscal year 2003,202,214,-2.485346,2.4041662,239.116,72.29853343963623,606.770797729492
+967,2002-10-10,2,HJRES122,Passed,On Passage,Making further continuing appropriations for the fiscal year 2003,272,144,2.2228484,-2.963953,12.58591,7.905318796634674,19.46623406410217
+968,2002-10-10,2,HR3295,Passed,On Agreeing to the Conference Report,Help America Vote Act,357,48,-1.4379267,-3.0380878,4.322178,1.8327098160982132,8.699691796302794
+969,2002-10-10,2,HR4546,Passed,On Motion to Instruct Conferees,Department of Defense Authorization Act for FY 2003,391,0,0.37506306,-3.0288756,151.79196,21.056093978881837,455.43370590209935
+970,2002-10-16,2,,Passed,On Approving the Journal,,330,52,2.4412575,2.5722775,313.4687,138.51175651550292,570.3795532226562
+971,2002-10-16,2,HR2155,Passed,"On Motion to Suspend the Rules and Pass, as Amended","To amend title 18, United States Code, to make it illegal to operate a motor vehicle with a drug or alcohol in the body of the driver at a land border port of entry.",296,94,0.6704859,-1.678385,71.78217,8.17957158088684,299.3889167785641
+972,2002-10-16,2,S1533,Passed,"On Motion to Suspend the Rules and Pass, as Amended",Health Care Safety Net Amendments,392,5,-0.5106182,2.609751,107.27787,16.886640119552613,354.7590003967285
+973,2002-10-16,2,HRES585,Passed,On Ordering the Previous Question,Providing for consideration of H.J. Res 123; Making further continuing appropriations for fiscal year 2003,209,193,2.3639078,-2.445903,241.67548,67.22525367736816,578.2211914062498
+974,2002-10-16,2,HRES585,Passed,On Agreeing to the Resolution,Providing for consideration of H.J. Res 123; Making further continuing appropriations for fiscal year 2003,206,193,2.938779,-3.015839,109.22896,15.236438608169555,405.2857833862302
+975,2002-10-16,2,HJRES123,Failed,On Motion to Recommit with Instructions,Making further continuing appropriations for the fiscal year 2003,194,210,-1.8638831,1.7429856,113.66872,30.310694551467897,345.06184082031234
+976,2002-10-16,2,HJRES123,Passed,On Passage,Making further continuing appropriations for the fiscal year 2003,228,172,0.9413832,-1.24736,82.61961,5.6872698903083805,353.78424530029264
+977,2002-11-13,2,,Failed,On Motion to Adjourn,,24,338,-1.8461179,0.09744087,74.267235,6.833477866649628,323.32540588378885
+978,2002-11-13,2,HRES602,Passed,On Agreeing to the Resolution,"Providing for consideration of H.J. Res 124, making further continuing appropriations for the fiscal year 2003; and for consideration of H.R. 5708, to reduce preexisting PAYGO balances.",215,189,2.3034854,-2.3845668,247.82483,68.13886127471923,611.429649353027
+979,2002-11-13,2,HJRES124,Failed,On Motion to Recommit with Instructions,"Making further continuing appropriations for the fiscal year 2003, and for other purposes.",196,216,-2.9290147,2.847964,64.26006,28.93281741142273,145.1620452880859
+980,2002-11-13,2,HJRES124,Passed,On Passage,"Making further continuing appropriations for the fiscal year 2003, and for other purposes.",270,143,2.0698256,-2.701507,5.0510025,3.4711782813072203,6.963511312007902
+981,2002-11-13,2,HRES600,Passed,On Agreeing to the Resolution,Providing for consideration of H.R. 5710; to establish a Department of Homeland Security,237,177,2.3892016,-2.787427,13.597372,8.686383485794067,21.523464679718018
+982,2002-11-13,2,HR5710,Failed,On Motion to Recommit with Instructions,Homeland Security Act,203,215,-2.266986,2.240016,133.59758,30.214657402038576,406.3413085937497
+983,2002-11-13,2,HR5710,Passed,On Passage,Homeland Security Act,299,121,2.2803807,3.0689816,18.099087,11.03534984588623,27.140553855895995
+984,2002-11-14,2,HRES606,Failed,On Agreeing to the Resolution,"Waiving Points of Order Against the Conference Report on H.R. 333, Bankruptcy Abuse Prevention and Consumer Protection Act",172,243,2.6736495,2.8517027,70.719604,2.6080380737781526,302.88379058837836
+985,2002-11-14,2,HRES609,Passed,On Ordering the Previous Question,"Providing for the Consideration of the Senate Amendments to H.R. 5063, Armed Forces Tax Fairness Act",207,198,2.251412,-2.3314772,246.16446,71.38939552307129,585.0751281738279
+986,2002-11-14,2,HRES609,Passed,On Agreeing to the Resolution,"Providing for the Consideration of the Senate Amendments to H.R. 5063, Armed Forces Tax Fairness Act",245,137,2.1887758,-2.8773382,8.573266,5.395936369895935,13.064031004905699
+987,2002-11-14,2,HR5708,Failed,On Motion to Recommit with Instructions,To reduce preexisting PAYGO balances,187,201,-3.0113559,2.9394808,174.17506,48.60763034820557,466.08253936767557
+988,2002-11-14,2,HR5708,Passed,On Passage,To reduce preexisting PAYGO balances,366,19,-0.69193417,-1.868559,63.24452,5.147344994544983,268.9398269653315
+989,2002-11-15,2,HR4628,Passed,On Agreeing to the Conference Report,Intelligence Authorization Act for Fiscal Year 2003,366,3,1.185122,2.2139423,90.594376,9.762648153305054,324.500267791748
+990,2002-11-15,2,HR333,Passed,agree to senate amendment with an amendment,Bankruptcy Abuse Prevention and Consumer Protection Act,244,116,0.9409002,-1.7185805,79.74515,13.113932585716247,298.8029350280753

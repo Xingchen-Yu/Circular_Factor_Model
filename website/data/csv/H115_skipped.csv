@@ -1,0 +1,6 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+B000287,29316,"BECERRA, Xavier",D,CA,34,-0.512,-0.283,"Becerra, Xavier (D CA-34)",False,0.9850869925434963,18
+M001182,21176,"MULVANEY, Mick",R,SC,5,0.75,-0.592,"Mulvaney, Mick (R SC-5)",False,0.995857497928749,5
+P000591,20505,"PRICE, Tom",R,GA,6,0.644,-0.073,"Price, Tom (R GA-6)",False,0.9983429991714996,2
+P000602,21136,"POMPEO, Mike",R,KS,4,0.66,0.164,"Pompeo, Mike (R KS-4)",False,0.9991714995857498,1
+Z000018,21532,"ZINKE, Ryan",R,MT,1,0.442,-0.112,"Zinke, Ryan (R MT-1)",False,0.9850869925434963,18

@@ -1,0 +1,4 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+G000551,20305,"GRIJALVA, Raúl M.",D,AZ,7,-0.598,-0.264,"Grijalva, Raúl M. (D AZ-7)",False,0.9985163204747775,1
+W000823,21981,"WALTZ, Michael",R,FL,6,0.452,-0.113,"Waltz, Michael (R FL-6)",False,0.9896142433234422,7
+W000832,22572,"WAHAB, Aisha",D,CA,14,,,"Wahab, Aisha (D CA-14)",False,0.9673590504451038,22

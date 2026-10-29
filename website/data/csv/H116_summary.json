@@ -1,0 +1,183 @@
+{
+  "congress": 116,
+  "chamber": "House",
+  "I": 429,
+  "J": 952,
+  "n_fitted": 429,
+  "n_placed": 11,
+  "n_skipped": 1,
+  "chi_0": {
+    "mean": 0.27647988689345976,
+    "q025": 0.2616808979001213,
+    "q975": 0.2938693554252019,
+    "ess": 36.23064744562927,
+    "per_chain_mean": [
+      0.27567550979056865,
+      0.2772842639963508
+    ],
+    "split_rhat": 1.0517590914255752
+  },
+  "chi_D": {
+    "mean": 0.01299603475734774,
+    "q025": 0.01143474301197515,
+    "q975": 0.014830923435720882,
+    "ess": 86.28976177662355,
+    "per_chain_mean": [
+      0.01280124857248013,
+      0.01319082094221535
+    ]
+  },
+  "chi_R": {
+    "mean": 0.045127714952,
+    "q025": 0.040311064464117,
+    "q975": 0.05041829471191194,
+    "ess": 35.32425803597846,
+    "per_chain_mean": [
+      0.046099207963417425,
+      0.044156221940582566
+    ]
+  },
+  "party_measure_overrides": {
+    "A000367": "R"
+  },
+  "waic_grouped": {
+    "lppd": -35132.444964290655,
+    "p_waic": 2569.8800344048313,
+    "elpd_waic": -37702.32499869548,
+    "waic_deviance": 75404.64999739097
+  },
+  "omega_mean": 2.1692162182071666,
+  "choice": {
+    "chains": [
+      "results/full_ext/c1/H116",
+      "results/full_ext/c2/H116"
+    ],
+    "rule": "chains agree; pooled after +40k each"
+  },
+  "chains": [
+    {
+      "path": "results/full_ext/c1/H116",
+      "draws_used": 80000,
+      "loglik_mean": -36124.60835202638,
+      "loglik_sd": 49.06725252502733,
+      "md5_posterior": "3d31b7ad27fbcf435b9dd7e9515a114e",
+      "md5_placed": "7cbe546bdbc1671bff41898120169174",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 0,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2021,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    },
+    {
+      "path": "results/full_ext/c2/H116",
+      "draws_used": 80000,
+      "loglik_mean": -36165.92388378418,
+      "loglik_sd": 41.58623133782972,
+      "md5_posterior": "b378ee8c6edc6b9f2eb5df5aed82b227",
+      "md5_placed": "9aaf348cc7d532e26dc53f4b5ea19d5f",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 0,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2022,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    }
+  ],
+  "provenance": {
+    "code": {
+      "commit": "a78aadfcbca298693310f2cd540cace4ef69871d",
+      "dirty": true
+    },
+    "script": "scripts/combine_chains.py",
+    "created": "2026-10-29T23:15:18+00:00",
+    "place_min_votes": 25,
+    "data": [
+      {
+        "file": "H116_members.csv",
+        "md5": "b5f122db78462bead1a2018c50feeabb",
+        "modified": "2026-10-24T21:24:57+00:00"
+      },
+      {
+        "file": "H116_rollcalls.csv",
+        "md5": "7f97be86d2e7f02a70e98700c7c6a2f3",
+        "modified": "2026-10-24T21:24:57+00:00"
+      },
+      {
+        "file": "H116_votes.csv",
+        "md5": "da6153fc35963c00314c27d861c7919a",
+        "modified": "2026-10-24T21:24:57+00:00"
+      }
+    ]
+  }
+}

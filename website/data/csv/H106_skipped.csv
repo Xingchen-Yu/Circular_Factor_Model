@@ -1,0 +1,2 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+L000371,14469,"LIVINGSTON, Robert Linlithgow, Jr.",R,LA,1,0.326,0.109,"Livingston, Robert Linlithgow, Jr. (R LA-1)",False,0.9842845326716294,19

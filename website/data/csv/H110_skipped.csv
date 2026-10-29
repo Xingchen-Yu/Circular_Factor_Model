@@ -1,0 +1,3 @@
+person,icpsr,bioname,party,state,district,nominate_dim1,nominate_dim2,label,merged_ids,frac_missing,n_votes
+F000455,20941,"FUDGE, Marcia L.",D,OH,11,-0.581,0.14,"Fudge, Marcia L. (D OH-11)",False,0.9962466487935657,7
+N000159,29513,"NORWOOD, Charles W., Jr.",R,GA,10,0.533,0.469,"Norwood, Charles W., Jr. (R GA-10)",False,0.995710455764075,8

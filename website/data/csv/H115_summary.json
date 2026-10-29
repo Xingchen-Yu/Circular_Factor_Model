@@ -1,0 +1,127 @@
+{
+  "congress": 115,
+  "chamber": "House",
+  "I": 427,
+  "J": 1207,
+  "n_fitted": 427,
+  "n_placed": 18,
+  "n_skipped": 5,
+  "chi_0": {
+    "mean": 0.3033976772667846,
+    "q025": 0.2888585296787556,
+    "q975": 0.3208268470917393,
+    "ess": 12.102747456897976,
+    "per_chain_mean": [
+      0.3033976772667846
+    ],
+    "split_rhat": 1.1494830384512151
+  },
+  "chi_D": {
+    "mean": 0.004826838623836175,
+    "q025": 0.004331815233061223,
+    "q975": 0.00536441093507887,
+    "ess": 265.23405074373596,
+    "per_chain_mean": [
+      0.004826838623836175
+    ]
+  },
+  "chi_R": {
+    "mean": 0.06900668410755163,
+    "q025": 0.06497107981315942,
+    "q975": 0.07341409893614488,
+    "ess": 46.283462524104124,
+    "per_chain_mean": [
+      0.06900668410755163
+    ]
+  },
+  "waic_grouped": {
+    "lppd": -46052.866879953566,
+    "p_waic": 2719.1330547049793,
+    "elpd_waic": -48771.99993465855,
+    "waic_deviance": 97543.9998693171
+  },
+  "omega_mean": 1.989244728371653,
+  "choice": {
+    "chains": [
+      "results/full_ext2/c1/H115"
+    ],
+    "rule": "best of 2 chains; other chain -535 loglik, trapped Walter Jones and Rod Blum at the centre"
+  },
+  "chains": [
+    {
+      "path": "results/full_ext2/c1/H115",
+      "draws_used": 160000,
+      "loglik_mean": -47110.3668197191,
+      "loglik_sd": 46.650623492455715,
+      "md5_posterior": "399b11f3e3691a9829ba5015f1c0abf3",
+      "md5_placed": "5d42594b2a0ba93d2e4bb98838e229ad",
+      "config": {
+        "n_samples": 80000,
+        "burnin": 0,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2021,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    }
+  ],
+  "provenance": {
+    "code": {
+      "commit": "a78aadfcbca298693310f2cd540cace4ef69871d",
+      "dirty": false
+    },
+    "script": "scripts/combine_chains.py",
+    "created": "2026-10-29T22:12:25+00:00",
+    "place_min_votes": 25,
+    "data": [
+      {
+        "file": "H115_members.csv",
+        "md5": "acd16046b980f446a35606c1df628bf9",
+        "modified": "2026-10-25T00:24:29+00:00"
+      },
+      {
+        "file": "H115_rollcalls.csv",
+        "md5": "dbfd101bfd1d4bd090e1e1e93ee81591",
+        "modified": "2026-10-25T00:24:29+00:00"
+      },
+      {
+        "file": "H115_votes.csv",
+        "md5": "66369a45d4999318167b01d7ede9a077",
+        "modified": "2026-10-25T00:24:29+00:00"
+      }
+    ]
+  }
+}

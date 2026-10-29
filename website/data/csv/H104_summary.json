@@ -1,0 +1,127 @@
+{
+  "congress": 104,
+  "chamber": "House",
+  "I": 431,
+  "J": 1321,
+  "n_fitted": 431,
+  "n_placed": 9,
+  "n_skipped": 0,
+  "chi_0": {
+    "mean": 0.17293267653169783,
+    "q025": 0.16488055182401606,
+    "q975": 0.1795916453258847,
+    "ess": 50.49351028536248,
+    "per_chain_mean": [
+      0.17293267653169783
+    ],
+    "split_rhat": 1.0127654361981908
+  },
+  "chi_D": {
+    "mean": 0.036634408959438654,
+    "q025": 0.034291946817038725,
+    "q975": 0.03900607658033663,
+    "ess": 26.827441496745088,
+    "per_chain_mean": [
+      0.036634408959438654
+    ]
+  },
+  "chi_R": {
+    "mean": 0.04068563036137554,
+    "q025": 0.037473538388063526,
+    "q975": 0.04353301626248777,
+    "ess": 33.71389132344502,
+    "per_chain_mean": [
+      0.04068563036137554
+    ]
+  },
+  "waic_grouped": {
+    "lppd": -124746.71595152417,
+    "p_waic": 3986.403702683567,
+    "elpd_waic": -128733.11965420774,
+    "waic_deviance": 257466.23930841548
+  },
+  "omega_mean": 3.2508943254656915,
+  "choice": {
+    "chains": [
+      "results/full_ext/c6/H104"
+    ],
+    "rule": "best of 6 chains (seed 2026); voting record favours its placement of Neumann and Roth at the far right"
+  },
+  "chains": [
+    {
+      "path": "results/full_ext/c6/H104",
+      "draws_used": 50000,
+      "loglik_mean": -126473.05031198471,
+      "loglik_sd": 49.969123321929345,
+      "md5_posterior": "7dde04b5870e853a32c2b20adb0e056f",
+      "md5_placed": "a16a7b2794d36615822cf82806637c63",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 0,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2026,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    }
+  ],
+  "provenance": {
+    "code": {
+      "commit": "a78aadfcbca298693310f2cd540cace4ef69871d",
+      "dirty": false
+    },
+    "script": "scripts/combine_chains.py",
+    "created": "2026-10-29T22:10:32+00:00",
+    "place_min_votes": 25,
+    "data": [
+      {
+        "file": "H104_members.csv",
+        "md5": "4e0c4d1892d1816cb858306b100361f8",
+        "modified": "2026-10-25T00:24:08+00:00"
+      },
+      {
+        "file": "H104_rollcalls.csv",
+        "md5": "7bd263aa496c08f09f1c6c8e5dd00572",
+        "modified": "2026-10-25T00:24:09+00:00"
+      },
+      {
+        "file": "H104_votes.csv",
+        "md5": "6f745b698142a60a6d119ddf71922bd1",
+        "modified": "2026-10-25T00:24:08+00:00"
+      }
+    ]
+  }
+}

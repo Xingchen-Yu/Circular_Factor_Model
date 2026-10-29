@@ -1,0 +1,130 @@
+{
+  "congress": 103,
+  "chamber": "House",
+  "I": 430,
+  "J": 1094,
+  "n_fitted": 430,
+  "n_placed": 7,
+  "n_skipped": 4,
+  "chi_0": {
+    "mean": 0.11312028364585774,
+    "q025": 0.10633186751092712,
+    "q975": 0.11975568670894904,
+    "ess": 54.72592479890338,
+    "per_chain_mean": [
+      0.11312028364585774
+    ],
+    "split_rhat": 1.089622377970899
+  },
+  "chi_D": {
+    "mean": 0.03729261184971854,
+    "q025": 0.034600068102561964,
+    "q975": 0.04034951018769632,
+    "ess": 14.844421185368898,
+    "per_chain_mean": [
+      0.03729261184971854
+    ]
+  },
+  "chi_R": {
+    "mean": 0.018860536621698825,
+    "q025": 0.017367455024638618,
+    "q975": 0.020495237814861282,
+    "ess": 89.51197817444641,
+    "per_chain_mean": [
+      0.018860536621698825
+    ]
+  },
+  "waic_grouped": {
+    "lppd": -106496.40101586236,
+    "p_waic": 3227.295032807425,
+    "elpd_waic": -109723.69604866978,
+    "waic_deviance": 219447.39209733956
+  },
+  "omega_mean": 4.751596231505372,
+  "choice": {
+    "chains": [
+      "results/full_ext/c8/H103"
+    ],
+    "rule": "best of 6 chains (seed 2028)",
+    "notes": [
+      "Schroeder: separate, non-overlapping modes across chains (rank 62-96 here vs 2-14 in another chain with loglik ~45 lower, about 1 sd); reported mode is the best-fitting chain's"
+    ]
+  },
+  "chains": [
+    {
+      "path": "results/full_ext/c8/H103",
+      "draws_used": 50000,
+      "loglik_mean": -107933.48689201343,
+      "loglik_sd": 48.34175367283336,
+      "md5_posterior": "92b4cae3bf37e73230cf9712ebe02eef",
+      "md5_placed": "d520bc6b2687a3a80db89655284bc821",
+      "config": {
+        "n_samples": 40000,
+        "burnin": 0,
+        "thin": 1,
+        "n_bill_draws": 1000,
+        "jitter_every": 50,
+        "beta_step": [
+          0.01,
+          0.04
+        ],
+        "tau_step": [
+          0.01,
+          0.105
+        ],
+        "beta_max_leap": 10,
+        "tau_max_leap": 10,
+        "kappa_prop_sd": 0.5,
+        "omega_prop_sd": 0.1,
+        "adapt_steps": true,
+        "grad_dtype": "float32",
+        "rotation_move": false,
+        "bill_flip": true,
+        "bill_flip_kappa": true,
+        "bill_shift": true,
+        "beta_shift": false,
+        "temper_start": 1.0,
+        "temper_frac": 0.5,
+        "scale_move": false,
+        "scale_kappa_power": 2.0,
+        "scale_prop_sd": 0.01,
+        "seed": 2028,
+        "print_every": 2000
+      },
+      "priors": {
+        "mu": 0.0,
+        "omega_shape": 1.0,
+        "omega_rate": 0.1,
+        "kappa_shape": 1.0,
+        "xi_shape": 1.0,
+        "xi_rate": 25.0
+      }
+    }
+  ],
+  "provenance": {
+    "code": {
+      "commit": "a78aadfcbca298693310f2cd540cace4ef69871d",
+      "dirty": false
+    },
+    "script": "scripts/combine_chains.py",
+    "created": "2026-10-29T22:10:27+00:00",
+    "place_min_votes": 25,
+    "data": [
+      {
+        "file": "H103_members.csv",
+        "md5": "addda90bd328b93db5d53c317cad8316",
+        "modified": "2026-10-25T00:24:07+00:00"
+      },
+      {
+        "file": "H103_rollcalls.csv",
+        "md5": "9fad43cd3c52f0c416837c997dab6874",
+        "modified": "2026-10-25T00:24:07+00:00"
+      },
+      {
+        "file": "H103_votes.csv",
+        "md5": "d626854062be06021485f6b96d27800e",
+        "modified": "2026-10-25T00:24:07+00:00"
+      }
+    ]
+  }
+}
