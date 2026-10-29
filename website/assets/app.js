@@ -130,14 +130,14 @@ function tallyHTML(H, vs, which) {
 /* ---------- trend charts ---------- */
 function trendFrame(svg, W, H, yMax, yStep, fmt) {
   clear(svg);
-  const L = 46, Rm = 12, T = 12, B = 44;
+  const L = 50, Rm = 14, T = 12, B = 34;
   const x = (c) => L + (c - 99.5) / 20 * (W - L - Rm), y = (v) => T + (1 - v / yMax) * (H - T - B);
   for (const h of INDEX.houses) el("rect", { x: x(h.congress - 0.5), y: T, width: x(1) - x(0), height: H - T - B, fill: h.majority === "D" ? "var(--majD)" : "var(--majR)" }, svg);
   for (let v = 0; v <= yMax + 1e-9; v += yStep) {
     el("line", { x1: L, x2: W - Rm, y1: y(v), y2: y(v), stroke: "var(--line)", "stroke-width": 1 }, svg);
     txt(svg, L - 8, y(v) + 4, fmt(v), { "text-anchor": "end", class: "tick" });
   }
-  for (const c of [100, 104, 108, 112, 116, 119]) { txt(svg, x(c), H - B + 17, ord(c), { "text-anchor": "middle", class: "tick" }); txt(svg, x(c), H - B + 32, String(1787 + 2 * c), { "text-anchor": "middle", class: "tick" }); }
+  for (const c of [100, 104, 108, 112, 116, 119]) txt(svg, x(c), H - B + 22, String(1787 + 2 * c), { "text-anchor": "middle", class: "tick" });
   return { x, y };
 }
 function series(svg, x, y, key, color, label) {
@@ -156,7 +156,7 @@ function drawTrends() {
   let svg = $("#trend-all");
   let f = trendFrame(svg, 600, 340, 0.45, 0.1, (v) => v.toFixed(1));
   series(svg, f.x, f.y, "chi_0", "var(--ink)", "Polarization score");
-  txt(svg, f.x(112) - 4, f.y(0.43), "From 2011: record highs", { class: "ann", "text-anchor": "start" });
+  txt(svg, f.x(112) - 4, f.y(0.43), "Record highs", { class: "ann", "text-anchor": "start" });
   $("#trend-legend").innerHTML = `<span><i class="sq" style="background:var(--majD);box-shadow:inset 0 0 0 1px var(--D)"></i>Democratic majority</span><span><i class="sq" style="background:var(--majR);box-shadow:inset 0 0 0 1px var(--R)"></i>Republican majority</span>`;
   svg = $("#trend-party");
   const top = Math.max(...INDEX.houses.map((h) => Math.max(h.chi_D[2], h.chi_R[2])));
@@ -229,8 +229,8 @@ async function renderExplore(c) {
     <div class="tile"><div class="k">Within-party score</div><div class="v"><span style="color:var(--D)">${info.chi_D[0].toFixed(3)}</span> · <span style="color:var(--R)">${info.chi_R[0].toFixed(3)}</span></div><div class="s">Democrats · Republicans</div></div>
     <div class="tile"><div class="k">Roll-call votes</div><div class="v">${info.nRolls.toLocaleString()}</div><div class="s">${fmtDate(info.first)} to ${fmtDate(info.last)}</div></div>`;
   const notes = [];
-  if (c === LATEST) notes.push(`This Congress is still in session. It includes votes through ${fmtDate(info.last)}.`);
-  if (c === 103) notes.push("Pat Schroeder's position is uncertain: the model also finds a second, slightly worse-fitting position for her near the liberal end. See Methods.");
+  if (c === LATEST) notes.push(`In session. Votes through ${fmtDate(info.last)}.`);
+  if (c === 103) notes.push("Pat Schroeder's position is uncertain (see Methods).");
   $("#ex-note").hidden = !notes.length; $("#ex-note").textContent = notes.join(" ");
   $("#ex-filter").value = ""; $("#ex-vsearch").value = ""; lineupAll = false; $("#ex-vresults").innerHTML = "";
   if (state.selected && state.selected.c !== c) state.selected = null;
@@ -262,7 +262,7 @@ function renderVoteCard(H, vs) {
   const box = $("#ex-vote"), roll = state.vote[H.congress];
   if (state.mode !== "vote") { box.hidden = true; return; }
   box.hidden = false;
-  if (!roll) { box.innerHTML = `<p class="vd">Pick a vote below to color each member by how they voted.</p>`; return; }
+  if (!roll) { box.innerHTML = `<p class="vd">Pick a vote below.</p>`; return; }
   const r = H.rollList.find((x) => x.roll === roll);
   const f = (houseInfo(H.congress).featured || []).find((x) => x.roll === roll);
   box.innerHTML = `<div class="vt">${esc(rollTitle(r, f))}</div>
@@ -355,7 +355,7 @@ function bindMemberSearch() {
     for (const p of PEOPLE) for (const h of p.h) if (h[0] === LATEST && h[2] === st) rows.push([p, h]);
     rows.sort((a, b) => a[1][3] - b[1][3] || a[0].name.localeCompare(b[0].name));
     $("#m-statelist").innerHTML = rows.map(([p, h]) => `<a class="scard" href="#member-${p.id}"><b>${esc(p.name)}</b><span>${PARTY[h[1]]} · ${h[3] === 0 ? "At-large" : "District " + h[3]}</span><span>${h[4] === null ? "Too few votes to estimate" : sentence(h)}</span></a>`).join("")
-      + `<p class="small muted" style="grid-column:1/-1">Members of the 119th Congress, including any who left during it. Districts are those of the 119th Congress.</p>`;
+      + `<p class="small muted" style="grid-column:1/-1">119th Congress districts. Your 2026 district may differ.</p>`;
   });
 }
 function renderMember(id) {
@@ -366,17 +366,17 @@ function renderMember(id) {
   const parties = [...new Set(p.h.map((h) => h[1]))];
   const pct = (r, n) => 100 * (r - 1) / (n - 1);
   const notes = [];
-  if (last[0] === LATEST) notes.push(`Based on votes in the 119th Congress through ${fmtDate(houseInfo(LATEST).last)}. The Congress is still in session.`);
-  if (lr && (lr[9] || lr[6] - lr[5] > lr[7] * 0.2)) notes.push(`This member's range is wide${lr[9] ? " because they missed many votes" : ""}. Read the position as approximate.`);
+  if (last[0] === LATEST) notes.push(`Votes through ${fmtDate(houseInfo(LATEST).last)}. Congress still in session.`);
+  if (lr && (lr[9] || lr[6] - lr[5] > lr[7] * 0.2)) notes.push(`Wide range${lr[9] ? " (missed many votes)" : ""}: treat as approximate.`);
   for (const h of p.h) if (h[10]) notes.push(`${ord(h[0])} Congress: ${h[10]}.`);
-  if (lr && lr !== last) notes.push(`Too few votes in the ${ord(last[0])} Congress to estimate a position, so the ${ord(lr[0])} is shown.`);
+  if (lr && lr !== last) notes.push(`Too few votes in the ${ord(last[0])} Congress; showing the ${ord(lr[0])}.`);
   const card = lr ? `
       <p class="big">${sentence(lr)}${lr === last && last[0] === LATEST ? "" : ` (${ord(lr[0])} Congress)`}.</p>
       <div class="scale" aria-hidden="true"><div class="ln"></div><div class="ci" style="left:${pct(lr[5], lr[7])}%;width:${Math.max(pct(lr[6], lr[7]) - pct(lr[5], lr[7]), 1.5)}%"></div><div class="pt" style="left:${pct(lr[4], lr[7])}%"></div></div>
       <div class="ends"><span>Most liberal</span><span>Most conservative</span></div>
       <dl class="facts">
-        <dt>Rank</dt><dd><span class="mono">${lr[4]}</span> of <span class="mono">${lr[7]}</span> from the liberal end</dd>
-        <dt>Likely range</dt><dd>rank <span class="mono">${lr[5]}</span> to <span class="mono">${lr[6]}</span> (95%)</dd>
+        <dt>Rank</dt><dd><span class="mono">${lr[4]}</span> of <span class="mono">${lr[7]}</span> (1 = most liberal)</dd>
+        <dt>Likely range</dt><dd><span class="mono">${lr[5]}</span>–<span class="mono">${lr[6]}</span></dd>
         <dt>Votes counted</dt><dd class="mono">${lr[8].toLocaleString()}</dd>
       </dl>` : `<p class="big">Too few votes to estimate a position.</p>`;
   box.innerHTML = `
@@ -385,11 +385,11 @@ function renderMember(id) {
       <div class="sub"><span class="pill" style="background:var(--${last[1]})">${PARTY[last[1]]}</span><span>${STATES[last[2]] || last[2]}, ${last[3] === 0 ? "at-large" : "district " + last[3]}</span>${parties.length > 1 ? `<span class="small muted">Also served as ${parties.filter((x) => x !== last[1]).map((x) => PARTY[x]).join(", ")}</span>` : ""}</div>
       ${card}
       ${notes.map((n) => `<p class="note flag">${esc(n)}</p>`).join("")}
-      <p class="note">Positions describe roll-call voting only, not character or effectiveness. <a href="https://bioguide.congress.gov/search/bio/${p.id}" rel="noopener" target="_blank">Official biography</a></p>
+      <p class="note">Based on floor votes only. <a href="https://bioguide.congress.gov/search/bio/${p.id}" rel="noopener" target="_blank">Official biography</a></p>
     </div>
     <div>
       <figure class="panel">
-        <figcaption><b>Position in each Congress served</b><span>Dot: most likely position. Bar: 95% range. Left is more liberal.</span></figcaption>
+        <figcaption><b>Over the years</b><span>Bar shows the likely range</span></figcaption>
         <svg id="career" role="img" aria-label="Position in each Congress"></svg>
       </figure>
       <div class="tablewrap"><table class="htable">

@@ -73,7 +73,7 @@ def switch_note(c, leg, members, votes, rollcalls):
     if len(spans) < 2 or spans[0][1] == spans[1][1]:
         return None
     y, m = spans[1][0][:4], int(spans[1][0][5:7])
-    return f"Switched from {PARTY_NAME[spans[0][1]]} to {PARTY_NAME[spans[1][1]]} during this Congress (first vote as {PARTY_NAME[spans[1][1]]}: {MONTHS[m - 1]} {y})"
+    return f"switched from {PARTY_NAME[spans[0][1]]} to {PARTY_NAME[spans[1][1]]} ({MONTHS[m - 1]} {y})"
 
 
 def vote_strings(leg, votes, rolls):
