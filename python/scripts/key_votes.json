@@ -19,7 +19,7 @@
   {
    "roll": 640,
    "issue": "Government ethics",
-   "head": "Ban new stock buys by Congress, add photo ID to vote",
+   "head": "Bar Congress from buying stocks, require photo ID to vote",
    "official": "Stop Insider Trading Act (H.R. 7008)",
    "what": "Bars members of Congress, their spouses and dependent children from buying individual stocks. They may keep stocks they already own but must give 7 days' public notice before selling. Also requires photo ID to vote in person.",
    "competing": "A competing Democratic bill (H.R. 6731) would also cover the President and Vice President and require selling stocks already owned. It never got a House vote."
@@ -27,7 +27,7 @@
   {
    "roll": 348,
    "issue": "Health care",
-   "head": "Expand small-business health plans, fund cost-sharing payments",
+   "head": "Expand small-business health plans, lower some premiums",
    "official": "Lower Health Care Premiums for All Americans Act (H.R. 6703)",
    "what": "Lets small businesses band together to buy health plans, expands employer accounts for buying individual coverage, funds payments that lower some marketplace premiums from 2027, and adds reporting rules for drug-benefit middlemen. Does not extend the larger ACA subsidies.",
    "competing": "The House also voted on a competing bill to extend the larger ACA subsidies (next on this list)."
@@ -43,7 +43,7 @@
   {
    "roll": 574,
    "issue": "Immigration",
-   "head": "$70 billion more for ICE and Border Patrol",
+   "head": "Add $70 billion for ICE and Border Patrol",
    "official": "Secure America Act (S. 2)",
    "law": "June 2026",
    "what": "Adds about $70 billion for immigration enforcement and border security through 2029, passed by a simple majority under budget rules."
@@ -51,7 +51,7 @@
   {
    "roll": 567,
    "issue": "Foreign policy",
-   "head": "Loans for Ukraine's military, new Russia sanctions",
+   "head": "Lend Ukraine $8 billion for weapons, add Russia sanctions",
    "official": "Ukraine Support Act (H.R. 2913)",
    "what": "Provides $8 billion in loans for Ukraine to buy weapons, extends U.S. military aid to Ukraine through 2027, and adds sanctions on Russia."
   },
@@ -73,14 +73,14 @@
   {
    "roll": 550,
    "issue": "Guns",
-   "head": "Stop the VA flagging some veterans in gun checks",
+   "head": "Stop the VA from flagging some veterans in gun checks",
    "official": "Veterans 2nd Amendment Protection Act (H.R. 1041)",
    "what": "Stops the VA from reporting veterans who have someone managing their benefits to the gun background-check system unless a judge finds them dangerous."
   },
   {
    "roll": 284,
    "issue": "Government funding",
-   "head": "Reopen the government after the 2025 shutdown",
+   "head": "End the 2025 government shutdown",
    "official": "Continuing Appropriations and Extensions Act, 2026 (H.R. 5371)",
    "law": "November 12, 2025",
    "what": "Ends the 43-day shutdown, funds the government through January 30, 2026, and passes full-year funding for food aid, veterans and military construction."
@@ -133,7 +133,7 @@
   {
    "roll": 869,
    "issue": "Foreign policy",
-   "head": "$61 billion in aid to Ukraine",
+   "head": "Send $61 billion in aid to Ukraine",
    "official": "Ukraine Security Supplemental Appropriations Act (H.R. 8035)",
    "law": "April 24, 2024, in a combined foreign aid package",
    "what": "Provides about $61 billion in military and economic aid to Ukraine."
@@ -141,7 +141,7 @@
   {
    "roll": 870,
    "issue": "Foreign policy",
-   "head": "$26 billion in aid to Israel and for Gaza relief",
+   "head": "Send $26 billion in aid to Israel and for Gaza relief",
    "official": "Israel Security Supplemental Appropriations Act (H.R. 8034)",
    "law": "April 24, 2024, in a combined foreign aid package",
    "what": "Provides about $26 billion for Israel's defense and for humanitarian aid, including in Gaza."
@@ -170,7 +170,7 @@
   {
    "roll": 242,
    "issue": "Government funding",
-   "head": "Raise the debt limit and cap spending",
+   "head": "Suspend the debt limit and cap spending",
    "official": "Fiscal Responsibility Act (H.R. 3746)",
    "law": "June 3, 2023",
    "what": "Suspends the debt limit until 2025 to avoid a default and caps federal spending for two years."

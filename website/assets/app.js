@@ -475,7 +475,7 @@ function bindMemberSearch() {
 function memberRank(h) {
   const [, party, , , r, , , n] = h;
   const lib = party === "D" || (party !== "R" && r <= n / 2);
-  return `Rank ${r} of ${n} (${lib ? "1 = most liberal" : `${n} = most conservative`})`;
+  return `<span class="rk-l">Rank</span> <span class="mono rk">${r}</span> of <span class="mono">${n}</span><span class="rk-d">${lib ? "1 = most liberal" : `${n} = most conservative`}</span>`;
 }
 const MON = ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 const monthYear = (d) => { const [y, m] = d.split("-").map(Number); return `${MON[m - 1]} ${y}`; };
@@ -500,8 +500,7 @@ function renderMember(id) {
       ${lr ? `<p class="big">${sentence(lr)}${lr === last && last[0] === LATEST ? "" : ` (${termYears(lr[0])})`}.</p>
       <p class="rankline">${memberRank(lr)}</p><p class="basis">${basis}</p>` : `<p class="big">Too few votes to estimate a position.</p>`}
       ${notes.map((n) => `<p class="note flag">${esc(n)}</p>`).join("")}
-      <figure class="mcirc"><svg id="m-circle" class="circ" viewBox="0 0 600 490" role="img" aria-label="${esc(p.name)} ringed on the circle of the House"></svg>
-        <figcaption>Ringed: ${esc(p.name)}, ${termYears(lr ? lr[0] : last[0])}. Tap any dot to open that member.</figcaption></figure>
+      <figure class="mcirc"><svg id="m-circle" class="circ" viewBox="0 0 600 490" role="img" aria-label="${esc(p.name)} ringed on the circle of the House"></svg></figure>
       ${earlier.length ? `<div class="earlier"><h3>Earlier terms</h3><ul>${earlier.map((h) => `<li><span class="mono">${termYears(h[0])}</span><span>${h[4] === null ? "Too few votes" : `${h[4]} of ${h[7]}`}${h[1] !== last[1] ? ` · ${PARTY[h[1]]}` : ""}</span></li>`).join("")}</ul></div>` : ""}
       <p class="note">Based on floor votes only. <a href="https://bioguide.congress.gov/search/bio/${p.id}" rel="noopener" target="_blank">Official biography</a></p>
     </div>
