@@ -393,12 +393,17 @@ function renderFeatured(H, info) {
   $("#ex-featured").innerHTML = fs.length ? fs.map((f) => rollButton(H.rollList.find((r) => r.roll === f.roll), f)).join("") : `<li class="small muted">No strong examples in this Congress.</li>`;
 }
 function pickVote(roll) { state.vote[state.c] = roll; state.mode = "vote"; house(state.c).then(drawExplore); }
+// roll calls matching every word of q (or all words run together, so "hr 7888" finds HR7888); null for an empty query
+function matchRolls(list, q) {
+  const terms = fold(q).replace(/\./g, "").split(/\s+/).filter(Boolean);
+  if (!terms.length) return null;
+  const joined = terms.join("");
+  return list.filter((r) => terms.every((t) => r.key.includes(t)) || r.key.includes(joined));
+}
 function searchVotes(H, q) {
   const box = $("#ex-vresults");
-  const terms = fold(q).replace(/\./g, "").split(/\s+/).filter(Boolean);
-  if (!terms.length) { box.innerHTML = ""; return; }
-  const joined = terms.join("");
-  const hits = H.rollList.filter((r) => terms.every((t) => r.key.includes(t)) || r.key.includes(joined));
+  const hits = matchRolls(H.rollList, q);
+  if (!hits) { box.innerHTML = ""; return; }
   box.innerHTML = hits.length ? hits.slice(0, 60).map((r) => rollButton(r)).join("") + (hits.length > 60 ? `<li class="none">${hits.length - 60} more. Add a word to narrow the list.</li>` : "")
     : `<li class="none">No vote matches "${esc(q)}". Try a bill number such as H.R. 6172, or a word like budget.</li>`;
 }
@@ -509,9 +514,73 @@ function renderMember(id) {
       </table></div>
     </div>`;
   drawRings($("#m-rings"), p);
+  renderKeyVotes(p);
   const hc = lr ? lr[0] : last[0];
   house(hc).then((H) => { if (!$("#m-circle")) return; drawCircle($("#m-circle"), H, { cy: 300, tip: (m) => memberTip(H, m), click: (m) => { location.hash = `member-${m.id}`; }, selected: id, keep: () => true }); });
 }
+/* ---------- a member's votes: key votes per Congress, and a search of all their votes ---------- */
+const VOTED = { Y: ["Yes", "yes"], N: ["No", "no"], P: ["Didn't vote", "dnv"], _: ["Not in office", "dnv"] };
+// one vote row; party = [yes, no] cast by the member's party (D or R)
+function voteRow(c, r, title, ch, partyCode, party) {
+  const [label, cls] = VOTED[ch] || VOTED.P;
+  let pl = "", against = false;
+  if (party && party[0] + party[1]) {
+    const y = party[0] / (party[0] + party[1]), most = y >= 0.5 ? "yes" : "no";
+    pl = ` · ${PARTY[partyCode]}s ${Math.round(100 * Math.max(y, 1 - y))}% ${most}`;
+    against = y !== 0.5 && (ch === "Y" || ch === "N") && (ch === "Y") !== (y > 0.5);
+  }
+  return `<li><a class="kv" href="#explore-${c}" data-c="${c}" data-roll="${r.roll}"><span class="kvv ${cls}">${label}</span><span class="kvt"><span class="t">${esc(title.length > 160 ? title.slice(0, 157).trimEnd() + "…" : title)}</span>` +
+    `<span class="m">${fmtDate(r.date)}${r.bill ? ` · ${bill(r.bill)}` : ""} · ${esc(r.question)} · ${esc(r.result || "")} ${r.yea}–${r.nay}${pl}</span>` +
+    `${against ? `<span class="kvf">Voted against most of their party</span>` : ""}</span></a></li>`;
+}
+function renderKeyVotes(p) {
+  const box = $("#m-votes");
+  const served = p.h.filter((h) => h[12]).slice().reverse();
+  const groups = served.map((h) => {
+    const fs = houseInfo(h[0]).featured || [];
+    return `<h4 class="kvc">${ord(h[0])} Congress <span class="muted">${years(h[0])}</span></h4><ul class="kvl">` +
+      fs.map((f, j) => voteRow(h[0], f, f.title, h[12][j], h[1], f.party[h[1]])).join("") + `</ul>`;
+  }).join("");
+  box.innerHTML = `
+    <div class="kvhead"><h3>Key votes</h3><p class="small muted">Major votes in each Congress they served. Tap one to see the whole House on the circle.</p></div>
+    ${groups || `<p class="muted">No key votes on record.</p>`}
+    <h3 class="kvsh">Search all their votes</h3>
+    <label class="sr" for="m-vsearch">Search all their votes</label>
+    <input id="m-vsearch" type="search" autocomplete="off" placeholder="Bill or keyword, e.g. H.R. 2 or budget">
+    <ul class="kvl" id="m-vresults"></ul>`;
+  const q = $("#m-vsearch");
+  let seq = 0;
+  q.addEventListener("input", async () => {
+    const mine = ++seq, out = $("#m-vresults");
+    if (!q.value.trim()) { out.innerHTML = ""; return; }
+    const hs = p.h.filter((h) => h[4] !== null).slice().reverse();
+    if (!hs.every((h) => cache[`V${h[0]}`])) out.innerHTML = `<li class="none">Loading their votes…</li>`;
+    const all = await Promise.all(hs.map((h) => Promise.all([house(h[0]), votesOf(h[0])])));
+    if (mine !== seq) return;
+    const hits = [];
+    for (const [H, V] of all) {
+      const m = H.byId[p.id];
+      for (const r of (matchRolls(H.rollList, q.value) || []).slice().reverse()) if (V.byRoll[r.roll][m.k] !== "_") hits.push([H, V, m, r]);  // skip votes from before or after their time in office
+    }
+    const shown = hits.slice(0, 50).map(([H, V, m, r]) => {
+      const vs = V.byRoll[r.roll], party = [0, 0];
+      for (const o of H.list) if (o.party === m.party) { if (vs[o.k] === "Y") party[0]++; else if (vs[o.k] === "N") party[1]++; }
+      const f = (houseInfo(H.congress).featured || []).find((x) => x.roll === r.roll);
+      return voteRow(H.congress, r, rollTitle(r, f), vs[m.k], m.party, m.party === "I" ? null : party);
+    });
+    out.innerHTML = hits.length ? shown.join("") + (hits.length > 50 ? `<li class="none">${hits.length - 50} more. Add a word to narrow the list.</li>` : "")
+      : `<li class="none">No vote matches "${esc(q.value)}". Try a bill number such as H.R. 2, or a word like budget.</li>`;
+  });
+  box.onclick = (e) => {
+    const a = e.target.closest("a[data-roll]");
+    if (!a) return;
+    e.preventDefault();
+    const c = +a.dataset.c;
+    state.pendingVote = { c, roll: +a.dataset.roll }; state.selected = { c, id: p.id };
+    location.hash = `explore-${c}`;
+  };
+}
+
 /* ---------- Senate interest counter (worker/index.js; hidden count if the API is not there) ---------- */
 function senateText(n, mine) {
   if (n === null) return mine ? "Thanks! We've noted your interest." : "Tell us, and we'll run the same analysis for the Senate.";

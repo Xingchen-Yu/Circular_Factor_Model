@@ -9,8 +9,8 @@ Optional: scripts/featured_votes.json, hand-picked featured votes per House
 top-scoring "ends against the middle" votes.
 
 Outputs (website/data/):
-  index.json      one entry per House: years, majority, chi_0/chi_D/chi_R, counts, featured votes
-  members.json    one entry per person: name and their record in every House (search, member pages)
+  index.json      one entry per House: years, majority, chi_0/chi_D/chi_R, counts, featured votes (with yes / no per party)
+  members.json    one entry per person: name and their record in every House, incl. their featured votes (search, member pages)
   rings.json      every member's display angle and party in every House (the "tree rings" chart)
   H{c}.json       members of House c (display angle, rank, interval) and its roll calls
   V{c}.json       how each member voted on each roll call (loaded when a vote is picked)
@@ -174,22 +174,6 @@ def main():
         for r in leg[leg.merged_ids == True].itertuples():  # noqa: E712
             notes[r.person] = switch_note(c, r, members, votes, vv_rc)
 
-        mrows = []
-        for k, r in enumerate(leg.itertuples()):
-            mrows.append([r.person, r.party, r.state, int(r.district), round(float(ang[k]), 4), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), int(r.n_votes), int(bool(r.placed))])
-            people.setdefault(r.person, {"id": r.person, "name": nm[r.person], "h": []})["h"].append(
-                [c, r.party, r.state, int(r.district), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), n_rank, int(r.n_votes), int(bool(r.placed)), notes.get(r.person), round(float(ang[k]), 3)])
-        for r in skipped.itertuples():
-            people.setdefault(r.person, {"id": r.person, "name": nm[r.person], "h": []})["h"].append(
-                [c, r.party, r.state, int(r.district), None, None, None, n_rank, int(r.n_votes), 0, None, None])
-
-        rcrows = [[int(r.rollnumber), r.date, r.bill_number if isinstance(r.bill_number, str) else "", r.vote_question if isinstance(r.vote_question, str) else "",
-                   describe(r._asdict()), r.vote_result if isinstance(r.vote_result, str) else "", int(r.yea_count), int(r.nay_count), r.score] for r in rc.itertuples()]
-        (OUT / f"H{c}.json").write_text(json.dumps({"congress": c, "nRank": n_rank, "cols": ["id", "party", "state", "district", "angle", "rank", "lo", "hi", "votes", "placed"],
-                                                     "members": mrows, "rollcols": ["roll", "date", "bill", "question", "desc", "result", "yea", "nay", "score"], "rolls": rcrows},
-                                                    separators=(",", ":"), ensure_ascii=False))
-        (OUT / f"V{c}.json").write_text(json.dumps({"rolls": rolls, "votes": vs}, separators=(",", ":")))
-
         # featured votes: hand-picked if present, else the best-scoring roll call per bill
         top = rc.sort_values("score", ascending=False)
         top = top[~top.bill_number.duplicated() | top.bill_number.isna()].head(8)
@@ -201,6 +185,31 @@ def main():
             assert all(f["roll"] in rolls for f in featured), f"H{c}: featured roll call not in the data"
         else:
             featured = [{"roll": int(r.rollnumber)} for r in top.itertuples() if r.score >= 0.4][:4]
+        # key votes on member pages: the roll call facts, yes / no counts per party, and each member's own votes (members.json)
+        fvs = [vs[rolls.index(f["roll"])] for f in featured]
+        party = np.array(list(leg.party))
+        for f, s in zip(featured, fvs):
+            r = rc.loc[rc.rollnumber == f["roll"]].iloc[0]
+            a = np.array(list(s))
+            f.update({"date": r.date, "bill": r.bill_number if isinstance(r.bill_number, str) else "", "question": r.vote_question if isinstance(r.vote_question, str) else "",
+                      "result": r.vote_result if isinstance(r.vote_result, str) else "", "yea": int(r.yea_count), "nay": int(r.nay_count),
+                      "party": {g: [int(((party == g) & (a == "Y")).sum()), int(((party == g) & (a == "N")).sum())] for g in ("D", "R")}})
+
+        mrows = []
+        for k, r in enumerate(leg.itertuples()):
+            mrows.append([r.person, r.party, r.state, int(r.district), round(float(ang[k]), 4), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), int(r.n_votes), int(bool(r.placed))])
+            people.setdefault(r.person, {"id": r.person, "name": nm[r.person], "h": []})["h"].append(
+                [c, r.party, r.state, int(r.district), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), n_rank, int(r.n_votes), int(bool(r.placed)), notes.get(r.person), round(float(ang[k]), 3), "".join(x[k] for x in fvs)])
+        for r in skipped.itertuples():
+            people.setdefault(r.person, {"id": r.person, "name": nm[r.person], "h": []})["h"].append(
+                [c, r.party, r.state, int(r.district), None, None, None, n_rank, int(r.n_votes), 0, None, None, None])
+
+        rcrows = [[int(r.rollnumber), r.date, r.bill_number if isinstance(r.bill_number, str) else "", r.vote_question if isinstance(r.vote_question, str) else "",
+                   describe(r._asdict()), r.vote_result if isinstance(r.vote_result, str) else "", int(r.yea_count), int(r.nay_count), r.score] for r in rc.itertuples()]
+        (OUT / f"H{c}.json").write_text(json.dumps({"congress": c, "nRank": n_rank, "cols": ["id", "party", "state", "district", "angle", "rank", "lo", "hi", "votes", "placed"],
+                                                     "members": mrows, "rollcols": ["roll", "date", "bill", "question", "desc", "result", "yea", "nay", "score"], "rolls": rcrows},
+                                                    separators=(",", ":"), ensure_ascii=False))
+        (OUT / f"V{c}.json").write_text(json.dumps({"rolls": rolls, "votes": vs}, separators=(",", ":")))
 
         rings.append({"congress": c, "angle": [round(float(a), 3) for a in ang], "party": "".join(leg.party)})
         ix = index.loc[c]
