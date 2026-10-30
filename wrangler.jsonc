@@ -1,0 +1,6 @@
+// Cloudflare deploy config: serves the static Full Circle site in website/ (no build step).
+{
+  "name": "fullcircle",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./website" }
+}
