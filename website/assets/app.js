@@ -308,11 +308,14 @@ async function renderStory() {
 }
 
 /* ---------- explore ---------- */
-// where a Congress ranks among all of them on an index: "Highest", "3rd highest", ..., "Lowest"
-function rankText(c, key) {
+// where a Congress ranks among all of them on an index: "Highest", "3rd highest", ..., "Lowest";
+// the top 5 are bold so unusually high values stand out
+function rankText(c, key, lower = false) {
   const order = INDEX.houses.slice().sort((a, b) => b[key][0] - a[key][0]).map((h) => h.congress);
   const r = order.indexOf(c) + 1;
-  return r === 1 ? "Highest" : r === order.length ? "Lowest" : `${ord(r)} highest`;
+  let s = r === 1 ? "Highest" : r === order.length ? "Lowest" : `${ord(r)} highest`;
+  if (lower) s = s.toLowerCase();
+  return r <= 5 ? `<b>${s}</b>` : s;
 }
 let exHandle = null;
 async function renderExplore(c) {
@@ -328,7 +331,7 @@ async function renderExplore(c) {
   $("#ex-tiles").innerHTML = `
     <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">${rankText(c, "chi_0")} of ${INDEX.houses.length} Congresses since 1987</div></div>
     <div class="tile"><div class="k">Members placed</div><div class="v">${nEst}</div><div class="s"><b style="color:var(--D)">${info.nD} Democrats</b> · <b style="color:var(--R)">${info.nR} Republicans</b>${info.nI ? ` · <b style="color:var(--I)">${info.nI} Independent${info.nI > 1 ? "s" : ""}</b>` : ""}</div>${info.nSkipped ? `<div class="s muted">${info.nSkipped} not placed (too few votes)</div>` : ""}</div>
-    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">Of ${INDEX.houses.length} Congresses: Democrats <span style="color:var(--D)">${rankText(c, "chi_D").toLowerCase()}</span> · Republicans <span style="color:var(--R)">${rankText(c, "chi_R").toLowerCase()}</span></div></div>
+    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">Of ${INDEX.houses.length} Congresses: Democrats <span style="color:var(--D)">${rankText(c, "chi_D", true)}</span> · Republicans <span style="color:var(--R)">${rankText(c, "chi_R", true)}</span></div></div>
     <div class="tile"><div class="k">Roll-call votes</div><div class="v">${info.nRolls.toLocaleString()}</div><div class="s">${fmtDate(info.first)} to ${fmtDate(info.last)}</div></div>`;
   const notes = [];
   if (c === LATEST) notes.push(`In session. Votes through ${fmtDate(info.last)}.`);
