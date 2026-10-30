@@ -8,18 +8,6 @@ const PARTY = { D: "Democrat", R: "Republican", I: "Independent" };
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const LATEST = 119;
 const IDX = (v) => Math.round(100 * v);   // polarization index: 100 x circular variance
-// Context events for the trend chart (timing, not cause)
-const EVENTS = [
-  { c: 104, text: "1994: Republicans win the House for the first time in 40 years.", url: "https://en.wikipedia.org/wiki/1994_United_States_House_of_Representatives_elections" },
-  { c: 112, text: "2010: Tea Party wave election.", url: "https://en.wikipedia.org/wiki/2010_United_States_House_of_Representatives_elections" },
-  { c: 114, text: "2015: House Freedom Caucus forms; Speaker Boehner resigns.", url: "https://en.wikipedia.org/wiki/Freedom_Caucus" },
-  { c: 118, text: "2023: Speaker McCarthy removed, with 8 Republicans joining all Democrats.", url: "https://en.wikipedia.org/wiki/Kevin_McCarthy" },
-  { c: 119, text: "2025: Massie (R) and Khanna (D) force the Epstein files vote past leadership; it passes 427 to 1.", url: "https://www.news9.com/national-politics-oklahoma/epstein-discharge-petition-secures-final-signature-needed-to-force-house-vote-on-releasing-files" },
-  { c: 119, text: "2025: Record 43-day government shutdown ends.", url: "https://www.nhpr.org/2025-11-12/house-votes-to-end-the-longest-ever-government-shutdown" },
-  { c: 119, text: "2026: War with Iran begins; House war powers votes split Republicans.", url: "https://www.npr.org/2026/06/03/nx-s1-5845102/house-iran-war-powers-vote" },
-  { c: 119, text: "2026: Massie loses his primary to a Trump-endorsed challenger.", url: "https://www.pbs.org/newshour/politics/trump-backed-gallrein-defeats-rep-thomas-massie-in-gop-primary" },
-];
-
 const ord = (n) => n + (n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th");
 const years = (c) => `${1787 + 2 * c}–${1789 + 2 * c}`;
 const fmtDate = (d) => { const [y, m, dd] = d.split("-").map(Number); return `${MONTHS[m - 1]} ${dd}, ${y}`; };
@@ -117,12 +105,6 @@ function drawCircle(svg, H, opts) {
     const p = (a) => `${300 + R * Math.sin(a)} ${cy - R * Math.cos(a)}`;
     el("path", { d: `M ${p(a0)} A ${R} ${R} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${p(a1)}`, fill: "none", stroke: "var(--ink3)", "stroke-width": 1.6, "stroke-dasharray": "5 6" }, svg);
   }
-  const [l1, l2] = info.chi_0[0] >= 0.2
-    ? ["The most liberal and most conservative meet here", "On some votes, they join against the middle"]
-    : ["The most liberal and most conservative rarely meet", "This House still behaves like a line"];
-  txt(svg, 300, cy + R + 30, l1, { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
-  txt(svg, 300, cy + R + 58, l2, { "text-anchor": "middle" });
-
   const vs = opts.votes;
   const g = el("g", {}, svg);
   for (const p of pts) {
@@ -206,16 +188,6 @@ function drawTrends() {
   series(svg, f.x, f.y, "chi_0", "var(--ink)", "Polarization index");
   const top = INDEX.houses.reduce((a, b) => (b.chi_0[0] > a.chi_0[0] ? b : a));
   txt(svg, f.x(top.congress) - 10, f.y(100 * top.chi_0[2]) - 6, "Record high", { class: "ann", "text-anchor": "end" });
-  // event markers along the top: one badge per Congress, numbered like the list below
-  for (const c of [...new Set(EVENTS.map((e) => e.c))]) {
-    const nums = EVENTS.map((e, j) => [e.c, j + 1]).filter(([cc]) => cc === c).map(([, j]) => j);
-    const label = nums.length > 1 ? `${nums[0]}–${nums[nums.length - 1]}` : String(nums[0]);
-    const w = 10 + 7 * label.length, xx = Math.min(f.x(c), 600 - 14 - w / 2);
-    el("line", { x1: f.x(c), x2: f.x(c), y1: 20, y2: f.y(0), stroke: "var(--ink3)", "stroke-dasharray": "2 3", opacity: .6 }, svg);
-    el("rect", { x: xx - w / 2, y: 2, width: w, height: 18, rx: 9, fill: "var(--ink)" }, svg);
-    txt(svg, xx, 15, label, { "text-anchor": "middle", style: "font: 600 11px var(--f-body); fill: var(--bg)" });
-  }
-  $("#events").innerHTML = EVENTS.map((ev) => `<li>${esc(ev.text)} <a href="${ev.url}" rel="noopener" target="_blank">source</a></li>`).join("");
   $("#trend-legend").innerHTML = `<span><i class="sq" style="background:var(--majD);box-shadow:inset 0 0 0 1px var(--D)"></i>Democratic majority</span><span><i class="sq" style="background:var(--majR);box-shadow:inset 0 0 0 1px var(--R)"></i>Republican majority</span>`;
   svg = $("#trend-party");
   const pmax = Math.max(...INDEX.houses.map((h) => Math.max(h.chi_D[2], h.chi_R[2]))) * 100;
@@ -326,7 +298,6 @@ async function renderStory() {
 /* ---------- explore ---------- */
 // reference level: average of the 100th-103rd Congresses (1987-95)
 const base = (key) => INDEX.houses.filter((h) => h.congress <= 103).reduce((s, h) => s + h[key][0], 0) / 4;
-const times = (v, b) => `${(v / b).toFixed(1)}×`;
 let exHandle = null;
 async function renderExplore(c) {
   if (!houseInfo(c)) c = LATEST;
@@ -339,9 +310,9 @@ async function renderExplore(c) {
   $("#ex-sub").textContent = `${years(c)}${c === LATEST ? ", in progress" : ""} · ${PARTY[info.majority]} majority`;
   const nEst = info.nFitted + info.nPlaced;
   $("#ex-tiles").innerHTML = `
-    <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">${times(info.chi_0[0], base("chi_0"))} the 1987–95 average (${IDX(base("chi_0"))})</div></div>
+    <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">1987–95 average: ${IDX(base("chi_0"))}</div></div>
     <div class="tile"><div class="k">Members placed</div><div class="v">${nEst}</div><div class="s"><b style="color:var(--D)">${info.nD} Democrats</b> · <b style="color:var(--R)">${info.nR} Republicans</b>${info.nI ? ` · <b style="color:var(--I)">${info.nI} Independent${info.nI > 1 ? "s" : ""}</b>` : ""}</div>${info.nSkipped ? `<div class="s muted">${info.nSkipped} not placed (too few votes)</div>` : ""}</div>
-    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">vs 1987–95: Democrats ${times(info.chi_D[0], base("chi_D"))} · Republicans ${times(info.chi_R[0], base("chi_R"))}</div></div>
+    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">1987–95 average: <span style="color:var(--D)">${(100 * base("chi_D")).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * base("chi_R")).toFixed(1)}</span></div></div>
     <div class="tile"><div class="k">Roll-call votes</div><div class="v">${info.nRolls.toLocaleString()}</div><div class="s">${fmtDate(info.first)} to ${fmtDate(info.last)}</div></div>`;
   const notes = [];
   if (c === LATEST) notes.push(`In session. Votes through ${fmtDate(info.last)}.`);
@@ -507,7 +478,7 @@ function renderMember(id) {
     <div>
       <figure class="panel">
         <figcaption><b>Seat on the circle, ${ord(lr ? lr[0] : last[0])} Congress</b><span>Ringed dot: ${esc(p.name)}</span></figcaption>
-        <svg id="m-circle" class="circ" viewBox="0 0 600 560" role="img" aria-label="Member highlighted on the circle"></svg>
+        <svg id="m-circle" class="circ" viewBox="0 0 600 490" role="img" aria-label="Member highlighted on the circle"></svg>
       </figure>
       <figure class="panel" style="margin-top:16px">
         <figcaption><b>Over the years</b><span>One ring per Congress, 1987 inside. Dots: this member.</span></figcaption>

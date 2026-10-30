@@ -49,7 +49,7 @@
         </div>
         <figure class="panel hero-fig">
           <figcaption><b>The House today</b><span>Each dot is one representative</span></figcaption>
-          <svg id="hero-circle" class="circ" viewBox="0 0 600 560" role="img" aria-label="Members of the 119th House on a circle: Democrats on the left, Republicans on the right, both ends curving down toward each other"></svg>
+          <svg id="hero-circle" class="circ" viewBox="0 0 600 490" role="img" aria-label="Members of the 119th House on a circle: Democrats on the left, Republicans on the right, both ends curving down toward each other"></svg>
         </figure>
       </div>
     </section>
@@ -74,11 +74,9 @@
           </details>
         </div>
         <figure class="panel">
-          <figcaption><b>Polarization index, 0 to 100</b><span>Shading shows the majority party. Numbered marks: events below.</span></figcaption>
+          <figcaption><b>Polarization index, 0 to 100</b><span>Shading shows the majority party</span></figcaption>
           <svg id="trend-all" class="chart" viewBox="0 0 600 340" role="img" aria-label="Polarization index by Congress"></svg>
           <div class="legend" id="trend-legend"></div>
-          <ol class="events" id="events"></ol>
-          <p class="small muted" style="margin:6px 0 0">Events are shown for context. The chart shows timing, not cause.</p>
         </figure>
       </div>
     </section>
@@ -171,7 +169,7 @@
       <div class="wrap explore-grid">
         <div class="circle-wrap">
           <div class="legend" id="ex-legend"></div>
-          <svg id="ex-circle" class="circ" viewBox="0 0 600 560" role="img" aria-label="Members on the circle"></svg>
+          <svg id="ex-circle" class="circ" viewBox="0 0 600 490" role="img" aria-label="Members on the circle"></svg>
           <p class="small muted">Tap a dot to see the member.</p>
         </div>
         <aside class="side">
@@ -266,7 +264,7 @@
           <summary>Details for statisticians</summary>
           <p><b>Model.</b> Bayesian circular factor model.<a class="fn" href="#fn1">1</a> Members and each vote's yes and no positions are angles on the unit circle; a yes is more likely when the yes position is geodesically closer. Fitted with geodesic Hamiltonian Monte Carlo (JAX, GPU), 2 to 4 chains per Congress. New Metropolis moves that mirror or shift each vote's yes and no positions, and regularly redrawn step sizes, help chains escape configurations where they get stuck. Chains that agree are pooled; where one chain's log-likelihood is more than 3 within-chain standard deviations higher, it is used alone, and each such choice was checked against voting records.</p>
           <p><b>Line as a limit.</b> As the concentration of the members' von Mises prior and the vote-specific link precisions grow, the circular likelihood and prior approach those of the one-dimensional Euclidean probit model on the tangent line at the top of the circle; the prior (mean concentration 10, so about 95% prior mass on the upper half) favors this regime (paper Sections 4.3–4.4).<a class="fn" href="#fn1">1</a></p>
-          <p><b>Polarization index.</b> 100 × χ, where χ = 1 − R̄ is the circular variance of the posterior member positions and R̄ is the length of their mean direction. χ lies between 0 and 1 on the circle, so it is comparable across Congresses (unlike the variance on a line, which depends on an arbitrary scale). Within-party indices use one party's members. Raw χ values are in the downloads. Ratios such as "2.6× the 1987–95 average" compare index values; for small spreads the index grows roughly with the square of the spread (χ ≈ σ²/2), so 4× the index means about 2× the spread.</p>
+          <p><b>Polarization index.</b> 100 × χ, where χ = 1 − R̄ is the circular variance of the posterior member positions and R̄ is the length of their mean direction. χ lies between 0 and 1 on the circle, so it is comparable across Congresses (unlike the variance on a line, which depends on an arbitrary scale). Within-party indices use one party's members. Raw χ values are in the downloads. Comparisons such as "about 5 times" compare index values; for small spreads the index grows roughly with the square of the spread (χ ≈ σ²/2), so 4× the index means about 2× the spread.</p>
           <p><b>Ranks.</b> Posterior median and 95% interval of each member's rank around the circle, starting from the liberal end, among members fitted directly.</p>
           <p><b>Members with many missed votes</b> (more than 40% missing) are handled in two stages. First the model is fitted to everyone else. Then each of these members is placed with a cut posterior:<a class="fn" href="#fn2">2</a><a class="fn" href="#fn3">3</a> for every posterior draw of the vote parameters, their position is drawn exactly from its conditional distribution, evaluated on a 4,096-point grid over the circle. Their votes inform their own position but do not feed back into the vote parameters. Because the draw is exact for every posterior draw, this avoids the naive cut sampler, which does not converge to a well-defined limiting distribution.<a class="fn" href="#fn2">2</a> On when cuts are appropriate and how they behave, see <a class="fn" href="#fn4">4</a><a class="fn" href="#fn5">5</a><a class="fn" href="#fn6">6</a>. Cut credible regions can under-cover,<a class="fn" href="#fn6">6</a> so we checked coverage in a <a href="https://github.com/Xingchen-Yu/Circular_Factor_Model/blob/master/python/docs/cut_posterior_simulation.md" rel="noopener" target="_blank">simulation study</a>. These members are then ranked among the fitted members.</p>
           <p><b>Party switchers.</b> Listed under the party they cast most of their votes with in that Congress. For within-party indices, members who left a party to become independent count with the party they left (Justin Amash, 116th), or with the party they joined in the same Congress (Virgil Goode, 107th). Bernie Sanders (independent) is left out of both.</p>
