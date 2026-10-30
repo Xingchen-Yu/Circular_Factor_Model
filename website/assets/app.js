@@ -187,7 +187,7 @@ function drawTrends() {
   let f = trendFrame(svg, 600, 340, 45, 10);
   series(svg, f.x, f.y, "chi_0", "var(--ink)", "Polarization index");
   const top = INDEX.houses.reduce((a, b) => (b.chi_0[0] > a.chi_0[0] ? b : a));
-  txt(svg, f.x(top.congress) - 10, f.y(100 * top.chi_0[2]) - 6, "Record high", { class: "ann", "text-anchor": "end" });
+  txt(svg, f.x(top.congress) - 10, f.y(100 * top.chi_0[2]) - 6, "Highest since 1987", { class: "ann", "text-anchor": "end" });
   $("#trend-legend").innerHTML = `<span><i class="sq" style="background:var(--majD);box-shadow:inset 0 0 0 1px var(--D)"></i>Democratic majority</span><span><i class="sq" style="background:var(--majR);box-shadow:inset 0 0 0 1px var(--R)"></i>Republican majority</span>`;
   svg = $("#trend-party");
   const pmax = Math.max(...INDEX.houses.map((h) => Math.max(h.chi_D[2], h.chi_R[2]))) * 100;
@@ -211,7 +211,7 @@ function drawExplain() {
   const first = INDEX.houses[0], top = INDEX.houses.reduce((a, b) => (b.chi_0[0] > a.chi_0[0] ? b : a));
   const ex = [
     [first.chi_0[0], 100, `like ${first.years[0]}`],
-    [top.chi_0[0], 300, `like ${top.years[0]} (the record)`],
+    [top.chi_0[0], 300, `like ${top.years[0]} (the highest)`],
     [0.7, 500, "hypothetical: the ends nearly meet"],
   ];
   for (const [v, cx, note] of ex) {
