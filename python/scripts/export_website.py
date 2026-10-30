@@ -11,6 +11,7 @@ top-scoring "ends against the middle" votes.
 Outputs (website/data/):
   index.json      one entry per House: years, majority, chi_0/chi_D/chi_R, counts, featured votes
   members.json    one entry per person: name and their record in every House (search, member pages)
+  rings.json      every member's display angle and party in every House (the "tree rings" chart)
   H{c}.json       members of House c (display angle, rank, interval) and its roll calls
   V{c}.json       how each member voted on each roll call (loaded when a vote is picked)
   csv/            the per-House result files, for download
@@ -128,7 +129,7 @@ def main():
     featured_manual = json.loads((ROOT / "scripts" / "featured_votes.json").read_text()) if (ROOT / "scripts" / "featured_votes.json").exists() else {}
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "csv").mkdir(exist_ok=True)
-    people, houses, candidates = {}, [], []
+    people, houses, candidates, rings = {}, [], [], []
     for c in CONGRESSES:
         d = FINAL / f"H{c}"
         leg = pd.read_csv(d / "legislators.csv")
@@ -177,10 +178,10 @@ def main():
         for k, r in enumerate(leg.itertuples()):
             mrows.append([r.person, r.party, r.state, int(r.district), round(float(ang[k]), 4), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), int(r.n_votes), int(bool(r.placed))])
             people.setdefault(r.person, {"id": r.person, "name": nm[r.person], "h": []})["h"].append(
-                [c, r.party, r.state, int(r.district), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), n_rank, int(r.n_votes), int(bool(r.placed)), notes.get(r.person)])
+                [c, r.party, r.state, int(r.district), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), n_rank, int(r.n_votes), int(bool(r.placed)), notes.get(r.person), round(float(ang[k]), 3)])
         for r in skipped.itertuples():
             people.setdefault(r.person, {"id": r.person, "name": nm[r.person], "h": []})["h"].append(
-                [c, r.party, r.state, int(r.district), None, None, None, n_rank, int(r.n_votes), 0, None])
+                [c, r.party, r.state, int(r.district), None, None, None, n_rank, int(r.n_votes), 0, None, None])
 
         rcrows = [[int(r.rollnumber), r.date, r.bill_number if isinstance(r.bill_number, str) else "", r.vote_question if isinstance(r.vote_question, str) else "",
                    describe(r._asdict()), r.vote_result if isinstance(r.vote_result, str) else "", int(r.yea_count), int(r.nay_count), r.score] for r in rc.itertuples()]
@@ -201,6 +202,7 @@ def main():
         else:
             featured = [{"roll": int(r.rollnumber)} for r in top.itertuples() if r.score >= 0.4][:4]
 
+        rings.append({"congress": c, "angle": [round(float(a), 3) for a in ang], "party": "".join(leg.party)})
         ix = index.loc[c]
         for k in ("chi_0", "chi_D", "chi_R"):
             assert abs(ix[f"{k}_mean"] - summ[k]["mean"]) < 1e-12, f"H{c}: index.csv and summary.json disagree on {k}"
@@ -221,6 +223,7 @@ def main():
         dup = pd.Series(rows).duplicated()
         assert not dup.any(), f"H{c}: two members share a name and state: {pd.Series(rows)[dup].tolist()}"
     (OUT / "members.json").write_text(json.dumps(sorted(people.values(), key=lambda p: p["name"]), separators=(",", ":"), ensure_ascii=False))
+    (OUT / "rings.json").write_text(json.dumps(rings, separators=(",", ":")))
     (OUT / "index.json").write_text(json.dumps({"houses": houses, "lastVote": houses[-1]["last"], "source": "Voteview (voteview.com), downloaded 2026-10"}, separators=(",", ":")))
     cand = ROOT / "results" / "website"
     cand.mkdir(parents=True, exist_ok=True)

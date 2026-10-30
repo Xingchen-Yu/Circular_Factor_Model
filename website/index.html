@@ -43,12 +43,12 @@
       <div class="wrap hero-grid">
         <div>
           <p class="eyebrow">U.S. House · 1987 to today</p>
-          <h1>The House has come full circle.</h1>
-          <p class="lede">Every member, placed by how they vote. Allies sit close together. Lately, the two ends meet.</p>
+          <h1>Where they really stand.</h1>
+          <p class="lede">Talk is cheap; votes are on the record. Every House vote since 1987 reveals where each representative actually stands, and shows a House that has bent from a line into a circle.</p>
           <div class="cta"><a class="btn" href="#members">Find your representative</a><a class="btn ghost" href="#explore">Explore a House</a></div>
         </div>
         <figure class="panel hero-fig">
-          <figcaption><b>The House today</b><span>Each dot is one member</span></figcaption>
+          <figcaption><b>The House today</b><span>Each dot is one representative</span></figcaption>
           <svg id="hero-circle" class="circ" viewBox="0 0 600 560" role="img" aria-label="Members of the 119th House on a circle: Democrats on the left, Republicans on the right, both ends curving down toward each other"></svg>
         </figure>
       </div>
@@ -56,7 +56,7 @@
 
     <section class="band">
       <div class="wrap midterm">
-        <p><b>Voting on November 3?</b> <span class="muted">See how your representative has voted. Challengers aren't included.</span></p>
+        <p><b>Voting November 3? Every incumbent has a record. See theirs.</b> <span class="muted">New candidates join the map once they've voted in the House.</span></p>
         <a class="btn" href="#members">Look up a member</a>
       </div>
     </section>
@@ -66,17 +66,33 @@
         <div class="copy">
           <p class="eyebrow">The trend</p>
           <h2>Polarization hit record highs after 2011</h2>
-          <p>As the parties pulled apart, the far ends curved around the circle toward each other.</p>
-          <details class="explain">
-            <summary>What does the score mean?</summary>
-            <p>How spread out members are around the circle: 0 means everyone votes alike, 1 means spread all the way around.</p>
-            <svg id="explain-svg" viewBox="0 0 460 190" role="img" aria-label="Two example circles: a low score with members bunched at the top, and a high score with members spread so the two ends approach each other at the bottom"></svg>
+          <p>As the parties pulled apart, their outer members kept going, curving around the circle until the two ends began to meet.</p>
+          <details class="explain" open>
+            <summary>What does the index mean?</summary>
+            <p>0 means everyone votes alike. 100 means the two sides sit at opposite points of the circle. Here is what different values look like:</p>
+            <svg id="explain-svg" viewBox="0 0 600 200" role="img" aria-label="Three example circles for index values 10, 25 and 40: the two sides move further apart as the index grows"></svg>
           </details>
         </div>
         <figure class="panel">
-          <figcaption><b>Polarization score</b><span>Shading shows the majority party</span></figcaption>
-          <svg id="trend-all" class="chart" viewBox="0 0 600 340" role="img" aria-label="Polarization score by Congress"></svg>
+          <figcaption><b>Polarization index, 0 to 100</b><span>Shading shows the majority party. Numbered marks: events below.</span></figcaption>
+          <svg id="trend-all" class="chart" viewBox="0 0 600 340" role="img" aria-label="Polarization index by Congress"></svg>
           <div class="legend" id="trend-legend"></div>
+          <ol class="events" id="events"></ol>
+          <p class="small muted" style="margin:6px 0 0">Events are shown for context. The chart shows timing, not cause.</p>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap two-col">
+        <div class="copy">
+          <p class="eyebrow">Every House since 1987</p>
+          <h2>Watch the circle close</h2>
+          <p>One ring per Congress: 1987 at the center, today on the outside. Each tick is a representative. Early rings are short arcs, close to a line. Recent rings wrap around.</p>
+        </div>
+        <figure class="panel">
+          <figcaption><b>Tree rings of the House</b><span>Blue: Democrats. Red: Republicans.</span></figcaption>
+          <svg id="rings" class="circ" viewBox="0 0 600 600" role="img" aria-label="Concentric rings, one per Congress from 1987 (inside) to 2025 (outside), showing members spreading further around the circle over time"></svg>
         </figure>
       </div>
     </section>
@@ -85,12 +101,12 @@
       <div class="wrap two-col">
         <div class="copy">
           <p class="eyebrow">Inside each party</p>
-          <h2>Democrats moved closer. Republicans spread out.</h2>
-          <p>Since 2011, Republicans have voted less alike than Democrats in every Congress.</p>
+          <h2>Democrats moved closer. Republicans became more divided.</h2>
+          <p id="party-ratio"></p>
         </div>
         <figure class="panel">
-          <figcaption><b>Spread within each party</b><span>Higher means less alike</span></figcaption>
-          <svg id="trend-party" class="chart" viewBox="0 0 600 300" role="img" aria-label="Within-party score for Democrats and Republicans by Congress"></svg>
+          <figcaption><b>Within-party index</b><span>Same 0 to 100 scale, zoomed in: members of one party mostly vote alike.</span></figcaption>
+          <svg id="trend-party" class="chart" viewBox="0 0 600 300" role="img" aria-label="Within-party index for Democrats and Republicans by Congress"></svg>
           <div class="legend"><span><i style="background:var(--D)"></i>Democrats</span><span><i style="background:var(--R)"></i>Republicans</span></div>
         </figure>
       </div>
@@ -101,12 +117,12 @@
         <div class="copy">
           <p class="eyebrow">When the ends meet</p>
           <h2>Both ends against the middle</h2>
-          <p>Surveillance renewal, March 2020. Both party leaderships backed it. Most no votes came from the two ends.</p>
-          <p>On a line, the ends are as far apart as possible. On a circle, they can be neighbors.</p>
+          <p>April 2024: the House renewed FISA surveillance powers, 273 to 147, with most of both parties behind it. The no votes came from the two ends: nearly all of the 10% most conservative members, and four in five of the 10% most liberal.</p>
+          <p>On a line, the two ends are as far apart as possible. On a circle, they can be neighbors.</p>
           <div class="cta"><a class="btn ghost" href="#explore" id="story-vote-link">See it on the circle</a></div>
         </div>
         <figure class="panel">
-          <figcaption><b>Voted no on H.R. 6172</b><span>USA FREEDOM Reauthorization Act, 2020</span></figcaption>
+          <figcaption><b>Voted no on renewing FISA</b><span>H.R. 7888, April 12, 2024</span></figcaption>
           <div id="story-tally" class="tally"></div>
         </figure>
       </div>
@@ -115,9 +131,9 @@
     <section>
       <div class="wrap">
         <div class="three">
-          <div><h3>Votes only</h3><p>Positions come from floor votes. Nothing else.</p></div>
+          <div><h3>Votes, not words</h3><p>Positions come from floor votes. Nothing else.</p></div>
           <div><h3>Ranges matter</h3><p>Fewer votes means a wider range.</p></div>
-          <div><h3>Compare ranks</h3><p>Each Congress has its own circle.</p></div>
+          <div><h3>Standings, not spots</h3><p>Compare a member's standing within each Congress, not exact positions across years.</p></div>
         </div>
       </div>
     </section>
@@ -220,41 +236,48 @@
         <h2>How it works</h2>
         <ol class="steps">
           <li>Take every recorded House vote since 1987.</li>
-          <li>Place members on a circle so that those who vote alike sit close together.</li>
+          <li>Place representatives on a circle so that those who vote alike sit close together.</li>
           <li>Rank them around the circle, from the liberal end to the conservative end.</li>
         </ol>
 
         <h3>Why a circle?</h3>
-        <p>A line can't show both ends voting together against the middle. A circle can. When that rarely happens, the circle barely bends and acts like a line.</p>
+        <p>On a line, every vote splits members into a left group and a right group. But some votes split the middle from both ends. A line can't draw that split. A circle can.</p>
+        <svg id="why-svg" viewBox="0 0 640 250" role="img" aria-label="Left: a line where one cut separates left from right. Right: a circle where the no side wraps around the back, joining both ends against the middle."></svg>
+        <p>It matters for rankings. Line models placed the four members of "the Squad" between 172nd and 203rd of 430 in 2019, as if they were moderates, because they often voted with Republicans against their own party's leadership. Adding a second dimension did not fix it.<a class="fn" href="#fn1">1</a> On the circle they rank among the four most liberal members.</p>
+        <p>The idea echoes the "horseshoe theory", which holds that the far left and far right sit closer to each other than to the center.<a class="fn" href="#fn1">1</a> The circle only shows that they <em>vote</em> together, not that they agree: on the same bill, some conservatives may vote no because it costs too much, and some liberals because it doesn't go far enough.</p>
 
         <h3>Keep in mind</h3>
         <ul class="caveats">
-          <li>Compare ranks across Congresses, not positions.</li>
-          <li>The 119th Congress is in session: votes through <span class="lastvote"></span>.</li>
-          <li>Members who missed many votes have wide ranges. Under 25 votes: not estimated.</li>
-          <li>Non-voting delegates (D.C., territories) aren't included.</li>
+          <li><b>Compare standings, not spots.</b> Each Congress's circle is estimated on its own, so a dot's exact spot in 1990 and in 2020 can't be compared. You can compare the polarization index, which uses the same 0 to 100 scale every Congress, and a member's standing within their Congress ("more liberal than 80% of colleagues").</li>
+          <li><b>Ranges.</b> Each rank comes with a 95% Bayesian credible interval: under the model, the rank falls in that range with 95% probability.</li>
+          <li><b>The 119th Congress is in session.</b> Votes through <span class="lastvote"></span>.</li>
+          <li><b>Missed votes.</b> Members who missed many votes have wide ranges. Under 25 votes: not estimated. Non-voting delegates (D.C., territories) aren't included.</li>
         </ul>
 
         <details class="more">
           <summary>Details for statisticians</summary>
-          <p><b>Model.</b> Bayesian circular factor model (Yu &amp; Rodríguez, 2021): members and each vote's yes and no positions live on a circle; a yes is likelier when the yes position is geodesically closer. Fitted with geodesic HMC (JAX, GPU), 2–4 chains per Congress. Agreeing chains are pooled; where one chain's log-likelihood is more than 3 within-chain SD higher, it is used alone, checked against voting records.</p>
-          <p><b>Scores.</b> Polarization score = circular variance of member positions; within-party scores use one party's members.</p>
-          <p><b>Ranks.</b> Out of the members fitted directly. Members missing more than 40% of votes are placed afterwards and ranked among them.</p>
-          <p><b>Party switchers.</b> Listed under the party they cast most votes with that Congress. For within-party scores, members who left for independent count with the party they left (Amash, 116th), or the party they joined that Congress (Goode, 107th). Sanders is excluded.</p>
-          <p><b>Pat Schroeder, 103rd.</b> A second, slightly worse-fitting position near the liberal end exists; the better fit (rank ~80) is shown.</p>
+          <p><b>Model.</b> Bayesian circular factor model.<a class="fn" href="#fn1">1</a> Members and each vote's yes and no positions are angles on the unit circle; a yes is more likely when the yes position is geodesically closer. Fitted with geodesic Hamiltonian Monte Carlo (JAX, GPU), 2 to 4 chains per Congress. Chains that agree are pooled; where one chain's log-likelihood is more than 3 within-chain standard deviations higher, it is used alone, and each such choice was checked against voting records.</p>
+          <p><b>Polarization index.</b> 100 × χ, where χ = 1 − R̄ is the circular variance of the posterior member positions and R̄ is the length of their mean direction. χ lies between 0 and 1 on the circle, so it is comparable across Congresses (unlike the variance on a line, which depends on an arbitrary scale). Within-party indices use one party's members. Raw χ values are in the downloads.</p>
+          <p><b>Ranks.</b> Posterior median and 95% interval of each member's rank around the circle, starting from the liberal end, among members fitted directly.</p>
+          <p><b>Members with many missed votes</b> (more than 40% missing) are left out of the fit and placed afterwards with a cut posterior:<a class="fn" href="#fn2">2</a> for every posterior draw of the vote parameters, the member's position is drawn exactly from its conditional distribution, evaluated on a 4,096-point grid over the circle. Their votes inform their own position but do not change the vote parameters. Drawing exactly for every posterior draw avoids the "naive cut" algorithm, which does not converge to the cut distribution.<a class="fn" href="#fn2">2</a> They are then ranked among the fitted members.</p>
+          <p><b>Party switchers.</b> Listed under the party they cast most of their votes with in that Congress. For within-party indices, members who left a party to become independent count with the party they left (Justin Amash, 116th), or with the party they joined in the same Congress (Virgil Goode, 107th). Bernie Sanders (independent) is left out of both.</p>
+          <p><b>One uncertain case.</b> Pat Schroeder (D-CO) in the 103rd Congress fits two places almost equally well: around rank 80, or near the liberal end. The site shows the better fit; treat her position as uncertain.</p>
         </details>
 
         <h3>Data, code and paper</h3>
         <ul class="links">
           <li><a href="https://github.com/Xingchen-Yu/Circular_Factor_Model/tree/master/website/data/csv" rel="noopener" target="_blank">Download the estimates</a> (CC BY 4.0)</li>
-          <li><a href="https://github.com/Xingchen-Yu/Circular_Factor_Model" rel="noopener" target="_blank">Code on GitHub</a></li>
-          <li>Yu &amp; Rodríguez (2021), <i>Annals of Applied Statistics</i> 15(4). <a href="https://doi.org/10.1214/21-AOAS1454" rel="noopener" target="_blank">Read the paper</a></li>
+          <li><a href="https://github.com/Xingchen-Yu/Circular_Factor_Model" rel="noopener" target="_blank">Code on GitHub</a>, and the R package <a href="https://github.com/Xingchen-Yu/SLFM1D" rel="noopener" target="_blank">SLFM1D</a></li>
           <li>Votes: <a href="https://voteview.com" rel="noopener" target="_blank">Voteview</a> (Lewis et al.). Names: <a href="https://github.com/unitedstates/congress-legislators" rel="noopener" target="_blank">congress-legislators</a>.</li>
         </ul>
+        <ol class="footnotes">
+          <li id="fn1">Yu, X. and Rodríguez, A. (2021). Spatial voting models in circular spaces: A case study of the U.S. House of Representatives. <i>The Annals of Applied Statistics</i> 15(4), 1897–1922. <a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-15/issue-4/Spatial-voting-models-in-circular-spaces--A-case-study/10.1214/21-AOAS1454.full" rel="noopener" target="_blank">Read on Project Euclid</a>. The Squad example and the two-dimensional model are in Section 2 and Table 1; the horseshoe theory in Section 1.</li>
+          <li id="fn2">Plummer, M. (2015). Cuts in Bayesian graphical models. <i>Statistics and Computing</i> 25, 37–43.</li>
+        </ol>
 
         <h3>About</h3>
-        <p>Informational only. Not affiliated with any party, campaign or Voteview. No endorsements, no cookies.</p>
-        <p>Made by Xingchen Yu from PhD research at UC Santa Cruz. <a href="https://www.linkedin.com/in/xingchenyu90/" rel="noopener" target="_blank">LinkedIn</a></p>
+        <p>Full Circle is nonpartisan and informational. It is not affiliated with any party, campaign or Voteview, endorses no one, and uses no cookies.</p>
+        <p>It is built by Xingchen Yu, who developed the circular model with Abel Rodríguez during a PhD in statistics at UC Santa Cruz (published in 2021). This site reruns the model on every House since 1987 with a new, faster implementation, and adds plain-language tools for voters. <a href="https://www.linkedin.com/in/xingchenyu90/" rel="noopener" target="_blank">LinkedIn</a></p>
       </div>
     </section>
   </div>

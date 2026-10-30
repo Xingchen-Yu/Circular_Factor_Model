@@ -7,6 +7,18 @@ const STATES = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA:
 const PARTY = { D: "Democrat", R: "Republican", I: "Independent" };
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const LATEST = 119;
+const IDX = (v) => Math.round(100 * v);   // polarization index: 100 x circular variance
+// Context events for the trend chart (timing, not cause)
+const EVENTS = [
+  { c: 104, text: "1994: Republicans win the House for the first time in 40 years.", url: "https://en.wikipedia.org/wiki/1994_United_States_House_of_Representatives_elections" },
+  { c: 112, text: "2010: Tea Party wave election.", url: "https://en.wikipedia.org/wiki/2010_United_States_House_of_Representatives_elections" },
+  { c: 114, text: "2015: House Freedom Caucus forms; Speaker Boehner resigns.", url: "https://en.wikipedia.org/wiki/Freedom_Caucus" },
+  { c: 118, text: "2023: Speaker McCarthy removed, with 8 Republicans joining all Democrats.", url: "https://en.wikipedia.org/wiki/Kevin_McCarthy" },
+  { c: 119, text: "2025: Massie (R) and Khanna (D) force the Epstein files vote past leadership; it passes 427 to 1.", url: "https://www.news9.com/national-politics-oklahoma/epstein-discharge-petition-secures-final-signature-needed-to-force-house-vote-on-releasing-files" },
+  { c: 119, text: "2025: Record 43-day government shutdown ends.", url: "https://www.nhpr.org/2025-11-12/house-votes-to-end-the-longest-ever-government-shutdown" },
+  { c: 119, text: "2026: War with Iran begins; House war powers votes split Republicans.", url: "https://www.npr.org/2026/06/03/nx-s1-5845102/house-iran-war-powers-vote" },
+  { c: 119, text: "2026: Massie loses his primary to a Trump-endorsed challenger.", url: "https://www.pbs.org/newshour/politics/trump-backed-gallrein-defeats-rep-thomas-massie-in-gop-primary" },
+];
 
 const ord = (n) => n + (n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th");
 const years = (c) => `${1787 + 2 * c}–${1789 + 2 * c}`;
@@ -66,6 +78,28 @@ function layout(list, R) {
     if (maxL * step <= 92 || r === 1.6) return { r, pts: pos.map(({ m, L }) => ({ m, rr: rad(L), x: 300 + rad(L) * Math.sin(m.angle), y: 0 - rad(L) * Math.cos(m.angle) })) };
   }
 }
+let svgUid = 0;
+function arrowDefs(svg) {
+  const id = `arw${++svgUid}`;
+  const defs = el("defs", {}, svg);
+  const mk = el("marker", { id, viewBox: "0 0 10 10", refX: 8, refY: 5, markerWidth: 7, markerHeight: 7, orient: "auto-start-reverse" }, defs);
+  el("path", { d: "M0,0 L10,5 L0,10 z", fill: "var(--ink2)" }, mk);
+  return id;
+}
+// curved arrow + label along the circle, from angle a0 to a1 (radians, 0 = top)
+function curvedLabel(svg, cy, rad, a0, a1, label, mid) {
+  const p = (a) => [300 + rad * Math.sin(a), cy - rad * Math.cos(a)];
+  const [x0, y0] = p(a0), [x1, y1] = p(a1);
+  const sweep = a1 > a0 ? 1 : 0;
+  el("path", { d: `M ${x0} ${y0} A ${rad} ${rad} 0 0 ${sweep} ${x1} ${y1}`, fill: "none", stroke: "var(--ink2)", "stroke-width": 1.6, "marker-end": `url(#${mid})` }, svg);
+  const id = `lp${++svgUid}`, lr = rad + 10;
+  const q = (a) => [300 + lr * Math.sin(a), cy - lr * Math.cos(a)];
+  const [u0, v0] = q(Math.min(a0, a1)), [u1, v1] = q(Math.max(a0, a1));
+  el("path", { id, d: `M ${u0} ${v0} A ${lr} ${lr} 0 0 1 ${u1} ${v1}`, fill: "none" }, svg);
+  const tx = el("text", { style: "font-weight:600" }, svg);
+  const tp = el("textPath", { href: `#${id}`, startOffset: "50%", "text-anchor": "middle" }, tx);
+  tp.textContent = label;
+}
 function drawCircle(svg, H, opts) {
   clear(svg);
   const cy = opts.cy, R = 168;
@@ -73,24 +107,36 @@ function drawCircle(svg, H, opts) {
   const { r, pts } = H._lay;
   const info = houseInfo(H.congress);
   el("circle", { cx: 300, cy, r: R, fill: "none", stroke: "var(--line)", "stroke-width": 1, "stroke-dasharray": "2 5" }, svg);
-  txt(svg, 300, 22, "Middle of the House", { "text-anchor": "middle" });
+  const mid = arrowDefs(svg);
+  curvedLabel(svg, cy, 272, -0.25, -0.95, "More liberal", mid);
+  curvedLabel(svg, cy, 272, 0.25, 0.95, "More conservative", mid);
   const minA = Math.min(...H.list.map((m) => m.angle)), maxA = Math.max(...H.list.map((m) => m.angle));
-  txt(svg, 4, 52, "\u2190 More liberal", { style: "font-weight:600" });
-  txt(svg, 596, 52, "More conservative \u2192", { "text-anchor": "end", style: "font-weight:600" });
-  // the back of the circle, where the ends would meet
+  // the back of the circle, where the two ends would meet
   const a0 = maxA + 0.12, a1 = 2 * Math.PI + minA - 0.12;
   if (a1 > a0) {
     const p = (a) => `${300 + R * Math.sin(a)} ${cy - R * Math.cos(a)}`;
-    el("path", { d: `M ${p(a0)} A ${R} ${R} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${p(a1)}`, fill: "none", stroke: "var(--accent)", "stroke-width": 2, "stroke-dasharray": "5 6", opacity: .8 }, svg);
+    el("path", { d: `M ${p(a0)} A ${R} ${R} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${p(a1)}`, fill: "none", stroke: "var(--ink3)", "stroke-width": 1.6, "stroke-dasharray": "5 6" }, svg);
   }
-  txt(svg, 300, cy + R + 34, info.chi_0[0] >= 0.2 ? "Back of the circle: where the two ends meet" : "Back of the circle", { "text-anchor": "middle", style: "font-weight:600; fill: var(--accent)" });
+  if (info.chi_0[0] >= 0.2) {
+    txt(svg, 300, cy + R + 30, "Opposite ends, same vote", { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
+    txt(svg, 300, cy + R + 50, "Here the two ends join against the middle", { "text-anchor": "middle" });
+  } else {
+    txt(svg, 300, cy + R + 30, "The two ends rarely meet here", { "text-anchor": "middle", style: "font-weight:600" });
+    txt(svg, 300, cy + R + 50, "this House still behaves like a line", { "text-anchor": "middle" });
+  }
 
   const vs = opts.votes;
   const g = el("g", {}, svg);
   for (const p of pts) {
-    let fill = `var(--${p.m.party})`, op = 1;
-    if (vs) { const ch = vs[p.m.k]; fill = ch === "Y" ? "var(--ink2)" : ch === "N" ? "var(--accent)" : "var(--line)"; if (ch !== "Y" && ch !== "N") op = .9; }
-    el("circle", { cx: p.x.toFixed(1), cy: (cy + p.y).toFixed(1), r, fill, opacity: op }, g);
+    const a = { cx: p.x.toFixed(1), cy: (cy + p.y).toFixed(1), r };
+    if (!vs) a.fill = `var(--${p.m.party})`;
+    else {
+      const ch = vs[p.m.k];
+      if (ch === "Y") a.fill = "var(--yes)";
+      else if (ch === "N") a.fill = "var(--no)";
+      else { a.fill = "none"; a.stroke = "var(--ink3)"; a["stroke-width"] = 0.9; a.r = Math.max(r - 0.45, 1); }
+    }
+    el("circle", a, g);
   }
   const ring = el("circle", { r: 6.5, fill: "none", stroke: "var(--ink)", "stroke-width": 2, visibility: "hidden" }, svg);
   const mark = (p) => { if (!p) { ring.setAttribute("visibility", "hidden"); return; } ring.setAttribute("cx", p.x); ring.setAttribute("cy", cy + p.y); ring.setAttribute("visibility", "visible"); };
@@ -110,7 +156,7 @@ function drawCircle(svg, H, opts) {
 function memberTip(H, m, vs) {
   const v = vs ? vs[m.k] : null;
   return `<b>${esc(m.name)}</b><br>${PARTY[m.party]}, ${dist(m.state, m.d)}<br>Rank ${m.rank} of ${H.nRank} from the liberal end` +
-    (vs ? `<br>Voted: ${v === "Y" ? "Yes" : v === "N" ? "No" : "did not vote"}` : "");
+    (vs ? `<br>Voted: ${v === "Y" ? "Yes" : v === "N" ? "No" : "did not vote (absent or present)"}` : "");
 }
 
 /* ---------- vote tallies ---------- */
@@ -126,58 +172,125 @@ function groupShares(H, vs, which) {
 function tallyHTML(H, vs, which) {
   return groupShares(H, vs, which).map(([lab, s]) => `<span class="lab">${lab}</span><div class="track"><div class="fill" style="width:${(100 * s).toFixed(0)}%"></div></div><span class="mono">${(100 * s).toFixed(0)}%</span>`).join("");
 }
+// yes / no split per group, in the vote colors
+function splitHTML(H, vs) {
+  return groupShares(H, vs, "Y").map(([lab, y]) => `<span class="lab">${lab}</span><div class="track split"><span class="y" style="width:${(100 * y).toFixed(0)}%"></span><span class="n" style="width:${(100 - 100 * y).toFixed(0)}%"></span></div><span class="mono">${(100 * y).toFixed(0)}–${(100 - 100 * y).toFixed(0)}</span>`).join("");
+}
 
 /* ---------- trend charts ---------- */
-function trendFrame(svg, W, H, yMax, yStep, fmt) {
+function trendFrame(svg, W, H, yMax, yStep) {
   clear(svg);
-  const L = 50, Rm = 14, T = 12, B = 34;
+  const L = 50, Rm = 14, T = 22, B = 34;
   const x = (c) => L + (c - 99.5) / 20 * (W - L - Rm), y = (v) => T + (1 - v / yMax) * (H - T - B);
   for (const h of INDEX.houses) el("rect", { x: x(h.congress - 0.5), y: T, width: x(1) - x(0), height: H - T - B, fill: h.majority === "D" ? "var(--majD)" : "var(--majR)" }, svg);
   for (let v = 0; v <= yMax + 1e-9; v += yStep) {
     el("line", { x1: L, x2: W - Rm, y1: y(v), y2: y(v), stroke: "var(--line)", "stroke-width": 1 }, svg);
-    txt(svg, L - 8, y(v) + 4, fmt(v), { "text-anchor": "end", class: "tick" });
+    txt(svg, L - 8, y(v) + 4, String(Math.round(v)), { "text-anchor": "end", class: "tick" });
   }
   for (const c of [100, 104, 108, 112, 116, 119]) txt(svg, x(c), H - B + 22, String(1787 + 2 * c), { "text-anchor": "middle", class: "tick" });
   return { x, y };
 }
 function series(svg, x, y, key, color, label) {
-  const d = INDEX.houses;
-  const band = d.map((h) => `${x(h.congress)},${y(h[key][2])}`).join(" ") + " " + d.slice().reverse().map((h) => `${x(h.congress)},${y(h[key][1])}`).join(" ");
+  const d = INDEX.houses, v = (h, i) => 100 * h[key][i];
+  const band = d.map((h) => `${x(h.congress)},${y(v(h, 2))}`).join(" ") + " " + d.slice().reverse().map((h) => `${x(h.congress)},${y(v(h, 1))}`).join(" ");
   el("polygon", { points: band, fill: color, opacity: .16 }, svg);
-  el("polyline", { points: d.map((h) => `${x(h.congress)},${y(h[key][0])}`).join(" "), fill: "none", stroke: color, "stroke-width": 2.2, "stroke-linejoin": "round" }, svg);
+  el("polyline", { points: d.map((h) => `${x(h.congress)},${y(v(h, 0))}`).join(" "), fill: "none", stroke: color, "stroke-width": 2.2, "stroke-linejoin": "round" }, svg);
   for (const h of d) {
-    el("circle", { cx: x(h.congress), cy: y(h[key][0]), r: 3.6, fill: color, stroke: "var(--surface)", "stroke-width": 1.5 }, svg);
-    const hit = el("rect", { x: x(h.congress - 0.5), y: y(h[key][0]) - 14, width: x(1) - x(0), height: 28, fill: "transparent" }, svg);
-    hit.addEventListener("pointermove", (e) => showTip(e, `<b>${ord(h.congress)} Congress</b> (${years(h.congress)})<br>${label}: ${h[key][0].toFixed(3)}<br>95% interval ${h[key][1].toFixed(3)}–${h[key][2].toFixed(3)}<br>${PARTY[h.majority]} majority${h.congress === LATEST ? "<br>In progress" : ""}`));
+    el("circle", { cx: x(h.congress), cy: y(v(h, 0)), r: 3.6, fill: color, stroke: "var(--surface)", "stroke-width": 1.5 }, svg);
+    const hit = el("rect", { x: x(h.congress - 0.5), y: y(v(h, 0)) - 14, width: x(1) - x(0), height: 28, fill: "transparent" }, svg);
+    hit.addEventListener("pointermove", (e) => showTip(e, `<b>${ord(h.congress)} Congress</b> (${years(h.congress)})<br>${label}: ${v(h, 0).toFixed(1)} (range ${v(h, 1).toFixed(1)}–${v(h, 2).toFixed(1)})<br>χ = ${h[key][0].toFixed(3)} · ${PARTY[h.majority]} majority${h.congress === LATEST ? "<br>In progress" : ""}`));
     hit.addEventListener("pointerleave", hideTip);
   }
 }
 function drawTrends() {
   let svg = $("#trend-all");
-  let f = trendFrame(svg, 600, 340, 0.45, 0.1, (v) => v.toFixed(1));
-  series(svg, f.x, f.y, "chi_0", "var(--ink)", "Polarization score");
-  txt(svg, f.x(112) - 4, f.y(0.43), "Record highs", { class: "ann", "text-anchor": "start" });
+  let f = trendFrame(svg, 600, 340, 45, 10);
+  series(svg, f.x, f.y, "chi_0", "var(--ink)", "Polarization index");
+  const top = INDEX.houses.reduce((a, b) => (b.chi_0[0] > a.chi_0[0] ? b : a));
+  txt(svg, f.x(top.congress) - 10, f.y(100 * top.chi_0[2]) - 6, "Record high", { class: "ann", "text-anchor": "end" });
+  // event markers along the top: one badge per Congress, numbered like the list below
+  for (const c of [...new Set(EVENTS.map((e) => e.c))]) {
+    const nums = EVENTS.map((e, j) => [e.c, j + 1]).filter(([cc]) => cc === c).map(([, j]) => j);
+    const label = nums.length > 1 ? `${nums[0]}–${nums[nums.length - 1]}` : String(nums[0]);
+    const w = 10 + 7 * label.length, xx = Math.min(f.x(c), 600 - 14 - w / 2);
+    el("line", { x1: f.x(c), x2: f.x(c), y1: 20, y2: f.y(0), stroke: "var(--ink3)", "stroke-dasharray": "2 3", opacity: .6 }, svg);
+    el("rect", { x: xx - w / 2, y: 2, width: w, height: 18, rx: 9, fill: "var(--ink)" }, svg);
+    txt(svg, xx, 15, label, { "text-anchor": "middle", style: "font: 600 11px var(--f-body); fill: var(--bg)" });
+  }
+  $("#events").innerHTML = EVENTS.map((ev) => `<li>${esc(ev.text)} <a href="${ev.url}" rel="noopener" target="_blank">source</a></li>`).join("");
   $("#trend-legend").innerHTML = `<span><i class="sq" style="background:var(--majD);box-shadow:inset 0 0 0 1px var(--D)"></i>Democratic majority</span><span><i class="sq" style="background:var(--majR);box-shadow:inset 0 0 0 1px var(--R)"></i>Republican majority</span>`;
   svg = $("#trend-party");
-  const top = Math.max(...INDEX.houses.map((h) => Math.max(h.chi_D[2], h.chi_R[2])));
-  const yMax = Math.ceil(top * 1.1 / 0.01) * 0.01;
-  f = trendFrame(svg, 600, 300, yMax, 0.01, (v) => v.toFixed(2));
+  const pmax = Math.max(...INDEX.houses.map((h) => Math.max(h.chi_D[2], h.chi_R[2]))) * 100;
+  f = trendFrame(svg, 600, 300, Math.ceil(pmax / 2) * 2, 2);
   series(svg, f.x, f.y, "chi_D", "var(--D)", "Democrats");
   series(svg, f.x, f.y, "chi_R", "var(--R)", "Republicans");
+  // headline ratio, first vs latest Congress
+  const h0 = INDEX.houses[0], h1 = INDEX.houses[INDEX.houses.length - 1];
+  $("#party-ratio").textContent = `In ${h0.years[0]}, Democrats were about ${Math.round(h0.chi_D[0] / h0.chi_R[0])} times as spread out as Republicans. Today it is the reverse: Republicans are about ${Math.round(h1.chi_R[0] / h1.chi_D[0])} times as spread out as Democrats.`;
 }
+// what an index value looks like: two equal sides whose spread gives that circular variance
 function drawExplain() {
   const svg = $("#explain-svg"); clear(svg);
-  const one = (cx, spread, n, label1, label2) => {
-    el("circle", { cx, cy: 82, r: 58, fill: "none", stroke: "var(--line)", "stroke-dasharray": "2 4" }, svg);
-    for (let i = 0; i < n; i++) {
-      const a = -spread + (2 * spread * i) / (n - 1);
-      el("circle", { cx: cx + 58 * Math.sin(a), cy: 82 - 58 * Math.cos(a), r: 4.2, fill: a < 0 ? "var(--D)" : "var(--R)" }, svg);
+  [[10, 100], [25, 300], [40, 500]].forEach(([v, cx]) => {
+    const half = Math.acos(1 - v / 100);   // two point blocs at +-half have circular variance v/100
+    el("circle", { cx, cy: 86, r: 62, fill: "none", stroke: "var(--line)", "stroke-dasharray": "2 4" }, svg);
+    for (const [side, col] of [[-1, "var(--D)"], [1, "var(--R)"]]) for (let i = -3; i <= 3; i++) {
+      const a = side * half + i * 0.07;
+      el("circle", { cx: cx + 62 * Math.sin(a), cy: 86 - 62 * Math.cos(a), r: 4, fill: col }, svg);
     }
-    txt(svg, cx, 168, label1, { "text-anchor": "middle", style: "font-weight:600; fill: var(--ink)" });
-    txt(svg, cx, 184, label2, { "text-anchor": "middle" });
-  };
-  one(115, 0.55, 14, "Low score", "close to a straight line");
-  one(345, 2.55, 22, "High score", "the two ends meet");
+    txt(svg, cx, 178, `Index ${v}`, { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
+  });
+  txt(svg, 100, 196, "close to a line", { "text-anchor": "middle" });
+  txt(svg, 500, 196, "like the House today", { "text-anchor": "middle" });
+}
+// one ring per Congress, 1987 inside to today outside; optional highlighted member path
+async function drawRings(svg, person) {
+  const R = await getJSON("rings");
+  clear(svg);
+  const r0 = 70, dr = 11, rad = (c) => r0 + (c - 100) * dr, cy = 300;
+  const g = el("g", {}, svg);
+  for (const h of R) {
+    const rr = rad(h.congress);
+    el("circle", { cx: 300, cy, r: rr, fill: "none", stroke: "var(--line)", "stroke-width": .6 }, g);
+    let d = { D: "", R: "", I: "" };
+    h.angle.forEach((a, i) => {
+      const s = Math.sin(a), c = Math.cos(a);
+      d[h.party[i]] += `M${(300 + (rr - 3.5) * s).toFixed(1)} ${(cy - (rr - 3.5) * c).toFixed(1)}L${(300 + (rr + 3.5) * s).toFixed(1)} ${(cy - (rr + 3.5) * c).toFixed(1)}`;
+    });
+    for (const k of ["D", "R", "I"]) if (d[k]) el("path", { d: d[k], stroke: `var(--${k})`, "stroke-width": 1.2, opacity: person ? .18 : .4, fill: "none" }, g);
+  }
+  for (const c of [100, 108, 116, 119]) txt(svg, 300, cy + rad(c) + 4, String(1787 + 2 * c), { "text-anchor": "middle", class: "tick", style: "paint-order: stroke; stroke: var(--surface); stroke-width: 4px" });
+  if (person) {
+    const pts = person.h.filter((h) => h[11] !== null && h[11] !== undefined).map((h) => [h, 300 + rad(h[0]) * Math.sin(h[11]), cy - rad(h[0]) * Math.cos(h[11])]);
+    if (pts.length > 1) el("polyline", { points: pts.map(([, x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" "), fill: "none", stroke: "var(--ink)", "stroke-width": 1.6 }, svg);
+    for (const [h, x, y] of pts) {
+      el("circle", { cx: x, cy: y, r: 4.5, fill: `var(--${h[1]})`, stroke: "var(--ink)", "stroke-width": 1.4 }, svg);
+      const hit = el("circle", { cx: x, cy: y, r: 10, fill: "transparent" }, svg);
+      hit.addEventListener("pointermove", (e) => showTip(e, `<b>${ord(h[0])} Congress</b> (${years(h[0])})<br>Rank ${h[4]} of ${h[7]} (range ${h[5]}–${h[6]})`));
+      hit.addEventListener("pointerleave", hideTip);
+    }
+  }
+}
+// line vs circle: the same "middle against both ends" vote
+function drawWhy() {
+  const svg = $("#why-svg"); if (!svg) return; clear(svg);
+  const cols = ["var(--D)", "var(--D)", "var(--D)", "var(--D)", "var(--R)", "var(--R)", "var(--R)", "var(--R)"];
+  // line: one cut, left vs right
+  el("line", { x1: 20, x2: 290, y1: 100, y2: 100, stroke: "var(--ink3)", "stroke-width": 2 }, svg);
+  cols.forEach((c, i) => el("circle", { cx: 35 + i * 34, cy: 100, r: 8, fill: c }, svg));
+  el("line", { x1: 153, x2: 153, y1: 60, y2: 140, stroke: "var(--ink)", "stroke-width": 2, "stroke-dasharray": "5 4" }, svg);
+  txt(svg, 86, 52, "one side", { "text-anchor": "middle" }); txt(svg, 222, 52, "other side", { "text-anchor": "middle" });
+  txt(svg, 155, 222, "A line: left against right", { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
+  txt(svg, 155, 240, "both ends can never vote together", { "text-anchor": "middle" });
+  // circle: the no arc wraps around the back
+  const cx = 480, cy = 100, R = 58, p = (a, r = R) => `${cx + r * Math.sin(a)} ${cy - r * Math.cos(a)}`;
+  el("path", { d: `M ${p(-0.75, R + 14)} A ${R + 14} ${R + 14} 0 0 1 ${p(0.75, R + 14)}`, fill: "none", stroke: "var(--yes)", "stroke-width": 5, "stroke-linecap": "round" }, svg);
+  el("path", { d: `M ${p(0.95, R + 14)} A ${R + 14} ${R + 14} 0 1 1 ${p(-0.95, R + 14)}`, fill: "none", stroke: "var(--no)", "stroke-width": 5, "stroke-linecap": "round" }, svg);
+  el("circle", { cx, cy, r: R, fill: "none", stroke: "var(--ink3)", "stroke-width": 2 }, svg);
+  [-1.65, -1.25, -0.6, -0.25, 0.25, 0.6, 1.25, 1.65].forEach((a, i) => el("circle", { cx: cx + R * Math.sin(a), cy: cy - R * Math.cos(a), r: 8, fill: cols[i] }, svg));
+  txt(svg, cx, cy - R - 22, "yes: the middle", { "text-anchor": "middle", style: "fill: var(--yes); font-weight:600" });
+  txt(svg, cx, cy + R + 34, "no: both ends", { "text-anchor": "middle", style: "fill: var(--no); font-weight:600" });
+  txt(svg, cx, 222, "A circle: the middle against both ends", { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
 }
 
 /* ---------- views and routing ---------- */
@@ -203,12 +316,13 @@ const state = { c: LATEST, mode: "party", vote: {}, pendingVote: null, selected:
 
 /* ---------- story ---------- */
 async function renderStory() {
-  drawTrends(); drawExplain();
+  drawTrends(); drawExplain(); drawWhy();
+  drawRings($("#rings"));
   const H = await house(LATEST);
   drawCircle($("#hero-circle"), H, { cy: 300, tip: (m) => memberTip(H, m), click: (m) => { location.hash = `member-${m.id}`; } });
-  const [H116, V116] = await Promise.all([house(116), votesOf(116)]);
-  $("#story-tally").innerHTML = tallyHTML(H116, V116.byRoll[797], "N");
-  $("#story-vote-link").addEventListener("click", (e) => { e.preventDefault(); state.pendingVote = { c: 116, roll: 797 }; location.hash = "explore-116"; });
+  const [H118, V118] = await Promise.all([house(118), votesOf(118)]);
+  $("#story-tally").innerHTML = tallyHTML(H118, V118.byRoll[837], "N");
+  $("#story-vote-link").addEventListener("click", (e) => { e.preventDefault(); state.pendingVote = { c: 118, roll: 837 }; location.hash = "explore-118"; });
 }
 
 /* ---------- explore ---------- */
@@ -224,9 +338,9 @@ async function renderExplore(c) {
   $("#ex-sub").textContent = `${years(c)}${c === LATEST ? ", in progress" : ""} · ${PARTY[info.majority]} majority`;
   const nEst = info.nFitted + info.nPlaced;
   $("#ex-tiles").innerHTML = `
-    <div class="tile"><div class="k">Polarization score</div><div class="v">${info.chi_0[0].toFixed(3)}</div><div class="s">95% interval ${info.chi_0[1].toFixed(3)}–${info.chi_0[2].toFixed(3)}</div></div>
+    <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">range ${IDX(info.chi_0[1])}–${IDX(info.chi_0[2])}</div></div>
     <div class="tile"><div class="k">Members estimated</div><div class="v">${nEst}</div><div class="s">${info.nD} D · ${info.nR} R${info.nI ? ` · ${info.nI} I` : ""}${info.nSkipped ? ` · ${info.nSkipped} with too few votes` : ""}</div></div>
-    <div class="tile"><div class="k">Within-party score</div><div class="v"><span style="color:var(--D)">${info.chi_D[0].toFixed(3)}</span> · <span style="color:var(--R)">${info.chi_R[0].toFixed(3)}</span></div><div class="s">Democrats · Republicans</div></div>
+    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">Democrats · Republicans</div></div>
     <div class="tile"><div class="k">Roll-call votes</div><div class="v">${info.nRolls.toLocaleString()}</div><div class="s">${fmtDate(info.first)} to ${fmtDate(info.last)}</div></div>`;
   const notes = [];
   if (c === LATEST) notes.push(`In session. Votes through ${fmtDate(info.last)}.`);
@@ -251,7 +365,7 @@ async function drawExplore(H) {
     keep: () => !!state.selected, selected: state.selected && state.selected.id,
   });
   $("#ex-legend").innerHTML = vs
-    ? `<span><i style="background:var(--accent)"></i>Voted no</span><span><i style="background:var(--ink2)"></i>Voted yes</span><span><i style="background:var(--line)"></i>Did not vote</span>`
+    ? `<span><i style="background:var(--yes)"></i>Voted yes</span><span><i style="background:var(--no)"></i>Voted no</span><span><i style="box-shadow:inset 0 0 0 1.5px var(--ink3)"></i>Didn't vote (absent or present)</span>`
     : `<span><i style="background:var(--D)"></i>Democrat</span><span><i style="background:var(--R)"></i>Republican</span>${H.list.some((m) => m.party === "I") ? `<span><i style="background:var(--I)"></i>Independent</span>` : ""}`;
   renderVoteCard(H, vs);
   renderSelected(H, vs);
@@ -268,7 +382,7 @@ function renderVoteCard(H, vs) {
   box.innerHTML = `<div class="vt">${esc(rollTitle(r, f))}</div>
     <div class="vm">${fmtDate(r.date)}${r.bill ? ` · ${bill(r.bill)}` : ""} · ${esc(r.question)} · ${esc(r.result || "")} ${r.yea}–${r.nay}</div>
     ${f && f.text ? `<p class="vd">${esc(f.text)}</p>` : ""}
-    <div class="small muted">Share voting yes</div><div class="tally">${tallyHTML(H, vs, "Y")}</div>
+    <div class="small muted">Yes–no split, in %</div><div class="tally">${splitHTML(H, vs)}</div>
     <button class="linkbtn" id="ex-clearvote">Color by party instead</button>`;
   $("#ex-clearvote").onclick = () => { state.mode = "party"; drawExplore(H); };
 }
@@ -302,10 +416,10 @@ function renderLineup(H, q) {
   const f = fold(q.trim());
   const rows = H.list.slice().sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name))
     .filter((m) => !f || fold(m.name).includes(f) || m.state.toLowerCase() === f || fold(STATES[m.state] || "").includes(f));
-  const pct = (r) => (100 * (r - 1) / (H.nRank - 1)).toFixed(1);
   const more = !f && !lineupAll && rows.length > 40;
   $("#ex-more").hidden = !more; $("#ex-more").textContent = `Show all ${rows.length} members`;
-  $("#ex-lineup").innerHTML = rows.length ? (more ? rows.slice(0, 40) : rows).map((m) => `<a class="lrow" role="listitem" href="#member-${m.id}"><span class="r">${m.rank}</span><span class="n"><i style="background:var(--${m.party})"></i>${esc(m.name)} <small>${dist(m.state, m.d)}</small></span><span class="bar"><span class="ln"></span><span class="ci" style="left:${pct(m.lo)}%;width:${Math.max(pct(m.hi) - pct(m.lo), 1)}%;background:var(--${m.party})"></span><span class="pt" style="left:${pct(m.rank)}%;background:var(--${m.party})"></span></span></a>`).join("")
+  const glyph = (m) => `<svg class="glyph" viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="8" fill="none" stroke="var(--line)" stroke-width="1.5"/><circle cx="${(11 + 8 * Math.sin(m.angle)).toFixed(1)}" cy="${(11 - 8 * Math.cos(m.angle)).toFixed(1)}" r="3" fill="var(--${m.party})"/></svg>`;
+  $("#ex-lineup").innerHTML = rows.length ? (more ? rows.slice(0, 40) : rows).map((m) => `<a class="lrow" role="listitem" href="#member-${m.id}"><span class="r">${m.rank}</span>${glyph(m)}<span class="n">${esc(m.name)} <small>${dist(m.state, m.d)}</small></span><span class="rg">${m.lo}–${m.hi}</span></a>`).join("")
     : `<p class="muted">No member matches "${esc(q)}".</p>`;
 }
 
@@ -314,6 +428,8 @@ function latestRanked(p) { for (let i = p.h.length - 1; i >= 0; i--) if (p.h[i][
 function sentence(h) {
   const [, , , , rank, , , n] = h;
   const p = (rank - 1) / (n - 1);
+  if (rank === 1) return "The most liberal-voting member of the House";
+  if (rank === n) return "The most conservative-voting member of the House";
   if (p > 0.45 && p < 0.55) return "Votes near the middle of the House";
   if (p <= 0.45) return `Votes more liberal than ${Math.round(100 * (n - rank) / (n - 1))}% of other members`;
   return `Votes more conservative than ${Math.round(100 * (rank - 1) / (n - 1))}% of other members`;
@@ -389,38 +505,22 @@ function renderMember(id) {
     </div>
     <div>
       <figure class="panel">
-        <figcaption><b>Over the years</b><span>Bar shows the likely range</span></figcaption>
-        <svg id="career" role="img" aria-label="Position in each Congress"></svg>
+        <figcaption><b>Seat on the circle, ${ord(lr ? lr[0] : last[0])} Congress</b><span>Ringed dot: ${esc(p.name)}</span></figcaption>
+        <svg id="m-circle" class="circ" viewBox="0 0 600 560" role="img" aria-label="Member highlighted on the circle"></svg>
+      </figure>
+      <figure class="panel" style="margin-top:16px">
+        <figcaption><b>Over the years</b><span>One ring per Congress, 1987 inside. Dots: this member.</span></figcaption>
+        <svg id="m-rings" class="circ" viewBox="0 0 600 600" role="img" aria-label="Member's position on each Congress ring"></svg>
       </figure>
       <div class="tablewrap"><table class="htable">
         <thead><tr><th>Congress</th><th>Party</th><th>District</th><th>Rank</th><th>Range</th><th>Votes</th></tr></thead>
         <tbody>${p.h.slice().reverse().map((h) => `<tr><td><a href="#explore-${h[0]}">${ord(h[0])}</a> <span class="muted small">${1787 + 2 * h[0]}</span></td><td>${h[1]}</td><td>${dist(h[2], h[3])}</td><td>${h[4] === null ? "too few votes" : `${h[4]} of ${h[7]}`}</td><td>${h[4] === null ? "" : `${h[5]}–${h[6]}`}</td><td>${h[8].toLocaleString()}</td></tr>`).join("")}</tbody>
       </table></div>
     </div>`;
-  drawCareer($("#career"), p);
+  drawRings($("#m-rings"), p);
+  const hc = lr ? lr[0] : last[0];
+  house(hc).then((H) => { if (!$("#m-circle")) return; drawCircle($("#m-circle"), H, { cy: 300, tip: (m) => memberTip(H, m), click: (m) => { location.hash = `member-${m.id}`; }, selected: id, keep: () => true }); });
 }
-function drawCareer(svg, p) {
-  const hs = p.h, W = 520, L = 58, Rm = 12, T = 26, rowH = hs.length > 12 ? 18 : 24;
-  svg.setAttribute("viewBox", `0 0 ${W} ${T + rowH * hs.length + 8}`);
-  const x = (v) => L + v / 100 * (W - L - Rm);
-  txt(svg, x(0), 14, "Most liberal", { class: "tick" });
-  txt(svg, x(100), 14, "Most conservative", { class: "tick", "text-anchor": "end" });
-  el("line", { x1: x(50), x2: x(50), y1: T - 6, y2: T + rowH * hs.length, stroke: "var(--line)", "stroke-dasharray": "2 4" }, svg);
-  hs.forEach((h, k) => {
-    const yy = T + rowH * k + rowH / 2;
-    txt(svg, L - 10, yy + 4, String(1787 + 2 * h[0]), { class: "tick", "text-anchor": "end" });
-    el("line", { x1: x(0), x2: x(100), y1: yy, y2: yy, stroke: "var(--line)" }, svg);
-    if (h[4] === null) { txt(svg, x(50), yy + 4, "too few votes", { class: "tick", "text-anchor": "middle" }); return; }
-    const n = h[7], pc = (r) => 100 * (r - 1) / (n - 1);
-    el("line", { x1: x(pc(h[5])), x2: x(Math.max(pc(h[6]), pc(h[5]) + 0.6)), y1: yy, y2: yy, stroke: `var(--${h[1]})`, "stroke-width": 6, "stroke-linecap": "round", opacity: .35 }, svg);
-    const c = el("circle", { cx: x(pc(h[4])), cy: yy, r: 4.8, fill: `var(--${h[1]})`, stroke: "var(--surface)", "stroke-width": 1.5 }, svg);
-    const hit = el("rect", { x: x(0), y: yy - rowH / 2, width: x(100) - x(0), height: rowH, fill: "transparent" }, svg);
-    hit.addEventListener("pointermove", (e) => showTip(e, `<b>${ord(h[0])} Congress</b> (${years(h[0])})<br>${PARTY[h[1]]}, ${dist(h[2], h[3])}<br>Rank ${h[4]} of ${n} (range ${h[5]}–${h[6]})`));
-    hit.addEventListener("pointerleave", hideTip);
-    void c;
-  });
-}
-
 /* ---------- start ---------- */
 async function start() {
   try {
