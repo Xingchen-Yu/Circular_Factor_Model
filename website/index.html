@@ -87,12 +87,12 @@
       <div class="wrap two-col">
         <div class="copy">
           <p class="eyebrow">Every House since 1987</p>
-          <h2>Watch the circle close</h2>
+          <h2>Watch the polarization grow</h2>
           <p>One ring per Congress: 1987 at the center, today on the outside. Each tick is a representative. Early rings are short arcs, close to a line. Recent rings wrap around.</p>
         </div>
         <figure class="panel">
           <figcaption><b>Tree rings of the House</b><span>Blue: Democrats. Red: Republicans.</span></figcaption>
-          <svg id="rings" class="circ" viewBox="0 0 600 600" role="img" aria-label="Concentric rings, one per Congress from 1987 (inside) to 2025 (outside), showing members spreading further around the circle over time"></svg>
+          <svg id="rings" class="circ" viewBox="0 0 600 440" role="img" aria-label="Concentric rings, one per Congress from 1987 (inside) to 2025 (outside), showing members spreading further around the circle over time"></svg>
         </figure>
       </div>
     </section>
@@ -116,7 +116,7 @@
       <div class="wrap two-col">
         <div class="copy">
           <p class="eyebrow">When the ends meet</p>
-          <h2>Both ends against the middle</h2>
+          <h2>The most liberal and the most conservative, against the middle</h2>
           <p>April 2024: the House renewed FISA surveillance powers, 273 to 147, with most of both parties behind it. The no votes came from the two ends: nearly all of the 10% most conservative members, and four in five of the 10% most liberal.</p>
           <p>On a line, the two ends are as far apart as possible. On a circle, they can be neighbors.</p>
           <div class="cta"><a class="btn ghost" href="#explore" id="story-vote-link">See it on the circle</a></div>
@@ -139,7 +139,7 @@
       <div class="wrap">
         <div class="three">
           <div><h3>Votes, not words</h3><p>Positions come from floor votes. Nothing else.</p></div>
-          <div><h3>Ranges matter</h3><p>Fewer votes means a wider range.</p></div>
+          <div><h3>Ranges show uncertainty</h3><p>Members with fewer votes tend to have wider ranges.</p></div>
           <div><h3>Standings, not spots</h3><p>Compare a member's standing within each Congress, not exact positions across years.</p></div>
         </div>
       </div>
@@ -251,7 +251,8 @@
         <p>On a line, every vote splits members into a left group and a right group. But some votes split the middle from both ends. A line can't draw that split. A circle can.</p>
         <svg id="why-svg" viewBox="0 0 640 250" role="img" aria-label="Left: a line where one cut separates left from right. Right: a circle where the no side wraps around the back, joining both ends against the middle."></svg>
         <p>It matters for rankings. Line models placed the four members of "the Squad" between 172nd and 203rd of 430 in 2019, as if they were moderates, because they often voted with Republicans against their own party's leadership. Adding a second dimension did not fix it.<a class="fn" href="#fn1">1</a> On the circle they rank among the four most liberal members.</p>
-        <p>The idea echoes the "horseshoe theory", which holds that the far left and far right sit closer to each other than to the center.<a class="fn" href="#fn1">1</a> The circle only shows that they <em>vote</em> together, not that they agree: on the same bill, some conservatives may vote no because it costs too much, and some liberals because it doesn't go far enough.</p>
+        <p>The idea echoes the so-called "horseshoe theory", which asserts that "the far-left and the far-right are closer to each other than they are to the political center".<a class="fn" href="#fn1">1</a> The circle only shows that the two ends <em>vote</em> together, not that they agree. The paper's examples from 2019:<a class="fn" href="#fn1">1</a> the defense bill (S. 1790) was opposed by Democrats Rashida Tlaib and Earl Blumenauer and by Republicans Thomas Massie and Justin Amash. A resolution opposing the boycott movement against Israel (H.Res. 246) was opposed by 16 Democrats, citing free speech and Palestinian rights, and by Massie, on libertarian grounds that Congress should not interfere in Israel's decisions or in private boycotts. Same vote, different reasons.</p>
+        <p>When there is no ends-against-the-middle voting, the circle reduces to the traditional line. Members then stay near the top of the circle, where it is almost flat, and the rankings match the usual line model. The model's prior is built so that this line-like case is the default: members start out concentrated near the top, and only the votes can pull them around.<a class="fn" href="#fn1">1</a></p>
 
         <h3>Keep in mind</h3>
         <ul class="caveats">
@@ -263,8 +264,9 @@
 
         <details class="more">
           <summary>Details for statisticians</summary>
-          <p><b>Model.</b> Bayesian circular factor model.<a class="fn" href="#fn1">1</a> Members and each vote's yes and no positions are angles on the unit circle; a yes is more likely when the yes position is geodesically closer. Fitted with geodesic Hamiltonian Monte Carlo (JAX, GPU), 2 to 4 chains per Congress. Chains that agree are pooled; where one chain's log-likelihood is more than 3 within-chain standard deviations higher, it is used alone, and each such choice was checked against voting records.</p>
-          <p><b>Polarization index.</b> 100 × χ, where χ = 1 − R̄ is the circular variance of the posterior member positions and R̄ is the length of their mean direction. χ lies between 0 and 1 on the circle, so it is comparable across Congresses (unlike the variance on a line, which depends on an arbitrary scale). Within-party indices use one party's members. Raw χ values are in the downloads.</p>
+          <p><b>Model.</b> Bayesian circular factor model.<a class="fn" href="#fn1">1</a> Members and each vote's yes and no positions are angles on the unit circle; a yes is more likely when the yes position is geodesically closer. Fitted with geodesic Hamiltonian Monte Carlo (JAX, GPU), 2 to 4 chains per Congress. New Metropolis moves that mirror or shift each vote's yes and no positions, and regularly redrawn step sizes, help chains escape configurations where they get stuck. Chains that agree are pooled; where one chain's log-likelihood is more than 3 within-chain standard deviations higher, it is used alone, and each such choice was checked against voting records.</p>
+          <p><b>Line as a limit.</b> As the concentration of the members' von Mises prior and the vote-specific link precisions grow, the circular likelihood and prior approach those of the one-dimensional Euclidean probit model on the tangent line at the top of the circle; the prior (mean concentration 10, so about 95% prior mass on the upper half) favors this regime (paper Sections 4.3–4.4).<a class="fn" href="#fn1">1</a></p>
+          <p><b>Polarization index.</b> 100 × χ, where χ = 1 − R̄ is the circular variance of the posterior member positions and R̄ is the length of their mean direction. χ lies between 0 and 1 on the circle, so it is comparable across Congresses (unlike the variance on a line, which depends on an arbitrary scale). Within-party indices use one party's members. Raw χ values are in the downloads. Ratios such as "2.6× the 1987–95 average" compare index values; for small spreads the index grows roughly with the square of the spread (χ ≈ σ²/2), so 4× the index means about 2× the spread.</p>
           <p><b>Ranks.</b> Posterior median and 95% interval of each member's rank around the circle, starting from the liberal end, among members fitted directly.</p>
           <p><b>Members with many missed votes</b> (more than 40% missing) are handled in two stages. First the model is fitted to everyone else. Then each of these members is placed with a cut posterior:<a class="fn" href="#fn2">2</a><a class="fn" href="#fn3">3</a> for every posterior draw of the vote parameters, their position is drawn exactly from its conditional distribution, evaluated on a 4,096-point grid over the circle. Their votes inform their own position but do not feed back into the vote parameters. Because the draw is exact for every posterior draw, this avoids the naive cut sampler, which does not converge to a well-defined limiting distribution.<a class="fn" href="#fn2">2</a> On when cuts are appropriate and how they behave, see <a class="fn" href="#fn4">4</a><a class="fn" href="#fn5">5</a><a class="fn" href="#fn6">6</a>. Cut credible regions can under-cover,<a class="fn" href="#fn6">6</a> so we checked coverage in a <a href="https://github.com/Xingchen-Yu/Circular_Factor_Model/blob/master/python/docs/cut_posterior_simulation.md" rel="noopener" target="_blank">simulation study</a>. These members are then ranked among the fitted members.</p>
           <p><b>Party switchers.</b> Listed under the party they cast most of their votes with in that Congress. For within-party indices, members who left a party to become independent count with the party they left (Justin Amash, 116th), or with the party they joined in the same Congress (Virgil Goode, 107th). Bernie Sanders (independent) is left out of both.</p>
@@ -274,11 +276,11 @@
         <h3>Data, code and paper</h3>
         <ul class="links">
           <li><a href="https://github.com/Xingchen-Yu/Circular_Factor_Model/tree/master/website/data/csv" rel="noopener" target="_blank">Download the estimates</a> (CC BY 4.0)</li>
-          <li><a href="https://github.com/Xingchen-Yu/Circular_Factor_Model" rel="noopener" target="_blank">Code on GitHub</a>, and the R package <a href="https://github.com/Xingchen-Yu/SLFM1D" rel="noopener" target="_blank">SLFM1D</a></li>
+          <li><a href="https://github.com/Xingchen-Yu/Circular_Factor_Model" rel="noopener" target="_blank">Code on GitHub</a></li>
           <li>Votes: <a href="https://voteview.com" rel="noopener" target="_blank">Voteview</a> (Lewis et al.). Names: <a href="https://github.com/unitedstates/congress-legislators" rel="noopener" target="_blank">congress-legislators</a>.</li>
         </ul>
         <ol class="footnotes">
-          <li id="fn1">Yu, X. and Rodríguez, A. (2021). Spatial voting models in circular spaces: A case study of the U.S. House of Representatives. <i>The Annals of Applied Statistics</i> 15(4), 1897–1922. <a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-15/issue-4/Spatial-voting-models-in-circular-spaces--A-case-study/10.1214/21-AOAS1454.full" rel="noopener" target="_blank">Read on Project Euclid</a>. The Squad example and the two-dimensional model are in Section 2 and Table 1; the horseshoe theory in Section 1.</li>
+          <li id="fn1">Yu, X. and Rodríguez, A. (2021). Spatial voting models in circular spaces: A case study of the U.S. House of Representatives. <i>The Annals of Applied Statistics</i> 15(4), 1897–1922. <a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-15/issue-4/Spatial-voting-models-in-circular-spaces--A-case-study/10.1214/21-AOAS1454.full" rel="noopener" target="_blank">Read on Project Euclid</a>. The Squad example and the two-dimensional model: Section 2 and Table 1. Horseshoe theory: Section 1. S. 1790 and H.Res. 246: Section 6.1. Relation to the line model: Sections 4.3–4.4.</li>
           <li id="fn2">Plummer, M. (2015). Cuts in Bayesian graphical models. <i>Statistics and Computing</i> 25(1), 37–43. <a href="https://doi.org/10.1007/s11222-014-9503-z" rel="noopener" target="_blank">doi:10.1007/s11222-014-9503-z</a></li>
           <li id="fn3">Lunn, D., Best, N., Spiegelhalter, D., Graham, G. and Neuenschwander, B. (2009). Combining MCMC with "sequential" PKPD modelling. <i>Journal of Pharmacokinetics and Pharmacodynamics</i> 36(1), 19–38. <a href="https://doi.org/10.1007/s10928-008-9109-1" rel="noopener" target="_blank">doi:10.1007/s10928-008-9109-1</a></li>
           <li id="fn4">Jacob, P. E., Murray, L. M., Holmes, C. C. and Robert, C. P. (2017). Better together? Statistical learning in models made of modules. <a href="https://arxiv.org/abs/1708.08719" rel="noopener" target="_blank">arXiv:1708.08719</a></li>
@@ -288,7 +290,7 @@
 
         <h3>About</h3>
         <p>Full Circle is nonpartisan and informational. It is not affiliated with any party, campaign or Voteview, endorses no one, and uses no cookies.</p>
-        <p>It is built by Xingchen Yu, who developed the circular model with Abel Rodríguez during a PhD in statistics at UC Santa Cruz (published in 2021). This site reruns the model on every House since 1987 with a new, faster implementation, and adds plain-language tools for voters. <a href="https://www.linkedin.com/in/xingchenyu90/" rel="noopener" target="_blank">LinkedIn</a></p>
+        <p>It is built by Xingchen Yu, who developed the circular model with Abel Rodríguez during a PhD in Statistical Science at UC Santa Cruz (published in 2021). This site reruns the model on every House since 1987 with a new GPU implementation, new sampler moves that free stuck chains, and chain checks against members' voting records, and adds plain-language tools for voters. <a href="https://www.linkedin.com/in/xingchenyu90/" rel="noopener" target="_blank">LinkedIn</a></p>
       </div>
     </section>
   </div>

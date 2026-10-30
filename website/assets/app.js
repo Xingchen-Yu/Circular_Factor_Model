@@ -119,7 +119,7 @@ function drawCircle(svg, H, opts) {
   }
   if (info.chi_0[0] >= 0.2) {
     txt(svg, 300, cy + R + 30, "Opposite ends, same vote", { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
-    txt(svg, 300, cy + R + 50, "Here the two ends join against the middle", { "text-anchor": "middle" });
+    txt(svg, 300, cy + R + 50, "Here the most liberal and most conservative vote together", { "text-anchor": "middle" });
   } else {
     txt(svg, 300, cy + R + 30, "The two ends rarely meet here", { "text-anchor": "middle", style: "font-weight:600" });
     txt(svg, 300, cy + R + 50, "this House still behaves like a line", { "text-anchor": "middle" });
@@ -226,7 +226,7 @@ function drawTrends() {
   series(svg, f.x, f.y, "chi_R", "var(--R)", "Republicans");
   // headline ratio, first vs latest Congress
   const h0 = INDEX.houses[0], h1 = INDEX.houses[INDEX.houses.length - 1];
-  $("#party-ratio").textContent = `In ${h0.years[0]}, Democrats were about ${Math.round(h0.chi_D[0] / h0.chi_R[0])} times as spread out as Republicans. Today it is the reverse: Republicans are about ${Math.round(h1.chi_R[0] / h1.chi_D[0])} times as spread out as Democrats.`;
+  $("#party-ratio").textContent = `In ${h0.years[0]}, the Democrats' within-party index was about ${Math.round(h0.chi_D[0] / h0.chi_R[0])} times the Republicans'. Today it is the reverse: the Republicans' is about ${Math.round(h1.chi_R[0] / h1.chi_D[0])} times the Democrats'.`;
 }
 // what an index value looks like: two equal sides whose spread gives that circular variance
 function drawExplain() {
@@ -259,7 +259,7 @@ async function drawRings(svg, person) {
     });
     for (const k of ["D", "R", "I"]) if (d[k]) el("path", { d: d[k], stroke: `var(--${k})`, "stroke-width": 1.2, opacity: person ? .18 : .4, fill: "none" }, g);
   }
-  for (const c of [100, 108, 116, 119]) txt(svg, 300, cy + rad(c) + 4, String(1787 + 2 * c), { "text-anchor": "middle", class: "tick", style: "paint-order: stroke; stroke: var(--surface); stroke-width: 4px" });
+  for (const c of [100, 108, 116, 119]) txt(svg, 300, cy - rad(c) + 4, String(1787 + 2 * c), { "text-anchor": "middle", class: "tick", style: "font-weight:600; fill: var(--ink); paint-order: stroke; stroke: var(--surface); stroke-width: 5px" });
   if (person) {
     const pts = person.h.filter((h) => h[11] !== null && h[11] !== undefined).map((h) => [h, 300 + rad(h[0]) * Math.sin(h[11]), cy - rad(h[0]) * Math.cos(h[11])]);
     if (pts.length > 1) el("polyline", { points: pts.map(([, x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" "), fill: "none", stroke: "var(--ink)", "stroke-width": 1.6 }, svg);
@@ -326,6 +326,9 @@ async function renderStory() {
 }
 
 /* ---------- explore ---------- */
+// reference level: average of the 100th-103rd Congresses (1987-95)
+const base = (key) => INDEX.houses.filter((h) => h.congress <= 103).reduce((s, h) => s + h[key][0], 0) / 4;
+const times = (v, b) => `${(v / b).toFixed(1)}×`;
 let exHandle = null;
 async function renderExplore(c) {
   if (!houseInfo(c)) c = LATEST;
@@ -338,9 +341,9 @@ async function renderExplore(c) {
   $("#ex-sub").textContent = `${years(c)}${c === LATEST ? ", in progress" : ""} · ${PARTY[info.majority]} majority`;
   const nEst = info.nFitted + info.nPlaced;
   $("#ex-tiles").innerHTML = `
-    <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">range ${IDX(info.chi_0[1])}–${IDX(info.chi_0[2])}</div></div>
-    <div class="tile"><div class="k">Members estimated</div><div class="v">${nEst}</div><div class="s">${info.nD} D · ${info.nR} R${info.nI ? ` · ${info.nI} I` : ""}${info.nSkipped ? ` · ${info.nSkipped} with too few votes` : ""}</div></div>
-    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">Democrats · Republicans</div></div>
+    <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">${times(info.chi_0[0], base("chi_0"))} the 1987–95 average (${IDX(base("chi_0"))})</div></div>
+    <div class="tile"><div class="k">Members placed</div><div class="v">${nEst}</div><div class="s"><b style="color:var(--D)">${info.nD} Democrats</b> · <b style="color:var(--R)">${info.nR} Republicans</b>${info.nI ? ` · <b style="color:var(--I)">${info.nI} Independent${info.nI > 1 ? "s" : ""}</b>` : ""}</div>${info.nSkipped ? `<div class="s muted">${info.nSkipped} not placed (too few votes)</div>` : ""}</div>
+    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">vs 1987–95: Democrats ${times(info.chi_D[0], base("chi_D"))} · Republicans ${times(info.chi_R[0], base("chi_R"))}</div></div>
     <div class="tile"><div class="k">Roll-call votes</div><div class="v">${info.nRolls.toLocaleString()}</div><div class="s">${fmtDate(info.first)} to ${fmtDate(info.last)}</div></div>`;
   const notes = [];
   if (c === LATEST) notes.push(`In session. Votes through ${fmtDate(info.last)}.`);
@@ -510,7 +513,7 @@ function renderMember(id) {
       </figure>
       <figure class="panel" style="margin-top:16px">
         <figcaption><b>Over the years</b><span>One ring per Congress, 1987 inside. Dots: this member.</span></figcaption>
-        <svg id="m-rings" class="circ" viewBox="0 0 600 600" role="img" aria-label="Member's position on each Congress ring"></svg>
+        <svg id="m-rings" class="circ" viewBox="0 0 600 440" role="img" aria-label="Member's position on each Congress ring"></svg>
       </figure>
       <div class="tablewrap"><table class="htable">
         <thead><tr><th>Congress</th><th>Party</th><th>District</th><th>Rank</th><th>Range</th><th>Votes</th></tr></thead>
