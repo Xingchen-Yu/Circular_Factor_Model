@@ -8,3 +8,4 @@ Static site (no build step): `index.html`, `assets/style.css`, `assets/app.js`, 
 
 `data/csv/` holds the per-House result files offered for download (CC BY 4.0).
 Featured votes per House: edit `python/scripts/featured_votes.json`, then rerun the export.
+Key votes on member pages (2023–26): edit `python/scripts/key_votes.json` (headline = what a Yes vote supported; `law` only if it became law), then rerun the export.

@@ -498,6 +498,7 @@ function renderMember(id) {
       ${card}
       ${notes.map((n) => `<p class="note flag">${esc(n)}</p>`).join("")}
       <p class="note">Based on floor votes only. <a href="https://bioguide.congress.gov/search/bio/${p.id}" rel="noopener" target="_blank">Official biography</a></p>
+      <div class="mvotes" id="m-votes"></div>
     </div>
     <div>
       <figure class="panel">
@@ -518,59 +519,131 @@ function renderMember(id) {
   const hc = lr ? lr[0] : last[0];
   house(hc).then((H) => { if (!$("#m-circle")) return; drawCircle($("#m-circle"), H, { cy: 300, tip: (m) => memberTip(H, m), click: (m) => { location.hash = `member-${m.id}`; }, selected: id, keep: () => true }); });
 }
-/* ---------- a member's votes: key votes per Congress, and a search of all their votes ---------- */
-const VOTED = { Y: ["Yes", "yes"], N: ["No", "no"], P: ["Didn't vote", "dnv"], _: ["Not in office", "dnv"] };
-// one vote row; party = [yes, no] cast by the member's party (D or R)
-function voteRow(c, r, title, ch, partyCode, party) {
-  const [label, cls] = VOTED[ch] || VOTED.P;
-  let pl = "", against = false;
-  if (party && party[0] + party[1]) {
-    const y = party[0] / (party[0] + party[1]), most = y >= 0.5 ? "yes" : "no";
-    pl = ` · ${PARTY[partyCode]}s ${Math.round(100 * Math.max(y, 1 - y))}% ${most}`;
-    against = y !== 0.5 && (ch === "Y" || ch === "N") && (ch === "Y") !== (y > 0.5);
+/* ---------- a member's votes: key votes (scripts/key_votes.json) and a search of all their votes ---------- */
+const VOTED = { Y: "Yes", N: "No", P: "Didn't vote", _: "Not in office", none: "No House vote" };
+const termYears = (c) => `${1787 + 2 * c}–${String(1788 + 2 * c).slice(2)}`;
+// how each party voted: yes fills from the left, no from the right, dashed line at half
+function partyBars(D, R) {
+  const bar = (lab, y, n) => {
+    const t = y + n || 1, wy = 100 * y / t, wn = 100 * n / t;
+    return `<span>${lab}</span><div class="hbar" role="img" aria-label="${lab}: ${y} yes, ${n} no"><span class="y" style="width:${wy}%">${wy >= 14 ? y : ""}</span><span class="n" style="width:${wn}%">${wn >= 14 ? n : ""}</span></div>`;
+  };
+  const small = [["Democrats", D], ["Republicans", R]].map(([l, [y, n]]) => {
+    const t = y + n || 1, bits = [];
+    if (100 * y / t < 14) bits.push(`${y} yes`);
+    if (100 * n / t < 14) bits.push(`${n} no`);
+    return bits.length ? `${l}: ${bits.join(", ")}` : "";
+  }).filter(Boolean).join(" · ");
+  return `<div class="kvhouse"><span></span><div class="kvends"><span class="y">Yes</span><span class="n">No</span></div>${bar("Democrats", ...D)}${bar("Republicans", ...R)}${small ? `<p class="hs">${small}</p>` : ""}</div>`;
+}
+const pill = (ch) => `<span class="vp ${ch}">${VOTED[ch] || VOTED.P}</span>`;
+const circleLink = (c, roll) => `<a class="circlelink" href="#explore-${c}" data-c="${c}" data-roll="${roll}">See the whole House on the circle</a>`;
+// against most of their party: only for a cast vote, and only when the party was not split evenly
+function against(ch, partyCode, tally) {
+  if (!tally || !(ch === "Y" || ch === "N") || tally[0] === tally[1]) return false;
+  return (ch === "Y") !== (tally[0] > tally[1]);
+}
+function voteRow({ c, roll, ch, issue, head, sub, partyCode, tally, more, D, R }) {
+  const ag = against(ch, partyCode, tally);
+  return `<details class="kv"><summary>${pill(ch)}<span class="st">${issue ? `<span class="eyb">${esc(issue)}</span>` : ""}<span class="hd">${esc(head)}</span>` +
+    `<span class="sub2">${sub}${ag ? ` · <span class="ag">against most ${PARTY[partyCode]}s</span>` : ""}</span></span><span class="chev" aria-hidden="true">›</span></summary>` +
+    `<div class="kvmore">${more}${partyBars(D, R)}${circleLink(c, roll)}</div></details>`;
+}
+const passed = (b) => `${b.yea > b.nay ? "Passed" : "Failed in"} the House ${b.yea}–${b.nay}`;
+function outcome(b) {
+  return `<div class="outc">${b.law ? `<span class="badge">Became law</span><span>${esc(b.law)}</span><span class="mono">${passed(b)}</span>` : `<span>${passed(b)}</span>`}</div>`;
+}
+// competing bills on one goal: same rows for both, facts only; a bill with no House vote says so
+function pairRow(c, item, chs, partyCode, who) {
+  const bs = item.bills, ch = (k) => (bs[k].roll ? chs[k] : "none");
+  const line = (b, k) => `<span class="pl">${pill(ch(k))}<span class="st"><span class="hd">${esc(b.head)}</span><span class="sub2">${esc(b.official)}${b.roll ? ` · ${fmtDate(b.date)}` : ""}${b.roll && against(ch(k), partyCode, b.party[partyCode]) ? ` · <span class="ag">against most ${PARTY[partyCode]}s</span>` : ""}</span></span></span>`;
+  const name = (b) => esc(b.official.replace(/ \(.*\)$/, ""));
+  const cmp = `<div class="cmp"><div class="h h0"></div>${bs.map((b) => `<div class="h"><b>${name(b)}</b><small>${esc(b.by)}</small></div>`).join("")}` +
+    item.diffs.map(([a, x, y]) => `<div class="a">${esc(a)}</div><div class="v">${esc(x)}</div><div class="v">${esc(y)}</div>`).join("") +
+    `<div class="a">${esc(who)}'s vote</div>${bs.map((b, k) => `<div>${pill(ch(k))}</div>`).join("")}` +
+    `<div class="a">What happened</div>${bs.map((b) => `<div>${b.roll ? (b.law ? `Became law ${esc(b.law)}` : passed(b)) : "Never brought to a House vote"}</div>`).join("")}</div>`;
+  const voted = bs.filter((b) => b.roll);
+  return `<details class="kv pair"><summary><span class="st"><span class="eyb">${esc(item.issue)} · ${esc(item.topic)}</span><span class="pairlines">${bs.map(line).join("")}</span></span><span class="chev" aria-hidden="true">›</span></summary>` +
+    `<div class="kvmore">${cmp}<div class="twohouse">${voted.map((b) => `<div><h5>${name(b)}</h5>${partyBars(b.party.D, b.party.R)}${circleLink(c, b.roll)}</div>`).join("")}</div></div></details>`;
+}
+function keyVotesTerm(p, h) {
+  const c = h[0], items = houseInfo(c).keyVotes, partyCode = h[1], who = p.name.split(" ").slice(-1)[0];
+  let j = 0;  // h[12]: one character per voted bill, in list order
+  const rows = [], cast = [];
+  for (const item of items) {
+    if (item.bills) {
+      const chs = item.bills.map((b) => (b.roll ? h[12][j++] : null));
+      item.bills.forEach((b, k) => { if (b.roll) cast.push([chs[k], b]); });
+      rows.push(pairRow(c, item, chs, partyCode, who));
+    } else {
+      const ch = h[12][j++];
+      cast.push([ch, item]);
+      rows.push(voteRow({ c, roll: item.roll, ch, issue: item.issue, head: item.head, sub: `${esc(item.official)} · ${fmtDate(item.date)}`, partyCode, tally: item.party[partyCode],
+        more: `<p class="what">${esc(item.what)}</p>${outcome(item)}`, D: item.party.D, R: item.party.R }));
+    }
   }
-  return `<li><a class="kv" href="#explore-${c}" data-c="${c}" data-roll="${r.roll}"><span class="kvv ${cls}">${label}</span><span class="kvt"><span class="t">${esc(title.length > 160 ? title.slice(0, 157).trimEnd() + "…" : title)}</span>` +
-    `<span class="m">${fmtDate(r.date)}${r.bill ? ` · ${bill(r.bill)}` : ""} · ${esc(r.question)} · ${esc(r.result || "")} ${r.yea}–${r.nay}${pl}</span>` +
-    `${against ? `<span class="kvf">Voted against most of their party</span>` : ""}</span></a></li>`;
+  const n = (x) => cast.filter(([ch]) => ch === x).length;
+  const yn = cast.filter(([ch]) => ch === "Y" || ch === "N");
+  const withParty = yn.filter(([ch, b]) => !against(ch, partyCode, b.party[partyCode])).length;
+  const summary = partyCode === "I" ? "" : ` Voted with most ${PARTY[partyCode]}s on ${withParty} of ${yn.length}.`;
+  return `<div class="kvterm"><h3>Key votes, ${termYears(c)}</h3>
+    <p class="kvsum">${esc(p.name)} voted <b>yes on ${n("Y")}</b> and <b>no on ${n("N")}</b>${n("P") ? `, and didn't vote on ${n("P")}` : ""}${n("_") ? `; not yet in office for ${n("_")}` : ""}.${summary}</p>
+    <div class="kvlist">${rows.join("")}</div></div>`;
+}
+// what kind of vote, in plain words; true = a final vote on the bill
+function voteKind(q, b) {
+  if (/Objections of the President/.test(q)) return ["Veto override vote", true];
+  if (/Conference Report/.test(q)) return ["Final House vote on the House–Senate deal", true];
+  if (/Concur/.test(q)) return ["Final House vote on the Senate's version", true];
+  if (/^On Passage|Suspend the Rules and (Pass|Agree)/.test(q)) return ["Final House vote", true];
+  if (/Election of the Speaker/.test(q)) return ["Election of the Speaker", true];
+  if (/Amendment/.test(q)) return ["Vote on a change to the bill", false];
+  if (/Commit/.test(q)) return ["Vote to send the bill back to committee", false];
+  if (/Previous Question|Table|Adjourn|Reconsider|Consider|Quorum|Journal/.test(q) || (/^HRES/.test(b) && /Agreeing to the Resolution/.test(q))) return ["Procedural vote", false];
+  return [q, /Agreeing to the Resolution/.test(q)];
 }
 function renderKeyVotes(p) {
   const box = $("#m-votes");
-  const served = p.h.filter((h) => h[12]).slice().reverse();
-  const groups = served.map((h) => {
-    const fs = houseInfo(h[0]).featured || [];
-    return `<h4 class="kvc">${ord(h[0])} Congress <span class="muted">${years(h[0])}</span></h4><ul class="kvl">` +
-      fs.map((f, j) => voteRow(h[0], f, f.title, h[12][j], h[1], f.party[h[1]])).join("") + `</ul>`;
-  }).join("");
-  box.innerHTML = `
-    <div class="kvhead"><h3>Key votes</h3><p class="small muted">Major votes in each Congress they served. Tap one to see the whole House on the circle.</p></div>
-    ${groups || `<p class="muted">No key votes on record.</p>`}
-    <h3 class="kvsh">Search all their votes</h3>
-    <label class="sr" for="m-vsearch">Search all their votes</label>
-    <input id="m-vsearch" type="search" autocomplete="off" placeholder="Bill or keyword, e.g. H.R. 2 or budget">
-    <ul class="kvl" id="m-vresults"></ul>`;
-  const q = $("#m-vsearch");
+  const terms = p.h.filter((h) => h[12] && houseInfo(h[0]).keyVotes).slice().reverse();
+  const key = terms.length ? terms.map((h) => keyVotesTerm(p, h)).join("") +
+    `<p class="kvfoot">Key votes follow the issues voters rated most important to their vote (<a href="https://www.pewresearch.org/politics/2026/10/08/economy-ranks-as-top-issue-in-midterms-for-all-voters-but-partisans-differ-over-the-importance-of-other-issues/" rel="noopener" target="_blank">Pew Research Center, October 2026</a>). The majority party decides which bills get a vote, so most are its bills; the other party's bills reach a vote when enough members sign a petition to force one.</p>` : "";
+  box.innerHTML = `${key}
+    <div class="kvsearch"><h3>${terms.length ? "Search all their votes" : "Search their votes"}</h3>
+      <div class="sctl"><label class="sr" for="m-vsearch">Search all their votes</label>
+        <input id="m-vsearch" type="search" autocomplete="off" placeholder="Bill or topic, e.g. farm, border, H.R. 1">
+        <label class="chk" for="m-final"><input type="checkbox" id="m-final" checked> Final votes only</label></div>
+      <div id="m-vresults"></div></div>`;
+  const q = $("#m-vsearch"), fin = $("#m-final");
   let seq = 0;
-  q.addEventListener("input", async () => {
+  const run = async () => {
     const mine = ++seq, out = $("#m-vresults");
     if (!q.value.trim()) { out.innerHTML = ""; return; }
     const hs = p.h.filter((h) => h[4] !== null).slice().reverse();
-    if (!hs.every((h) => cache[`V${h[0]}`])) out.innerHTML = `<li class="none">Loading their votes…</li>`;
+    if (!hs.every((h) => cache[`V${h[0]}`])) out.innerHTML = `<p class="none">Loading their votes…</p>`;
     const all = await Promise.all(hs.map((h) => Promise.all([house(h[0]), votesOf(h[0])])));
     if (mine !== seq) return;
     const hits = [];
     for (const [H, V] of all) {
       const m = H.byId[p.id];
-      for (const r of (matchRolls(H.rollList, q.value) || []).slice().reverse()) if (V.byRoll[r.roll][m.k] !== "_") hits.push([H, V, m, r]);  // skip votes from before or after their time in office
+      for (const r of (matchRolls(H.rollList, q.value) || []).slice().reverse()) {
+        const ch = V.byRoll[r.roll][m.k];
+        if (ch === "_") continue;  // before or after their time in office
+        const [kind, final] = voteKind(r.question, r.bill);
+        if (fin.checked && !final) continue;
+        hits.push({ H, V, m, r, ch, kind });
+      }
     }
-    const shown = hits.slice(0, 50).map(([H, V, m, r]) => {
-      const vs = V.byRoll[r.roll], party = [0, 0];
-      for (const o of H.list) if (o.party === m.party) { if (vs[o.k] === "Y") party[0]++; else if (vs[o.k] === "N") party[1]++; }
-      const f = (houseInfo(H.congress).featured || []).find((x) => x.roll === r.roll);
-      return voteRow(H.congress, r, rollTitle(r, f), vs[m.k], m.party, m.party === "I" ? null : party);
-    });
-    out.innerHTML = hits.length ? shown.join("") + (hits.length > 50 ? `<li class="none">${hits.length - 50} more. Add a word to narrow the list.</li>` : "")
-      : `<li class="none">No vote matches "${esc(q.value)}". Try a bill number such as H.R. 2, or a word like budget.</li>`;
-  });
+    out.innerHTML = hits.length ? hits.slice(0, 30).map(({ H, V, m, r, ch, kind }) => {
+      const vs = V.byRoll[r.roll], D = [0, 0], R = [0, 0];
+      for (const o of H.list) { const t = o.party === "D" ? D : o.party === "R" ? R : null; if (t && vs[o.k] === "Y") t[0]++; else if (t && vs[o.k] === "N") t[1]++; }
+      const title = r.desc || r.question, long = title.length > 110;
+      return voteRow({ c: H.congress, roll: r.roll, ch, head: long ? title.slice(0, 107).trimEnd() + "…" : title, sub: `${r.bill ? bill(r.bill) + " · " : ""}${esc(kind)} · ${fmtDate(r.date)}`,
+        partyCode: m.party, tally: m.party === "D" ? D : m.party === "R" ? R : null, more: `${long ? `<p class="what">${esc(title)}</p>` : ""}<div class="outc"><span>${esc(r.result)} ${r.yea}–${r.nay}</span></div>`, D, R });
+    }).join("") + (hits.length > 30 ? `<p class="none">${hits.length - 30} more. Add a word to narrow the list.</p>` : "")
+      : `<p class="none">No vote matches "${esc(q.value)}".${fin.checked ? ` Try turning off "Final votes only".` : ` Try a bill number such as H.R. 2, or a word like budget.`}</p>`;
+  };
+  q.addEventListener("input", run);
+  fin.addEventListener("change", run);
   box.onclick = (e) => {
     const a = e.target.closest("a[data-roll]");
     if (!a) return;

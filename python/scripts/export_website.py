@@ -4,13 +4,14 @@
 
 Inputs: results/final/ (combine_chains.py), data/voteview/ (votes, roll calls),
 data/congress_legislators/ (display names, public domain, github.com/unitedstates/congress-legislators).
-Optional: scripts/featured_votes.json, hand-picked featured votes per House
+Optional: scripts/featured_votes.json, hand-picked featured votes per House (Explore)
+Also: scripts/key_votes.json, hand-picked key votes for member pages (recent Houses)
 ({"116": [{"roll": 797, "title": "...", "text": "..."}]}); Houses without an entry get the
 top-scoring "ends against the middle" votes.
 
 Outputs (website/data/):
-  index.json      one entry per House: years, majority, chi_0/chi_D/chi_R, counts, featured votes (with yes / no per party)
-  members.json    one entry per person: name and their record in every House, incl. their featured votes (search, member pages)
+  index.json      one entry per House: years, majority, chi_0/chi_D/chi_R, counts, featured votes, key votes (yes / no per party)
+  members.json    one entry per person: name and their record in every House, incl. their key votes (search, member pages)
   rings.json      every member's display angle and party in every House (the "tree rings" chart)
   H{c}.json       members of House c (display angle, rank, interval) and its roll calls
   V{c}.json       how each member voted on each roll call (loaded when a vote is picked)
@@ -126,6 +127,7 @@ def describe(r):
 def main():
     nm = names()
     index = pd.read_csv(FINAL / "index.csv").set_index("congress")
+    key_votes = json.loads((ROOT / "scripts" / "key_votes.json").read_text())
     featured_manual = json.loads((ROOT / "scripts" / "featured_votes.json").read_text()) if (ROOT / "scripts" / "featured_votes.json").exists() else {}
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "csv").mkdir(exist_ok=True)
@@ -185,21 +187,27 @@ def main():
             assert all(f["roll"] in rolls for f in featured), f"H{c}: featured roll call not in the data"
         else:
             featured = [{"roll": int(r.rollnumber)} for r in top.itertuples() if r.score >= 0.4][:4]
-        # key votes on member pages: the roll call facts, yes / no counts per party, and each member's own votes (members.json)
-        fvs = [vs[rolls.index(f["roll"])] for f in featured]
+        # key votes on member pages (scripts/key_votes.json): roll call facts and yes / no per party here,
+        # each member's own votes in members.json (one character per voted bill, in list order)
+        kv = key_votes.get(str(c), [])
         party = np.array(list(leg.party))
-        for f, s in zip(featured, fvs):
-            r = rc.loc[rc.rollnumber == f["roll"]].iloc[0]
-            a = np.array(list(s))
-            f.update({"date": r.date, "bill": r.bill_number if isinstance(r.bill_number, str) else "", "question": r.vote_question if isinstance(r.vote_question, str) else "",
-                      "result": r.vote_result if isinstance(r.vote_result, str) else "", "yea": int(r.yea_count), "nay": int(r.nay_count),
-                      "party": {g: [int(((party == g) & (a == "Y")).sum()), int(((party == g) & (a == "N")).sum())] for g in ("D", "R")}})
+        kv_rolls = []
+        for item in kv:
+            for b in item.get("bills", [item]):
+                if b["roll"] is None:
+                    continue
+                assert b["roll"] in rolls, f"H{c}: key vote roll {b['roll']} not in the data"
+                r = rc.loc[rc.rollnumber == b["roll"]].iloc[0]
+                a = np.array(list(vs[rolls.index(b["roll"])]))
+                b.update({"date": r.date, "bill": r.bill_number if isinstance(r.bill_number, str) else "", "yea": int(r.yea_count), "nay": int(r.nay_count),
+                          "party": {g: [int(((party == g) & (a == "Y")).sum()), int(((party == g) & (a == "N")).sum())] for g in ("D", "R")}})
+                kv_rolls.append(vs[rolls.index(b["roll"])])
 
         mrows = []
         for k, r in enumerate(leg.itertuples()):
             mrows.append([r.person, r.party, r.state, int(r.district), round(float(ang[k]), 4), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), int(r.n_votes), int(bool(r.placed))])
             people.setdefault(r.person, {"id": r.person, "name": nm[r.person], "h": []})["h"].append(
-                [c, r.party, r.state, int(r.district), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), n_rank, int(r.n_votes), int(bool(r.placed)), notes.get(r.person), round(float(ang[k]), 3), "".join(x[k] for x in fvs)])
+                [c, r.party, r.state, int(r.district), int(r.rank_median), int(r.rank_q025), int(r.rank_q975), n_rank, int(r.n_votes), int(bool(r.placed)), notes.get(r.person), round(float(ang[k]), 3), "".join(x[k] for x in kv_rolls) or None])
         for r in skipped.itertuples():
             people.setdefault(r.person, {"id": r.person, "name": nm[r.person], "h": []})["h"].append(
                 [c, r.party, r.state, int(r.district), None, None, None, n_rank, int(r.n_votes), 0, None, None, None])
@@ -219,7 +227,7 @@ def main():
                        **{k: [round(summ[k]["mean"], 4), round(summ[k]["q025"], 4), round(summ[k]["q975"], 4)] for k in ("chi_0", "chi_D", "chi_R")},
                        "nFitted": summ["n_fitted"], "nPlaced": summ["n_placed"], "nSkipped": summ["n_skipped"],
                        "nD": int((leg.party == "D").sum()), "nR": int((leg.party == "R").sum()), "nI": int((leg.party == "I").sum()),
-                       "nRolls": len(rolls), "first": rc.date.min(), "last": rc.date.max(), "featured": featured})
+                       "nRolls": len(rolls), "first": rc.date.min(), "last": rc.date.max(), "featured": featured, **({"keyVotes": kv} if kv else {})})
         for f in ("legislators.csv", "rollcalls.csv", "skipped.csv", "summary.json"):
             shutil.copy(d / f, OUT / "csv" / f"H{c}_{f}")
         print(f"H{c}: {len(leg)} members, {len(skipped)} skipped, {len(rolls)} roll calls, top ends score {max(score):.2f}", flush=True)
