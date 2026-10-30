@@ -117,13 +117,11 @@ function drawCircle(svg, H, opts) {
     const p = (a) => `${300 + R * Math.sin(a)} ${cy - R * Math.cos(a)}`;
     el("path", { d: `M ${p(a0)} A ${R} ${R} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${p(a1)}`, fill: "none", stroke: "var(--ink3)", "stroke-width": 1.6, "stroke-dasharray": "5 6" }, svg);
   }
-  if (info.chi_0[0] >= 0.2) {
-    txt(svg, 300, cy + R + 30, "Opposite ends, same vote", { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
-    txt(svg, 300, cy + R + 50, "Here the most liberal and most conservative vote together", { "text-anchor": "middle" });
-  } else {
-    txt(svg, 300, cy + R + 30, "The two ends rarely meet here", { "text-anchor": "middle", style: "font-weight:600" });
-    txt(svg, 300, cy + R + 50, "this House still behaves like a line", { "text-anchor": "middle" });
-  }
+  const [l1, l2] = info.chi_0[0] >= 0.2
+    ? ["The most liberal and most conservative meet here", "On some votes, they join against the middle"]
+    : ["The most liberal and most conservative rarely meet", "This House still behaves like a line"];
+  txt(svg, 300, cy + R + 30, l1, { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
+  txt(svg, 300, cy + R + 58, l2, { "text-anchor": "middle" });
 
   const vs = opts.votes;
   const g = el("g", {}, svg);
