@@ -198,20 +198,32 @@ function drawTrends() {
   const h0 = INDEX.houses[0], h1 = INDEX.houses[INDEX.houses.length - 1];
   $("#party-ratio").textContent = `In ${h0.years[0]}, the Democrats' within-party index was about ${Math.round(h0.chi_D[0] / h0.chi_R[0])} times the Republicans'. Today it is the reverse: the Republicans' is about ${Math.round(h1.chi_R[0] / h1.chi_D[0])} times the Democrats'.`;
 }
-// what an index value looks like: two equal sides whose spread gives that circular variance
+// what an index value looks like: members spread evenly over an arc of half-width w around the top
+// (Democrats left, Republicans right, touching at the top). Circular variance of that arc is
+// 1 - sin(w)/w, solved for w so each picture has exactly the index it is labelled with.
+function arcHalfWidth(v) {
+  let lo = 1e-6, hi = Math.PI;
+  for (let k = 0; k < 60; k++) { const w = (lo + hi) / 2; if (1 - Math.sin(w) / w < v) lo = w; else hi = w; }
+  return (lo + hi) / 2;
+}
 function drawExplain() {
   const svg = $("#explain-svg"); clear(svg);
-  [[10, 100], [25, 300], [40, 500]].forEach(([v, cx]) => {
-    const half = Math.acos(1 - v / 100);   // two point blocs at +-half have circular variance v/100
+  const first = INDEX.houses[0], top = INDEX.houses.reduce((a, b) => (b.chi_0[0] > a.chi_0[0] ? b : a));
+  const ex = [
+    [first.chi_0[0], 100, `like ${first.years[0]}`],
+    [top.chi_0[0], 300, `like ${top.years[0]} (the record)`],
+    [0.7, 500, "hypothetical: the ends nearly meet"],
+  ];
+  for (const [v, cx, note] of ex) {
+    const w = arcHalfWidth(v), n = 31;
     el("circle", { cx, cy: 86, r: 62, fill: "none", stroke: "var(--line)", "stroke-dasharray": "2 4" }, svg);
-    for (const [side, col] of [[-1, "var(--D)"], [1, "var(--R)"]]) for (let i = -3; i <= 3; i++) {
-      const a = side * half + i * 0.07;
-      el("circle", { cx: cx + 62 * Math.sin(a), cy: 86 - 62 * Math.cos(a), r: 4, fill: col }, svg);
+    for (let i = 0; i < n; i++) {
+      const a = -w + (2 * w * (i + 0.5)) / n;
+      el("circle", { cx: cx + 62 * Math.sin(a), cy: 86 - 62 * Math.cos(a), r: 3.6, fill: a < 0 ? "var(--D)" : "var(--R)" }, svg);
     }
-    txt(svg, cx, 178, `Index ${v}`, { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
-  });
-  txt(svg, 100, 196, "close to a line", { "text-anchor": "middle" });
-  txt(svg, 500, 196, "like the House today", { "text-anchor": "middle" });
+    txt(svg, cx, 178, `Polarization index ${IDX(v)}`, { "text-anchor": "middle", style: "font-weight:700; fill: var(--ink)" });
+    txt(svg, cx, 196, note, { "text-anchor": "middle" });
+  }
 }
 // one ring per Congress, 1987 inside to today outside; optional highlighted member path
 async function drawRings(svg, person) {
@@ -296,9 +308,12 @@ async function renderStory() {
 }
 
 /* ---------- explore ---------- */
-// reference level: average of the 100th-111th Congresses (1987-2011), before the jump in the 112th
-const BASE_LAST = 111;
-const base = (key) => { const hs = INDEX.houses.filter((h) => h.congress <= BASE_LAST); return hs.reduce((s, h) => s + h[key][0], 0) / hs.length; };
+// where a Congress ranks among all of them on an index: "Highest", "3rd highest", ..., "Lowest"
+function rankText(c, key) {
+  const order = INDEX.houses.slice().sort((a, b) => b[key][0] - a[key][0]).map((h) => h.congress);
+  const r = order.indexOf(c) + 1;
+  return r === 1 ? "Highest" : r === order.length ? "Lowest" : `${ord(r)} highest`;
+}
 let exHandle = null;
 async function renderExplore(c) {
   if (!houseInfo(c)) c = LATEST;
@@ -311,9 +326,9 @@ async function renderExplore(c) {
   $("#ex-sub").textContent = `${years(c)}${c === LATEST ? ", in progress" : ""} · ${PARTY[info.majority]} majority`;
   const nEst = info.nFitted + info.nPlaced;
   $("#ex-tiles").innerHTML = `
-    <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">1987–2011 average: ${IDX(base("chi_0"))}</div></div>
+    <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">${rankText(c, "chi_0")} of ${INDEX.houses.length} Congresses since 1987</div></div>
     <div class="tile"><div class="k">Members placed</div><div class="v">${nEst}</div><div class="s"><b style="color:var(--D)">${info.nD} Democrats</b> · <b style="color:var(--R)">${info.nR} Republicans</b>${info.nI ? ` · <b style="color:var(--I)">${info.nI} Independent${info.nI > 1 ? "s" : ""}</b>` : ""}</div>${info.nSkipped ? `<div class="s muted">${info.nSkipped} not placed (too few votes)</div>` : ""}</div>
-    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">1987–2011 average: <span style="color:var(--D)">${(100 * base("chi_D")).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * base("chi_R")).toFixed(1)}</span></div></div>
+    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">Of ${INDEX.houses.length} Congresses: Democrats <span style="color:var(--D)">${rankText(c, "chi_D").toLowerCase()}</span> · Republicans <span style="color:var(--R)">${rankText(c, "chi_R").toLowerCase()}</span></div></div>
     <div class="tile"><div class="k">Roll-call votes</div><div class="v">${info.nRolls.toLocaleString()}</div><div class="s">${fmtDate(info.first)} to ${fmtDate(info.last)}</div></div>`;
   const notes = [];
   if (c === LATEST) notes.push(`In session. Votes through ${fmtDate(info.last)}.`);
