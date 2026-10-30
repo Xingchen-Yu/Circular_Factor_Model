@@ -521,6 +521,33 @@ function renderMember(id) {
   const hc = lr ? lr[0] : last[0];
   house(hc).then((H) => { if (!$("#m-circle")) return; drawCircle($("#m-circle"), H, { cy: 300, tip: (m) => memberTip(H, m), click: (m) => { location.hash = `member-${m.id}`; }, selected: id, keep: () => true }); });
 }
+/* ---------- Senate interest counter (worker/index.js; hidden count if the API is not there) ---------- */
+function senateText(n, mine) {
+  if (n === null) return mine ? "Thanks! We've noted your interest." : "Tell us, and we'll run the same analysis for the Senate.";
+  return `${n.toLocaleString()} ${n === 1 ? "person has" : "people have"} asked so far.${mine ? " Thanks for adding yours!" : ""}`;
+}
+async function senateCall(method) {
+  try {
+    const r = await fetch("api/senate", { method });
+    if (!r.ok) return null;
+    const j = await r.json();
+    return typeof j.count === "number" ? j.count : null;
+  } catch (_) { return null; }
+}
+async function bindSenate() {
+  const btn = $("#senate-btn"), out = $("#senate-count");
+  let mine = false;
+  try { mine = localStorage.getItem("fc-senate") === "1"; } catch (_) {}
+  const done = () => { btn.disabled = true; btn.textContent = "Request sent"; };
+  if (mine) done();
+  out.textContent = senateText(await senateCall("GET"), mine);
+  btn.addEventListener("click", async () => {
+    done();
+    try { localStorage.setItem("fc-senate", "1"); } catch (_) {}
+    out.textContent = senateText(await senateCall("POST"), true);
+  });
+}
+
 /* ---------- start ---------- */
 async function start() {
   try {
@@ -545,6 +572,7 @@ async function start() {
   $("#ex-filter").addEventListener("input", (e) => house(state.c).then((H) => renderLineup(H, e.target.value)));
   $("#ex-more").addEventListener("click", () => { lineupAll = true; house(state.c).then((H) => renderLineup(H, "")); });
   bindMemberSearch();
+  bindSenate();
   window.addEventListener("hashchange", () => { document.title = "Full Circle"; route(); });
   route();
   renderStory();

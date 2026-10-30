@@ -128,6 +128,13 @@
       </div>
     </section>
 
+    <section class="band">
+      <div class="wrap midterm">
+        <p><b>Want the Senate next?</b> <span class="muted" id="senate-count">Tell us, and we'll run the same analysis for the Senate.</span></p>
+        <button class="btn" id="senate-btn" type="button">Yes, show me the Senate</button>
+      </div>
+    </section>
+
     <section>
       <div class="wrap">
         <div class="three">
@@ -259,7 +266,7 @@
           <p><b>Model.</b> Bayesian circular factor model.<a class="fn" href="#fn1">1</a> Members and each vote's yes and no positions are angles on the unit circle; a yes is more likely when the yes position is geodesically closer. Fitted with geodesic Hamiltonian Monte Carlo (JAX, GPU), 2 to 4 chains per Congress. Chains that agree are pooled; where one chain's log-likelihood is more than 3 within-chain standard deviations higher, it is used alone, and each such choice was checked against voting records.</p>
           <p><b>Polarization index.</b> 100 × χ, where χ = 1 − R̄ is the circular variance of the posterior member positions and R̄ is the length of their mean direction. χ lies between 0 and 1 on the circle, so it is comparable across Congresses (unlike the variance on a line, which depends on an arbitrary scale). Within-party indices use one party's members. Raw χ values are in the downloads.</p>
           <p><b>Ranks.</b> Posterior median and 95% interval of each member's rank around the circle, starting from the liberal end, among members fitted directly.</p>
-          <p><b>Members with many missed votes</b> (more than 40% missing) are left out of the fit and placed afterwards with a cut posterior:<a class="fn" href="#fn2">2</a> for every posterior draw of the vote parameters, the member's position is drawn exactly from its conditional distribution, evaluated on a 4,096-point grid over the circle. Their votes inform their own position but do not change the vote parameters. Drawing exactly for every posterior draw avoids the "naive cut" algorithm, which does not converge to the cut distribution.<a class="fn" href="#fn2">2</a> They are then ranked among the fitted members.</p>
+          <p><b>Members with many missed votes</b> (more than 40% missing) are handled in two stages. First the model is fitted to everyone else. Then each of these members is placed with a cut posterior:<a class="fn" href="#fn2">2</a><a class="fn" href="#fn3">3</a> for every posterior draw of the vote parameters, their position is drawn exactly from its conditional distribution, evaluated on a 4,096-point grid over the circle. Their votes inform their own position but do not feed back into the vote parameters. Because the draw is exact for every posterior draw, this avoids the naive cut sampler, which does not converge to a well-defined limiting distribution.<a class="fn" href="#fn2">2</a> On when cuts are appropriate and how they behave, see <a class="fn" href="#fn4">4</a><a class="fn" href="#fn5">5</a><a class="fn" href="#fn6">6</a>. Cut credible regions can under-cover,<a class="fn" href="#fn6">6</a> so we checked coverage in a <a href="https://github.com/Xingchen-Yu/Circular_Factor_Model/blob/master/python/docs/cut_posterior_simulation.md" rel="noopener" target="_blank">simulation study</a>. These members are then ranked among the fitted members.</p>
           <p><b>Party switchers.</b> Listed under the party they cast most of their votes with in that Congress. For within-party indices, members who left a party to become independent count with the party they left (Justin Amash, 116th), or with the party they joined in the same Congress (Virgil Goode, 107th). Bernie Sanders (independent) is left out of both.</p>
           <p><b>One uncertain case.</b> Pat Schroeder (D-CO) in the 103rd Congress fits two places almost equally well: around rank 80, or near the liberal end. The site shows the better fit; treat her position as uncertain.</p>
         </details>
@@ -272,7 +279,11 @@
         </ul>
         <ol class="footnotes">
           <li id="fn1">Yu, X. and Rodríguez, A. (2021). Spatial voting models in circular spaces: A case study of the U.S. House of Representatives. <i>The Annals of Applied Statistics</i> 15(4), 1897–1922. <a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-15/issue-4/Spatial-voting-models-in-circular-spaces--A-case-study/10.1214/21-AOAS1454.full" rel="noopener" target="_blank">Read on Project Euclid</a>. The Squad example and the two-dimensional model are in Section 2 and Table 1; the horseshoe theory in Section 1.</li>
-          <li id="fn2">Plummer, M. (2015). Cuts in Bayesian graphical models. <i>Statistics and Computing</i> 25, 37–43.</li>
+          <li id="fn2">Plummer, M. (2015). Cuts in Bayesian graphical models. <i>Statistics and Computing</i> 25(1), 37–43. <a href="https://doi.org/10.1007/s11222-014-9503-z" rel="noopener" target="_blank">doi:10.1007/s11222-014-9503-z</a></li>
+          <li id="fn3">Lunn, D., Best, N., Spiegelhalter, D., Graham, G. and Neuenschwander, B. (2009). Combining MCMC with "sequential" PKPD modelling. <i>Journal of Pharmacokinetics and Pharmacodynamics</i> 36(1), 19–38. <a href="https://doi.org/10.1007/s10928-008-9109-1" rel="noopener" target="_blank">doi:10.1007/s10928-008-9109-1</a></li>
+          <li id="fn4">Jacob, P. E., Murray, L. M., Holmes, C. C. and Robert, C. P. (2017). Better together? Statistical learning in models made of modules. <a href="https://arxiv.org/abs/1708.08719" rel="noopener" target="_blank">arXiv:1708.08719</a></li>
+          <li id="fn5">Carmona, C. U. and Nicholls, G. K. (2020). Semi-modular inference: enhanced learning in multi-modular models by tempering the influence of components. <i>AISTATS 2020</i>, PMLR 108, 4226–4235. <a href="https://arxiv.org/abs/2003.06804" rel="noopener" target="_blank">arXiv:2003.06804</a></li>
+          <li id="fn6">Pompe, E. and Jacob, P. E. (2021). Asymptotics of cut distributions and robust modular inference using Posterior Bootstrap. <a href="https://arxiv.org/abs/2110.11149" rel="noopener" target="_blank">arXiv:2110.11149</a></li>
         </ol>
 
         <h3>About</h3>

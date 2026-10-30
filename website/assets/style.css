@@ -74,6 +74,7 @@ svg .ann { font-weight: 600; fill: var(--ink); }
 
 .cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
 .btn { display: inline-block; font: 600 15px var(--f-body); padding: 11px 18px; border-radius: var(--radius); border: 1px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; cursor: pointer; white-space: nowrap; }
+.btn:disabled { opacity: .55; cursor: default; }
 .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
 .btn.ghost:hover { border-color: var(--ink3); }
 .midterm { display: flex; gap: 16px 32px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
