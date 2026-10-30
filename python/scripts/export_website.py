@@ -4,10 +4,10 @@
 
 Inputs: results/final/ (combine_chains.py), data/voteview/ (votes, roll calls),
 data/congress_legislators/ (display names, public domain, github.com/unitedstates/congress-legislators).
-Optional: scripts/featured_votes.json, hand-picked featured votes per House (Explore)
-Also: scripts/key_votes.json, hand-picked key votes for member pages (recent Houses)
+Optional: scripts/featured_votes.json, hand-picked featured votes per House on Explore
 ({"116": [{"roll": 797, "title": "...", "text": "..."}]}); Houses without an entry get the
 top-scoring "ends against the middle" votes.
+scripts/key_votes.json: hand-picked key votes on member pages (recent Houses; see its _about).
 
 Outputs (website/data/):
   index.json      one entry per House: years, majority, chi_0/chi_D/chi_R, counts, featured votes, key votes (yes / no per party)
@@ -188,20 +188,18 @@ def main():
         else:
             featured = [{"roll": int(r.rollnumber)} for r in top.itertuples() if r.score >= 0.4][:4]
         # key votes on member pages (scripts/key_votes.json): roll call facts and yes / no per party here,
-        # each member's own votes in members.json (one character per voted bill, in list order)
+        # each member's own votes in members.json (one character per key vote, in list order)
         kv = key_votes.get(str(c), [])
         party = np.array(list(leg.party))
         kv_rolls = []
-        for item in kv:
-            for b in item.get("bills", [item]):
-                if b["roll"] is None:
-                    continue
-                assert b["roll"] in rolls, f"H{c}: key vote roll {b['roll']} not in the data"
-                r = rc.loc[rc.rollnumber == b["roll"]].iloc[0]
-                a = np.array(list(vs[rolls.index(b["roll"])]))
-                b.update({"date": r.date, "bill": r.bill_number if isinstance(r.bill_number, str) else "", "yea": int(r.yea_count), "nay": int(r.nay_count),
-                          "party": {g: [int(((party == g) & (a == "Y")).sum()), int(((party == g) & (a == "N")).sum())] for g in ("D", "R")}})
-                kv_rolls.append(vs[rolls.index(b["roll"])])
+        for b in kv:
+            assert b["roll"] in rolls, f"H{c}: key vote roll {b['roll']} not in the data"
+            r = rc.loc[rc.rollnumber == b["roll"]].iloc[0]
+            s = vs[rolls.index(b["roll"])]
+            a = np.array(list(s))
+            b.update({"date": r.date, "bill": r.bill_number if isinstance(r.bill_number, str) else "", "yea": int(r.yea_count), "nay": int(r.nay_count),
+                      "party": {g: [int(((party == g) & (a == "Y")).sum()), int(((party == g) & (a == "N")).sum())] for g in ("D", "R")}})
+            kv_rolls.append(s)
 
         mrows = []
         for k, r in enumerate(leg.itertuples()):
