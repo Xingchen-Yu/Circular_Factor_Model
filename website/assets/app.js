@@ -470,125 +470,62 @@ function bindMemberSearch() {
       + `<p class="small muted" style="grid-column:1/-1">119th Congress districts. Your 2026 district may differ.</p>`;
   });
 }
+// rank with the end it counts from: Republicans from the conservative end's number, Democrats from 1,
+// anyone else from the side of the House they sit on
+function memberRank(h) {
+  const [, party, , , r, , , n] = h;
+  const lib = party === "D" || (party !== "R" && r <= n / 2);
+  return `Rank ${r} of ${n} (${lib ? "1 = most liberal" : `${n} = most conservative`})`;
+}
+const MON = ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+const monthYear = (d) => { const [y, m] = d.split("-").map(Number); return `${MON[m - 1]} ${y}`; };
 function renderMember(id) {
   const p = BYID[id], box = $("#member");
   if (!p) { box.innerHTML = `<p>No member with this id. <a href="#members">Search for a member</a>.</p>`; return; }
   document.title = `${p.name} · Full Circle`;
   const last = p.h[p.h.length - 1], lr = latestRanked(p);
   const parties = [...new Set(p.h.map((h) => h[1]))];
-  const pct = (r, n) => 100 * (r - 1) / (n - 1);
   const notes = [];
-  if (last[0] === LATEST) notes.push(`Votes through ${fmtDate(houseInfo(LATEST).last)}. Congress still in session.`);
-  if (lr && (lr[9] || lr[6] - lr[5] > lr[7] * 0.2)) notes.push(`Wide range${lr[9] ? " (missed many votes)" : ""}: treat as approximate.`);
-  for (const h of p.h) if (h[10]) notes.push(`${ord(h[0])} Congress: ${h[10]}.`);
-  if (lr && lr !== last) notes.push(`Too few votes in the ${ord(last[0])} Congress; showing the ${ord(lr[0])}.`);
-  const card = lr ? `
-      <p class="big">${sentence(lr)}${lr === last && last[0] === LATEST ? "" : ` (${ord(lr[0])} Congress)`}.</p>
-      <div class="scale" aria-hidden="true"><div class="ln"></div><div class="ci" style="left:${pct(lr[5], lr[7])}%;width:${Math.max(pct(lr[6], lr[7]) - pct(lr[5], lr[7]), 1.5)}%"></div><div class="pt" style="left:${pct(lr[4], lr[7])}%"></div></div>
-      <div class="ends"><span>Most liberal</span><span>Most conservative</span></div>
-      <dl class="facts">
-        <dt>Rank</dt><dd><span class="mono">${lr[4]}</span> of <span class="mono">${lr[7]}</span> (1 = most liberal)</dd>
-        <dt>Likely range</dt><dd><span class="mono">${lr[5]}</span>–<span class="mono">${lr[6]}</span></dd>
-        <dt>Votes counted</dt><dd class="mono">${lr[8].toLocaleString()}</dd>
-      </dl>` : `<p class="big">Too few votes to estimate a position.</p>`;
+  if (lr && (lr[9] || lr[6] - lr[5] > lr[7] * 0.2)) notes.push(`Wide margin of error${lr[9] ? " (missed many votes)" : ""}: treat as approximate.`);
+  for (const h of p.h) if (h[10]) notes.push(`${termYears(h[0])}: ${h[10]}.`);
+  if (lr && lr !== last) notes.push(`Too few votes in ${termYears(last[0])}; showing ${termYears(lr[0])}.`);
+  const info = lr && houseInfo(lr[0]);
+  const basis = lr ? `Based on ${lr[8].toLocaleString()} floor votes, ${monthYear(info.first)} to ${monthYear(info.last)}.${lr[0] === LATEST ? " Congress still in session." : ""}` : "";
+  const earlier = p.h.filter((h) => h !== lr).slice().reverse();
+  const where = (h) => `${STATES[h[2]] || h[2]}'s ${h[3] === 0 ? "at-large district" : `${ord(h[3])} district`}`;
   box.innerHTML = `
     <div class="mcard">
       <h2 class="who">${esc(p.name)}</h2>
-      <div class="sub"><span class="pill" style="background:var(--${last[1]})">${PARTY[last[1]]}</span><span>${STATES[last[2]] || last[2]}, ${last[3] === 0 ? "at-large" : "district " + last[3]}</span>${parties.length > 1 ? `<span class="small muted">Also served as ${parties.filter((x) => x !== last[1]).map((x) => PARTY[x]).join(", ")}</span>` : ""}</div>
-      ${card}
+      <div class="sub"><span class="pill" style="background:var(--${last[1]})">${PARTY[last[1]]}</span><span>${where(last)}</span>${parties.length > 1 ? `<span class="small muted">Also served as ${parties.filter((x) => x !== last[1]).map((x) => PARTY[x]).join(", ")}</span>` : ""}</div>
+      ${lr ? `<p class="big">${sentence(lr)}${lr === last && last[0] === LATEST ? "" : ` (${termYears(lr[0])})`}.</p>
+      <p class="rankline">${memberRank(lr)}</p><p class="basis">${basis}</p>` : `<p class="big">Too few votes to estimate a position.</p>`}
       ${notes.map((n) => `<p class="note flag">${esc(n)}</p>`).join("")}
+      <figure class="mcirc"><svg id="m-circle" class="circ" viewBox="0 0 600 490" role="img" aria-label="${esc(p.name)} ringed on the circle of the House"></svg>
+        <figcaption>Ringed: ${esc(p.name)}, ${termYears(lr ? lr[0] : last[0])}. Tap any dot to open that member.</figcaption></figure>
+      ${earlier.length ? `<div class="earlier"><h3>Earlier terms</h3><ul>${earlier.map((h) => `<li><span class="mono">${termYears(h[0])}</span><span>${h[4] === null ? "Too few votes" : `${h[4]} of ${h[7]}`}${h[1] !== last[1] ? ` · ${PARTY[h[1]]}` : ""}</span></li>`).join("")}</ul></div>` : ""}
       <p class="note">Based on floor votes only. <a href="https://bioguide.congress.gov/search/bio/${p.id}" rel="noopener" target="_blank">Official biography</a></p>
-      <div class="mvotes" id="m-votes"></div>
     </div>
-    <div>
-      <figure class="panel">
-        <figcaption><b>Seat on the circle, ${ord(lr ? lr[0] : last[0])} Congress</b><span>Ringed dot: ${esc(p.name)}</span></figcaption>
-        <svg id="m-circle" class="circ" viewBox="0 0 600 490" role="img" aria-label="Member highlighted on the circle"></svg>
-      </figure>
-      <figure class="panel" style="margin-top:16px">
-        <figcaption><b>Over the years</b><span>One ring per Congress, 1987 inside. Dots: this member.</span></figcaption>
-        <svg id="m-rings" class="circ" viewBox="0 0 600 440" role="img" aria-label="Member's position on each Congress ring"></svg>
-      </figure>
-      <div class="tablewrap"><table class="htable">
-        <thead><tr><th>Congress</th><th>Party</th><th>District</th><th>Rank</th><th>Range</th><th>Votes</th></tr></thead>
-        <tbody>${p.h.slice().reverse().map((h) => `<tr><td><a href="#explore-${h[0]}">${ord(h[0])}</a> <span class="muted small">${1787 + 2 * h[0]}</span></td><td>${h[1]}</td><td>${dist(h[2], h[3])}</td><td>${h[4] === null ? "too few votes" : `${h[4]} of ${h[7]}`}</td><td>${h[4] === null ? "" : `${h[5]}–${h[6]}`}</td><td>${h[8].toLocaleString()}</td></tr>`).join("")}</tbody>
-      </table></div>
-    </div>`;
-  drawRings($("#m-rings"), p);
+    <div class="mvotes" id="m-votes"></div>`;
   renderKeyVotes(p);
   const hc = lr ? lr[0] : last[0];
   house(hc).then((H) => { if (!$("#m-circle")) return; drawCircle($("#m-circle"), H, { cy: 300, tip: (m) => memberTip(H, m), click: (m) => { location.hash = `member-${m.id}`; }, selected: id, keep: () => true }); });
 }
 /* ---------- a member's votes: key votes (scripts/key_votes.json) and a search of all their votes ---------- */
-const VOTED = { Y: "Yes", N: "No", P: "Didn't vote", _: "Not in office", none: "No House vote" };
+const VOTED = { Y: "Yes", N: "No", P: "Didn't vote", _: "Not in office" };
 const termYears = (c) => `${1787 + 2 * c}–${String(1788 + 2 * c).slice(2)}`;
-// how each party voted: yes fills from the left, no from the right, dashed line at half
+// how each party voted: counts at both ends, yes from the left, no from the right, dashed line at half
 function partyBars(D, R) {
-  const bar = (lab, y, n) => {
-    const t = y + n || 1, wy = 100 * y / t, wn = 100 * n / t;
-    return `<span>${lab}</span><div class="hbar" role="img" aria-label="${lab}: ${y} yes, ${n} no"><span class="y" style="width:${wy}%">${wy >= 14 ? y : ""}</span><span class="n" style="width:${wn}%">${wn >= 14 ? n : ""}</span></div>`;
-  };
-  const small = [["Democrats", D], ["Republicans", R]].map(([l, [y, n]]) => {
-    const t = y + n || 1, bits = [];
-    if (100 * y / t < 14) bits.push(`${y} yes`);
-    if (100 * n / t < 14) bits.push(`${n} no`);
-    return bits.length ? `${l}: ${bits.join(", ")}` : "";
-  }).filter(Boolean).join(" · ");
-  return `<div class="kvhouse"><span></span><div class="kvends"><span class="y">Yes</span><span class="n">No</span></div>${bar("Democrats", ...D)}${bar("Republicans", ...R)}${small ? `<p class="hs">${small}</p>` : ""}</div>`;
+  const bar = (lab, y, n) => { const t = y + n || 1; return `<span>${lab}</span><span class="bar"><span class="ny">${y}</span><span class="tr" role="img" aria-label="${lab}: ${y} yes, ${n} no"><span class="y" style="width:${100 * y / t}%"></span><span class="n" style="width:${100 * n / t}%"></span></span><span class="nn">${n}</span></span>`; };
+  return `<div class="kvbars"><span></span><span class="key"><span class="y">Yes</span><span class="n">No</span></span>${bar("Democrats", ...D)}${bar("Republicans", ...R)}</div>`;
 }
-const pill = (ch) => `<span class="vp ${ch}">${VOTED[ch] || VOTED.P}</span>`;
-const circleLink = (c, roll) => `<a class="circlelink" href="#explore-${c}" data-c="${c}" data-roll="${roll}">See the whole House on the circle</a>`;
-// against most of their party: only for a cast vote, and only when the party was not split evenly
-function against(ch, partyCode, tally) {
-  if (!tally || !(ch === "Y" || ch === "N") || tally[0] === tally[1]) return false;
-  return (ch === "Y") !== (tally[0] > tally[1]);
-}
-function voteRow({ c, roll, ch, issue, head, sub, partyCode, tally, more, D, R }) {
-  const ag = against(ch, partyCode, tally);
-  return `<details class="kv"><summary>${pill(ch)}<span class="st">${issue ? `<span class="eyb">${esc(issue)}</span>` : ""}<span class="hd">${esc(head)}</span>` +
-    `<span class="sub2">${sub}${ag ? ` · <span class="ag">against most ${PARTY[partyCode]}s</span>` : ""}</span></span><span class="chev" aria-hidden="true">›</span></summary>` +
-    `<div class="kvmore">${more}${partyBars(D, R)}${circleLink(c, roll)}</div></details>`;
-}
+const vpill = (ch) => `<span class="vp ${ch}">${VOTED[ch] || VOTED.P}</span>`;
+// split from most of their party: a cast vote against the party's majority (not for an even split or an Independent)
+const split = (ch, t) => !!t && (ch === "Y" || ch === "N") && t[0] !== t[1] && (ch === "Y") !== (t[0] > t[1]);
 const passed = (b) => `${b.yea > b.nay ? "Passed" : "Failed in"} the House ${b.yea}–${b.nay}`;
-function outcome(b) {
-  return `<div class="outc">${b.law ? `<span class="badge">Became law</span><span>${esc(b.law)}</span><span class="mono">${passed(b)}</span>` : `<span>${passed(b)}</span>`}</div>`;
-}
-// competing bills on one goal: same rows for both, facts only; a bill with no House vote says so
-function pairRow(c, item, chs, partyCode, who) {
-  const bs = item.bills, ch = (k) => (bs[k].roll ? chs[k] : "none");
-  const line = (b, k) => `<span class="pl">${pill(ch(k))}<span class="st"><span class="hd">${esc(b.head)}</span><span class="sub2">${esc(b.official)}${b.roll ? ` · ${fmtDate(b.date)}` : ""}${b.roll && against(ch(k), partyCode, b.party[partyCode]) ? ` · <span class="ag">against most ${PARTY[partyCode]}s</span>` : ""}</span></span></span>`;
-  const name = (b) => esc(b.official.replace(/ \(.*\)$/, ""));
-  const cmp = `<div class="cmp"><div class="h h0"></div>${bs.map((b) => `<div class="h"><b>${name(b)}</b><small>${esc(b.by)}</small></div>`).join("")}` +
-    item.diffs.map(([a, x, y]) => `<div class="a">${esc(a)}</div><div class="v">${esc(x)}</div><div class="v">${esc(y)}</div>`).join("") +
-    `<div class="a">${esc(who)}'s vote</div>${bs.map((b, k) => `<div>${pill(ch(k))}</div>`).join("")}` +
-    `<div class="a">What happened</div>${bs.map((b) => `<div>${b.roll ? (b.law ? `Became law ${esc(b.law)}` : passed(b)) : "Never brought to a House vote"}</div>`).join("")}</div>`;
-  const voted = bs.filter((b) => b.roll);
-  return `<details class="kv pair"><summary><span class="st"><span class="eyb">${esc(item.issue)} · ${esc(item.topic)}</span><span class="pairlines">${bs.map(line).join("")}</span></span><span class="chev" aria-hidden="true">›</span></summary>` +
-    `<div class="kvmore">${cmp}<div class="twohouse">${voted.map((b) => `<div><h5>${name(b)}</h5>${partyBars(b.party.D, b.party.R)}${circleLink(c, b.roll)}</div>`).join("")}</div></div></details>`;
-}
-function keyVotesTerm(p, h) {
-  const c = h[0], items = houseInfo(c).keyVotes, partyCode = h[1], who = p.name.split(" ").slice(-1)[0];
-  let j = 0;  // h[12]: one character per voted bill, in list order
-  const rows = [], cast = [];
-  for (const item of items) {
-    if (item.bills) {
-      const chs = item.bills.map((b) => (b.roll ? h[12][j++] : null));
-      item.bills.forEach((b, k) => { if (b.roll) cast.push([chs[k], b]); });
-      rows.push(pairRow(c, item, chs, partyCode, who));
-    } else {
-      const ch = h[12][j++];
-      cast.push([ch, item]);
-      rows.push(voteRow({ c, roll: item.roll, ch, issue: item.issue, head: item.head, sub: `${esc(item.official)} · ${fmtDate(item.date)}`, partyCode, tally: item.party[partyCode],
-        more: `<p class="what">${esc(item.what)}</p>${outcome(item)}`, D: item.party.D, R: item.party.R }));
-    }
-  }
-  const n = (x) => cast.filter(([ch]) => ch === x).length;
-  const yn = cast.filter(([ch]) => ch === "Y" || ch === "N");
-  const withParty = yn.filter(([ch, b]) => !against(ch, partyCode, b.party[partyCode])).length;
-  const summary = partyCode === "I" ? "" : ` Voted with most ${PARTY[partyCode]}s on ${withParty} of ${yn.length}.`;
-  return `<div class="kvterm"><h3>Key votes, ${termYears(c)}</h3>
-    <p class="kvsum">${esc(p.name)} voted <b>yes on ${n("Y")}</b> and <b>no on ${n("N")}</b>${n("P") ? `, and didn't vote on ${n("P")}` : ""}${n("_") ? `; not yet in office for ${n("_")}` : ""}.${summary}</p>
-    <div class="kvlist">${rows.join("")}</div></div>`;
+function voteRow({ c, roll, ch, issue, head, partyCode, tally, detail, D, R }) {
+  return `<details class="kv"><summary><span class="st">${issue ? `<span class="eyb">${esc(issue)}</span>` : ""}<span class="hd">${esc(head)}</span>` +
+    `${split(ch, tally) ? `<span class="splitn">Split from most ${PARTY[partyCode]}s</span>` : ""}</span>${vpill(ch)}<span class="chev" aria-hidden="true">›</span></summary>` +
+    `<div class="kvdet">${detail}${partyBars(D, R)}<a class="circlelink" href="#explore-${c}" data-c="${c}" data-roll="${roll}">See this vote on the circle</a></div></details>`;
 }
 // what kind of vote, in plain words; true = a final vote on the bill
 function voteKind(q, b) {
@@ -602,17 +539,37 @@ function voteKind(q, b) {
   if (/Previous Question|Table|Adjourn|Reconsider|Consider|Quorum|Journal/.test(q) || (/^HRES/.test(b) && /Agreeing to the Resolution/.test(q))) return ["Procedural vote", false];
   return [q, /Agreeing to the Resolution/.test(q)];
 }
+// one term of key votes; h[12] has one character per key vote, in list order
+function keyVotesTerm(p, h) {
+  const c = h[0], items = houseInfo(c).keyVotes, pc = h[1], party = pc === "D" || pc === "R" ? pc : null;
+  const rows = [], cast = [];
+  items.forEach((it, j) => {
+    const ch = h[12][j];
+    cast.push([ch, it]);
+    rows.push(voteRow({ c, roll: it.roll, ch, issue: it.issue, head: it.head, partyCode: pc, tally: party && it.party[party], D: it.party.D, R: it.party.R,
+      detail: `<p class="what">${esc(it.what)}</p><p class="outc">${esc(it.official)}. ${passed(it)}, ${fmtDate(it.date)}.${it.law ? ` <b>Became law</b> ${esc(it.law)}.` : ""}</p>${it.competing ? `<p class="compn">${esc(it.competing)}</p>` : ""}` }));
+  });
+  const yn = cast.filter(([ch]) => ch === "Y" || ch === "N"), agree = yn.filter(([ch, it]) => !split(ch, it.party[party])).length;
+  const absent = cast.filter(([ch]) => ch === "_").length;
+  return `${party ? `<p class="agree">Voted with most ${PARTY[party]}s on <b>${agree} of ${yn.length}</b> key votes${absent ? ` (not yet in office for ${absent})` : ""}.</p>` : ""}<div class="kvlist">${rows.join("")}</div>`;
+}
 function renderKeyVotes(p) {
   const box = $("#m-votes");
-  const terms = p.h.filter((h) => h[12] && houseInfo(h[0]).keyVotes).slice().reverse();
-  const key = terms.length ? terms.map((h) => keyVotesTerm(p, h)).join("") +
-    `<p class="kvfoot">Key votes follow the issues voters rated most important to their vote (<a href="https://www.pewresearch.org/politics/2026/10/08/economy-ranks-as-top-issue-in-midterms-for-all-voters-but-partisans-differ-over-the-importance-of-other-issues/" rel="noopener" target="_blank">Pew Research Center, October 2026</a>). The majority party decides which bills get a vote, so most are its bills; the other party's bills reach a vote when enough members sign a petition to force one.</p>` : "";
-  box.innerHTML = `${key}
-    <div class="kvsearch"><h3>${terms.length ? "Search all their votes" : "Search their votes"}</h3>
-      <div class="sctl"><label class="sr" for="m-vsearch">Search all their votes</label>
-        <input id="m-vsearch" type="search" autocomplete="off" placeholder="Bill or topic, e.g. farm, border, H.R. 1">
-        <label class="chk" for="m-final"><input type="checkbox" id="m-final" checked> Final votes only</label></div>
-      <div id="m-vresults"></div></div>`;
+  const terms = p.h.filter((h) => h[12] && houseInfo(h[0]).keyVotes);
+  let cur = terms.length ? terms[terms.length - 1][0] : null;
+  const tabs = terms.length > 1 ? `<div class="ttabs" role="group" aria-label="Term">${terms.slice().reverse().map((h) => `<button type="button" data-term="${h[0]}" aria-pressed="${h[0] === cur}">${termYears(h[0])}</button>`).join("")}</div>` : terms.length ? `<span class="small muted">${termYears(cur)}</span>` : "";
+  box.innerHTML = `${terms.length ? `<div class="kvhead"><h3>Key votes</h3>${tabs}</div><div id="m-kv"></div>
+      <p class="kvfoot">Picked by the issues voters rate most important (<a href="https://www.pewresearch.org/politics/2026/10/08/economy-ranks-as-top-issue-in-midterms-for-all-voters-but-partisans-differ-over-the-importance-of-other-issues/" rel="noopener" target="_blank">Pew Research Center, 2026</a>). The majority party decides which bills get a vote, so most are its bills.</p>` : ""}
+    <div class="kvsearch"><label for="m-vsearch"><h3>Search all their votes</h3></label>
+      <input id="m-vsearch" type="search" autocomplete="off" placeholder="Bill or topic, e.g. farm, border, H.R. 1">
+      <label class="chk" for="m-final"><input type="checkbox" id="m-final" checked> Final votes only</label>
+      <div id="m-vresults" class="kvlist"></div></div>`;
+  const showTerm = () => {
+    if (!cur) return;
+    $("#m-kv").innerHTML = keyVotesTerm(p, terms.find((h) => h[0] === cur));
+    for (const b of box.querySelectorAll("[data-term]")) b.setAttribute("aria-pressed", +b.dataset.term === cur);
+  };
+  showTerm();
   const q = $("#m-vsearch"), fin = $("#m-final");
   let seq = 0;
   const run = async () => {
@@ -637,14 +594,17 @@ function renderKeyVotes(p) {
       const vs = V.byRoll[r.roll], D = [0, 0], R = [0, 0];
       for (const o of H.list) { const t = o.party === "D" ? D : o.party === "R" ? R : null; if (t && vs[o.k] === "Y") t[0]++; else if (t && vs[o.k] === "N") t[1]++; }
       const title = r.desc || r.question, long = title.length > 110;
-      return voteRow({ c: H.congress, roll: r.roll, ch, head: long ? title.slice(0, 107).trimEnd() + "…" : title, sub: `${r.bill ? bill(r.bill) + " · " : ""}${esc(kind)} · ${fmtDate(r.date)}`,
-        partyCode: m.party, tally: m.party === "D" ? D : m.party === "R" ? R : null, more: `${long ? `<p class="what">${esc(title)}</p>` : ""}<div class="outc"><span>${esc(r.result)} ${r.yea}–${r.nay}</span></div>`, D, R });
+      return voteRow({ c: H.congress, roll: r.roll, ch, issue: `${termYears(H.congress)} · ${r.bill ? bill(r.bill) + " · " : ""}${kind}`, head: long ? title.slice(0, 107).trimEnd() + "…" : title,
+        partyCode: m.party, tally: m.party === "D" ? D : m.party === "R" ? R : null, D, R,
+        detail: `${long ? `<p class="what">${esc(title)}</p>` : ""}<p class="outc">${esc(r.result)} ${r.yea}–${r.nay}, ${fmtDate(r.date)}.</p>` });
     }).join("") + (hits.length > 30 ? `<p class="none">${hits.length - 30} more. Add a word to narrow the list.</p>` : "")
       : `<p class="none">No vote matches "${esc(q.value)}".${fin.checked ? ` Try turning off "Final votes only".` : ` Try a bill number such as H.R. 2, or a word like budget.`}</p>`;
   };
   q.addEventListener("input", run);
   fin.addEventListener("change", run);
   box.onclick = (e) => {
+    const t = e.target.closest("[data-term]");
+    if (t) { cur = +t.dataset.term; showTerm(); return; }
     const a = e.target.closest("a[data-roll]");
     if (!a) return;
     e.preventDefault();
@@ -652,6 +612,13 @@ function renderKeyVotes(p) {
     state.pendingVote = { c, roll: +a.dataset.roll }; state.selected = { c, id: p.id };
     location.hash = `explore-${c}`;
   };
+  // one vote open at a time; the others dim so the open one has the focus
+  box.addEventListener("toggle", (e) => {
+    const d = e.target, list = d.closest && d.closest(".kvlist");
+    if (!list) return;
+    if (d.open) for (const o of list.querySelectorAll("details.kv[open]")) if (o !== d) o.open = false;
+    list.classList.toggle("focus", !!list.querySelector("details.kv[open]"));
+  }, true);
 }
 
 /* ---------- Senate interest counter (worker/index.js; hidden count if the API is not there) ---------- */

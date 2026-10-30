@@ -1,62 +1,179 @@
 {
- "_about": "Key votes on member pages. Hand-picked, in the order of the issues voters rated most important to their vote (Pew Research Center, October 8, 2026): one vote per issue, a second only for a major law. head = what a Yes vote supported. law = signing date if it became law, else omitted (the page then shows the House result only). A pair = competing bills on one goal: same rows for both, facts only, ordered by House vote date; roll null = no House vote. Outcomes checked against congress.gov; see python/scratch/key_votes/ for sources.",
+ "_about": "Key votes on member pages. Hand-picked, in the order of the issues voters rated most important to their vote (Pew Research Center, October 8, 2026): one vote per issue, a second only for a major law. head = what a Yes vote supported. law = signing date if it became law, else omitted (the page then shows the House result only). Only bills with a House vote get a row; a competing bill on the same goal is noted in one neutral line (competing). Outcomes checked against congress.gov; see python/scratch/key_votes/ for sources.",
  "119": [
-  {"roll": 189, "issue": "Economy", "head": "Extend tax cuts, cut Medicaid and food aid", "official": "One Big Beautiful Bill Act (H.R. 1)", "law": "July 4, 2025",
-   "what": "Extends the 2017 tax cuts, adds tax breaks on tips, overtime and for seniors, cuts projected Medicaid and food-aid (SNAP) spending, adds money for border enforcement and defense, and raises the debt limit."},
-  {"roll": 101, "issue": "Elections", "head": "Require proof of citizenship to register to vote", "official": "SAVE Act (H.R. 22)",
-   "what": "Requires documents proving U.S. citizenship, such as a passport or birth certificate, to register to vote in federal elections."},
-  {"issue": "Government ethics", "topic": "Two bills on stock trading by officials", "bills": [
-    {"roll": 640, "head": "Ban new stock buys by Congress, add photo ID to vote", "official": "Stop Insider Trading Act (H.R. 7008)", "by": "Brought by Republican leaders"},
-    {"roll": null, "head": "Ban stock trading by Congress, the President and Vice President", "official": "Restore Trust in Government Act (H.R. 6731)", "by": "Democratic bill; a petition to force a vote fell short"}],
-   "diffs": [["Bans buying new individual stocks", "Yes", "Yes"],
-             ["Stocks already owned", "May keep; 7 days' public notice before selling", "Must sell within about 6 months"],
-             ["Covers the President and Vice President", "No", "Yes"],
-             ["Covers spouses and dependent children", "Yes", "Yes"],
-             ["Also requires photo ID to vote in person", "Yes", "No"]]},
-  {"issue": "Health care", "topic": "Two competing health premium bills", "bills": [
-    {"roll": 348, "head": "Expand small-business health plans, fund cost-sharing payments", "official": "Lower Health Care Premiums for All Americans Act (H.R. 6703)", "by": "Brought by Republican leaders"},
-    {"roll": 371, "head": "Extend ACA premium subsidies for 3 years", "official": "H.R. 1834 (used for the ACA extension)", "by": "Forced to a vote by a Democratic-led petition"}],
-   "diffs": [["Extends the larger ACA premium subsidies", "No", "Yes, through 2028"],
-             ["Funds cost-sharing payments that lower some premiums", "Yes, from 2027", "No"],
-             ["Expands small-business group plans and employer accounts for buying coverage", "Yes", "No"],
-             ["More reporting by drug-benefit middlemen", "Yes", "No"]]},
-  {"roll": 574, "issue": "Immigration", "head": "$70 billion more for ICE and Border Patrol", "official": "Secure America Act (S. 2)", "law": "June 2026",
-   "what": "Adds about $70 billion for immigration enforcement and border security through 2029, passed by a simple majority under budget rules."},
-  {"roll": 567, "issue": "Foreign policy", "head": "Loans for Ukraine's military, new Russia sanctions", "official": "Ukraine Support Act (H.R. 2913)",
-   "what": "Provides $8 billion in loans for Ukraine to buy weapons, extends U.S. military aid to Ukraine through 2027, and adds sanctions on Russia."},
-  {"roll": 165, "issue": "Crime & drugs", "head": "Permanently ban fentanyl look-alike drugs", "official": "HALT Fentanyl Act (S. 331)", "law": "July 16, 2025",
-   "what": "Permanently lists fentanyl-related drugs with the most dangerous controlled substances, with mandatory minimum sentences for trafficking them."},
-  {"roll": 26, "issue": "Abortion", "head": "Require care for infants who survive an abortion", "official": "Born-Alive Abortion Survivors Protection Act (H.R. 21)",
-   "what": "Requires doctors to give an infant born alive during an attempted abortion the same care as any newborn, with criminal penalties."},
-  {"roll": 550, "issue": "Guns", "head": "Stop the VA flagging some veterans in gun checks", "official": "Veterans 2nd Amendment Protection Act (H.R. 1041)",
-   "what": "Stops the VA from reporting veterans who have someone managing their benefits to the gun background-check system unless a judge finds them dangerous."},
-  {"roll": 284, "issue": "Government funding", "head": "Reopen the government after the 2025 shutdown", "official": "Continuing Appropriations and Extensions Act, 2026 (H.R. 5371)", "law": "November 12, 2025",
-   "what": "Ends the 43-day shutdown, funds the government through January 30, 2026, and passes full-year funding for food aid, veterans and military construction."}
+  {
+   "roll": 189,
+   "issue": "Economy",
+   "head": "Extend tax cuts, cut Medicaid and food aid",
+   "official": "One Big Beautiful Bill Act (H.R. 1)",
+   "law": "July 4, 2025",
+   "what": "Extends the 2017 tax cuts, adds tax breaks on tips, overtime and for seniors, cuts projected Medicaid and food-aid (SNAP) spending, adds money for border enforcement and defense, and raises the debt limit."
+  },
+  {
+   "roll": 101,
+   "issue": "Elections",
+   "head": "Require proof of citizenship to register to vote",
+   "official": "SAVE Act (H.R. 22)",
+   "what": "Requires documents proving U.S. citizenship, such as a passport or birth certificate, to register to vote in federal elections."
+  },
+  {
+   "roll": 640,
+   "issue": "Government ethics",
+   "head": "Ban new stock buys by Congress, add photo ID to vote",
+   "official": "Stop Insider Trading Act (H.R. 7008)",
+   "what": "Bars members of Congress, their spouses and dependent children from buying individual stocks. They may keep stocks they already own but must give 7 days' public notice before selling. Also requires photo ID to vote in person.",
+   "competing": "A competing Democratic bill (H.R. 6731) would also cover the President and Vice President and require selling stocks already owned. It never got a House vote."
+  },
+  {
+   "roll": 348,
+   "issue": "Health care",
+   "head": "Expand small-business health plans, fund cost-sharing payments",
+   "official": "Lower Health Care Premiums for All Americans Act (H.R. 6703)",
+   "what": "Lets small businesses band together to buy health plans, expands employer accounts for buying individual coverage, funds payments that lower some marketplace premiums from 2027, and adds reporting rules for drug-benefit middlemen. Does not extend the larger ACA subsidies.",
+   "competing": "The House also voted on a competing bill to extend the larger ACA subsidies (next on this list)."
+  },
+  {
+   "roll": 371,
+   "issue": "Health care",
+   "head": "Extend ACA premium subsidies for 3 years",
+   "official": "H.R. 1834 (used for the ACA extension)",
+   "what": "Extends the larger Affordable Care Act premium subsidies, which ended with 2025, through 2028.",
+   "competing": "The House also voted on a competing Republican health bill (previous on this list)."
+  },
+  {
+   "roll": 574,
+   "issue": "Immigration",
+   "head": "$70 billion more for ICE and Border Patrol",
+   "official": "Secure America Act (S. 2)",
+   "law": "June 2026",
+   "what": "Adds about $70 billion for immigration enforcement and border security through 2029, passed by a simple majority under budget rules."
+  },
+  {
+   "roll": 567,
+   "issue": "Foreign policy",
+   "head": "Loans for Ukraine's military, new Russia sanctions",
+   "official": "Ukraine Support Act (H.R. 2913)",
+   "what": "Provides $8 billion in loans for Ukraine to buy weapons, extends U.S. military aid to Ukraine through 2027, and adds sanctions on Russia."
+  },
+  {
+   "roll": 165,
+   "issue": "Crime & drugs",
+   "head": "Permanently ban fentanyl look-alike drugs",
+   "official": "HALT Fentanyl Act (S. 331)",
+   "law": "July 16, 2025",
+   "what": "Permanently lists fentanyl-related drugs with the most dangerous controlled substances, with mandatory minimum sentences for trafficking them."
+  },
+  {
+   "roll": 26,
+   "issue": "Abortion",
+   "head": "Require care for infants who survive an abortion",
+   "official": "Born-Alive Abortion Survivors Protection Act (H.R. 21)",
+   "what": "Requires doctors to give an infant born alive during an attempted abortion the same care as any newborn, with criminal penalties."
+  },
+  {
+   "roll": 550,
+   "issue": "Guns",
+   "head": "Stop the VA flagging some veterans in gun checks",
+   "official": "Veterans 2nd Amendment Protection Act (H.R. 1041)",
+   "what": "Stops the VA from reporting veterans who have someone managing their benefits to the gun background-check system unless a judge finds them dangerous."
+  },
+  {
+   "roll": 284,
+   "issue": "Government funding",
+   "head": "Reopen the government after the 2025 shutdown",
+   "official": "Continuing Appropriations and Extensions Act, 2026 (H.R. 5371)",
+   "law": "November 12, 2025",
+   "what": "Ends the 43-day shutdown, funds the government through January 30, 2026, and passes full-year funding for food aid, veterans and military construction."
+  }
  ],
  "118": [
-  {"roll": 748, "issue": "Economy", "head": "Expand the child tax credit", "official": "Tax Relief for American Families and Workers Act (H.R. 7024)",
-   "what": "Expands the child tax credit for lower-income families and restores several business tax breaks."},
-  {"roll": 1174, "issue": "Economy", "head": "End Social Security cuts for public-sector retirees", "official": "Social Security Fairness Act (H.R. 82)", "law": "January 5, 2025",
-   "what": "Ends two rules that cut Social Security benefits for many teachers, police officers and other public workers with pensions."},
-  {"roll": 1063, "issue": "Elections", "head": "Require proof of citizenship to register to vote", "official": "SAVE Act (H.R. 8281)",
-   "what": "Requires documents proving U.S. citizenship, such as a passport or birth certificate, to register to vote in federal elections."},
-  {"roll": 703, "issue": "Health care", "head": "Require hospitals and insurers to post prices", "official": "Lower Costs, More Transparency Act (H.R. 5378)",
-   "what": "Requires hospitals, insurers and drug-benefit middlemen to publish prices, and changes some Medicare drug payments."},
-  {"roll": 233, "issue": "Education", "head": "Cancel Biden's student loan forgiveness", "official": "H.J.Res. 45",
-   "what": "Overturns President Biden's plan to forgive up to $20,000 in federal student loans per borrower."},
-  {"roll": 208, "issue": "Immigration", "head": "Tighten asylum rules, restart the border wall", "official": "Secure the Border Act (H.R. 2)",
-   "what": "Restarts border wall construction, tightens asylum rules and requires employers to check workers' immigration status (E-Verify)."},
-  {"roll": 869, "issue": "Foreign policy", "head": "$61 billion in aid to Ukraine", "official": "Ukraine Security Supplemental Appropriations Act (H.R. 8035)", "law": "April 24, 2024, in a combined foreign aid package",
-   "what": "Provides about $61 billion in military and economic aid to Ukraine."},
-  {"roll": 870, "issue": "Foreign policy", "head": "$26 billion in aid to Israel and for Gaza relief", "official": "Israel Security Supplemental Appropriations Act (H.R. 8034)", "law": "April 24, 2024, in a combined foreign aid package",
-   "what": "Provides about $26 billion for Israel's defense and for humanitarian aid, including in Gaza."},
-  {"roll": 181, "issue": "Energy", "head": "Expand oil, gas and mining, speed energy permits", "official": "Lower Energy Costs Act (H.R. 1)",
-   "what": "Expands oil, gas and mining on federal land and water and speeds up permits for energy projects."},
-  {"roll": 28, "issue": "Abortion", "head": "Require care for infants who survive an abortion", "official": "Born-Alive Abortion Survivors Protection Act (H.R. 26)",
-   "what": "Requires doctors to give an infant born alive during an attempted abortion the same care as any newborn, with criminal penalties."},
-  {"roll": 251, "issue": "Guns", "head": "Overturn the ATF pistol-brace rule", "official": "H.J.Res. 44",
-   "what": "Cancels a federal rule that treated pistols fitted with stabilizing braces like short-barreled rifles, which must be registered."},
-  {"roll": 242, "issue": "Government funding", "head": "Raise the debt limit and cap spending", "official": "Fiscal Responsibility Act (H.R. 3746)", "law": "June 3, 2023",
-   "what": "Suspends the debt limit until 2025 to avoid a default and caps federal spending for two years."}
+  {
+   "roll": 748,
+   "issue": "Economy",
+   "head": "Expand the child tax credit",
+   "official": "Tax Relief for American Families and Workers Act (H.R. 7024)",
+   "what": "Expands the child tax credit for lower-income families and restores several business tax breaks."
+  },
+  {
+   "roll": 1174,
+   "issue": "Economy",
+   "head": "End Social Security cuts for public-sector retirees",
+   "official": "Social Security Fairness Act (H.R. 82)",
+   "law": "January 5, 2025",
+   "what": "Ends two rules that cut Social Security benefits for many teachers, police officers and other public workers with pensions."
+  },
+  {
+   "roll": 1063,
+   "issue": "Elections",
+   "head": "Require proof of citizenship to register to vote",
+   "official": "SAVE Act (H.R. 8281)",
+   "what": "Requires documents proving U.S. citizenship, such as a passport or birth certificate, to register to vote in federal elections."
+  },
+  {
+   "roll": 703,
+   "issue": "Health care",
+   "head": "Require hospitals and insurers to post prices",
+   "official": "Lower Costs, More Transparency Act (H.R. 5378)",
+   "what": "Requires hospitals, insurers and drug-benefit middlemen to publish prices, and changes some Medicare drug payments."
+  },
+  {
+   "roll": 233,
+   "issue": "Education",
+   "head": "Cancel Biden's student loan forgiveness",
+   "official": "H.J.Res. 45",
+   "what": "Overturns President Biden's plan to forgive up to $20,000 in federal student loans per borrower."
+  },
+  {
+   "roll": 208,
+   "issue": "Immigration",
+   "head": "Tighten asylum rules, restart the border wall",
+   "official": "Secure the Border Act (H.R. 2)",
+   "what": "Restarts border wall construction, tightens asylum rules and requires employers to check workers' immigration status (E-Verify)."
+  },
+  {
+   "roll": 869,
+   "issue": "Foreign policy",
+   "head": "$61 billion in aid to Ukraine",
+   "official": "Ukraine Security Supplemental Appropriations Act (H.R. 8035)",
+   "law": "April 24, 2024, in a combined foreign aid package",
+   "what": "Provides about $61 billion in military and economic aid to Ukraine."
+  },
+  {
+   "roll": 870,
+   "issue": "Foreign policy",
+   "head": "$26 billion in aid to Israel and for Gaza relief",
+   "official": "Israel Security Supplemental Appropriations Act (H.R. 8034)",
+   "law": "April 24, 2024, in a combined foreign aid package",
+   "what": "Provides about $26 billion for Israel's defense and for humanitarian aid, including in Gaza."
+  },
+  {
+   "roll": 181,
+   "issue": "Energy",
+   "head": "Expand oil, gas and mining, speed energy permits",
+   "official": "Lower Energy Costs Act (H.R. 1)",
+   "what": "Expands oil, gas and mining on federal land and water and speeds up permits for energy projects."
+  },
+  {
+   "roll": 28,
+   "issue": "Abortion",
+   "head": "Require care for infants who survive an abortion",
+   "official": "Born-Alive Abortion Survivors Protection Act (H.R. 26)",
+   "what": "Requires doctors to give an infant born alive during an attempted abortion the same care as any newborn, with criminal penalties."
+  },
+  {
+   "roll": 251,
+   "issue": "Guns",
+   "head": "Overturn the ATF pistol-brace rule",
+   "official": "H.J.Res. 44",
+   "what": "Cancels a federal rule that treated pistols fitted with stabilizing braces like short-barreled rifles, which must be registered."
+  },
+  {
+   "roll": 242,
+   "issue": "Government funding",
+   "head": "Raise the debt limit and cap spending",
+   "official": "Fiscal Responsibility Act (H.R. 3746)",
+   "law": "June 3, 2023",
+   "what": "Suspends the debt limit until 2025 to avoid a default and caps federal spending for two years."
+  }
  ]
 }
