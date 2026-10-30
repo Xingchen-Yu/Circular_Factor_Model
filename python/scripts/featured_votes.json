@@ -1,0 +1,22 @@
+{
+  "100": [{"roll": 419, "title": "Defense authorization, 1988"}, {"roll": 313, "title": "Debt limit increase and Gramm-Rudman revision"}, {"roll": 395, "title": "Stopgap government funding, 1988"}],
+  "101": [{"roll": 51, "title": "Federal budget plan, 1990"}, {"roll": 333, "title": "Defense authorization, 1990"}, {"roll": 208, "title": "Defense spending, 1990"}],
+  "102": [{"roll": 789, "title": "FREEDOM Support Act", "text": "Aid to the former Soviet states."}, {"roll": 314, "title": "Omnibus Crime Control Act of 1991"}, {"roll": 875, "title": "Defense authorization, 1993"}],
+  "103": [{"roll": 1094, "title": "GATT world trade agreement"}, {"roll": 738, "title": "Crime bill, 1994"}, {"roll": 145, "title": "Expedited Rescissions Act"}],
+  "104": [{"roll": 1150, "title": "Ending normal trade status for China, 1996"}, {"roll": 1218, "title": "Justice and State Department spending, 1997"}, {"roll": 692, "title": "Agriculture spending, 1996"}],
+  "105": [{"roll": 942, "title": "Ending normal trade status for China, 1998"}, {"roll": 1106, "title": "Intelligence authorization, 1999"}, {"roll": 633, "title": "Justice and State Department spending, 1998"}],
+  "106": [{"roll": 336, "title": "Ending normal trade relations with China, 1999"}, {"roll": 703, "title": "Emergency spending, 2000"}, {"roll": 434, "title": "Milk pricing reform"}],
+  "107": [{"roll": 253, "title": "Ending normal trade relations with China, 2001"}, {"roll": 368, "title": "Farm Security Act"}, {"roll": 624, "title": "Export-Import Bank extension"}],
+  "108": [{"roll": 31, "title": "Government funding, 2003"}],
+  "109": [{"roll": 373, "title": "East Asia Security Act"}, {"roll": 1187, "title": "Normal trade relations with Vietnam"}],
+  "110": [{"roll": 1568, "title": "Merida Initiative", "text": "Anti-drug aid to Mexico and Central America."}],
+  "111": [{"roll": 1544, "title": "NASA authorization, 2010"}],
+  "112": [{"roll": 410, "title": "Withdrawing U.S. forces from Libya", "text": "War powers resolution, June 2011."}, {"roll": 928, "title": "Defense authorization, 2012"}, {"roll": 177, "title": "Stopgap government funding, 2011"}],
+  "113": [{"roll": 869, "title": "USA FREEDOM Act", "text": "Limits on NSA phone-records collection."}, {"roll": 116, "title": "CISPA cyber-threat information sharing"}, {"roll": 1196, "title": "Intelligence authorization, 2014–15"}],
+  "114": [{"roll": 223, "title": "USA FREEDOM Act of 2015"}, {"roll": 169, "title": "Protecting Cyber Networks Act"}, {"roll": 1320, "title": "Stopgap government funding, 2017"}],
+  "115": [{"roll": 724, "title": "Renewing FISA surveillance powers, 2018"}, {"roll": 834, "title": "Government spending bill, 2018"}, {"roll": 776, "title": "Bipartisan Budget Act of 2018"}],
+  "116": [{"roll": 797, "title": "Renewing surveillance powers, 2020", "text": "USA FREEDOM Reauthorization Act."}, {"roll": 937, "title": "Defense authorization, 2021"}, {"roll": 949, "title": "COVID relief and government spending, December 2020"}],
+  "117": [{"roll": 292, "title": "Defense authorization, 2022"}, {"roll": 797, "title": "Defense authorization, 2023"}],
+  "118": [{"roll": 837, "title": "Renewing FISA surveillance powers, 2024"}, {"roll": 135, "title": "Withdrawing U.S. forces from Syria", "text": "War powers resolution, March 2023."}, {"roll": 242, "title": "Fiscal Responsibility Act", "text": "The 2023 debt-limit deal."}, {"roll": 718, "title": "Defense authorization, 2024"}],
+  "119": [{"roll": 515, "title": "Extending FISA surveillance powers, 2026"}, {"roll": 405, "title": "Government spending bill, 2026"}]
+}

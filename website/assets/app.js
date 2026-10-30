@@ -281,7 +281,7 @@ function renderSelected(H, vs) {
   box.innerHTML = `<b>${esc(s.name)}</b><p>${PARTY[s.party]}, ${dist(s.state, s.d)} · rank ${s.rank} of ${H.nRank} (range ${s.lo}–${s.hi})${vs ? ` · voted ${v === "Y" ? "yes" : v === "N" ? "no" : "did not vote"}` : ""}</p><p><a href="#member-${s.id}">Open member page</a></p>`;
 }
 function rollButton(r, f) {
-  return `<li><button data-roll="${r.roll}" aria-pressed="false"><span class="t">${esc(rollTitle(r, f)).slice(0, 140)}</span><span class="m">${fmtDate(r.date)}${r.bill ? ` · ${bill(r.bill)}` : ""} · ${esc(r.question)} · ${r.yea}–${r.nay}</span></button></li>`;
+  return `<li><button data-roll="${r.roll}" aria-pressed="false"><span class="t">${esc(rollTitle(r, f)).slice(0, 140)}</span><span class="m">${fmtDate(r.date)}${r.bill ? ` · ${bill(r.bill)}` : ""}${f ? "" : ` · ${esc(r.question)}`} · ${r.yea}–${r.nay}</span></button></li>`;
 }
 function renderFeatured(H, info) {
   const fs = info.featured || [];
