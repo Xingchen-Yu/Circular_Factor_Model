@@ -296,8 +296,9 @@ async function renderStory() {
 }
 
 /* ---------- explore ---------- */
-// reference level: average of the 100th-103rd Congresses (1987-95)
-const base = (key) => INDEX.houses.filter((h) => h.congress <= 103).reduce((s, h) => s + h[key][0], 0) / 4;
+// reference level: average of the 100th-111th Congresses (1987-2011), before the jump in the 112th
+const BASE_LAST = 111;
+const base = (key) => { const hs = INDEX.houses.filter((h) => h.congress <= BASE_LAST); return hs.reduce((s, h) => s + h[key][0], 0) / hs.length; };
 let exHandle = null;
 async function renderExplore(c) {
   if (!houseInfo(c)) c = LATEST;
@@ -310,9 +311,9 @@ async function renderExplore(c) {
   $("#ex-sub").textContent = `${years(c)}${c === LATEST ? ", in progress" : ""} · ${PARTY[info.majority]} majority`;
   const nEst = info.nFitted + info.nPlaced;
   $("#ex-tiles").innerHTML = `
-    <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">1987–95 average: ${IDX(base("chi_0"))}</div></div>
+    <div class="tile"><div class="k">Polarization index</div><div class="v">${IDX(info.chi_0[0])} <small class="muted" style="font-size:15px;font-weight:500">/ 100</small></div><div class="s">1987–2011 average: ${IDX(base("chi_0"))}</div></div>
     <div class="tile"><div class="k">Members placed</div><div class="v">${nEst}</div><div class="s"><b style="color:var(--D)">${info.nD} Democrats</b> · <b style="color:var(--R)">${info.nR} Republicans</b>${info.nI ? ` · <b style="color:var(--I)">${info.nI} Independent${info.nI > 1 ? "s" : ""}</b>` : ""}</div>${info.nSkipped ? `<div class="s muted">${info.nSkipped} not placed (too few votes)</div>` : ""}</div>
-    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">1987–95 average: <span style="color:var(--D)">${(100 * base("chi_D")).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * base("chi_R")).toFixed(1)}</span></div></div>
+    <div class="tile"><div class="k">Within-party index</div><div class="v"><span style="color:var(--D)">${(100 * info.chi_D[0]).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * info.chi_R[0]).toFixed(1)}</span></div><div class="s">1987–2011 average: <span style="color:var(--D)">${(100 * base("chi_D")).toFixed(1)}</span> · <span style="color:var(--R)">${(100 * base("chi_R")).toFixed(1)}</span></div></div>
     <div class="tile"><div class="k">Roll-call votes</div><div class="v">${info.nRolls.toLocaleString()}</div><div class="s">${fmtDate(info.first)} to ${fmtDate(info.last)}</div></div>`;
   const notes = [];
   if (c === LATEST) notes.push(`In session. Votes through ${fmtDate(info.last)}.`);
