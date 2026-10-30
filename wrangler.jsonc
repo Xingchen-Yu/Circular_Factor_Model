@@ -1,6 +1,11 @@
-// Cloudflare deploy config: serves the static Full Circle site in website/ (no build step).
+// Cloudflare deploy config: serves the static Full Circle site in website/. Requests that match
+// no file there (only /api/senate) go to worker/index.js, which keeps the Senate-interest count in D1.
 {
   "name": "fullcircle",
+  "main": "worker/index.js",
   "compatibility_date": "2026-10-01",
-  "assets": { "directory": "./website" }
+  "assets": { "directory": "./website", "binding": "ASSETS" },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "fullcircle", "database_id": "b273ab64-abc2-49a9-8019-4a82477b1716" }
+  ]
 }
