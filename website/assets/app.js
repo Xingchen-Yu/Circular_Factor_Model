@@ -672,6 +672,8 @@ async function start() {
   $("#ex-more").addEventListener("click", () => { lineupAll = true; house(state.c).then((H) => renderLineup(H, "")); });
   bindMemberSearch();
   bindSenate();
+  // footnote links scroll to the reference instead of changing the route
+  document.addEventListener("click", (e) => { const a = e.target.closest("a.fn"); if (!a) return; e.preventDefault(); document.querySelector(a.getAttribute("href")).scrollIntoView({ behavior: "smooth", block: "center" }); });
   window.addEventListener("hashchange", () => { document.title = "Full Circle"; route(); });
   route();
   renderStory();
